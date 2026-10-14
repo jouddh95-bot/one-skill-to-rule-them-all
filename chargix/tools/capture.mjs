@@ -31,14 +31,14 @@ for (const v of views) {
     if (y == null) return;
     await page.evaluate(y => window.scrollTo(0, y), y);
     await page.waitForTimeout(2200);
-    await page.screenshot({ path: `${out}/${label}-${v.name}-${tag}.jpg`, quality: 88, type: 'jpeg' });
+    await page.screenshot({ path: `${out}/${label}-${v.name}-${tag}.jpg`, quality: 88, type: "jpeg", timeout: 60000 }).catch(e => errors.push(`[${v.name}] shot ${tag}: ${e.message.split("\n")[0]}`));
   };
   for (const p of story) await shotAt('[data-cx-region="hall"]', p, `story-${String(Math.round(p * 1000)).padStart(4, '0')}`);
   for (const id of ['#work', '#demos', '#demo-essential', '#demo-3d', '#demo-launch', '#packages', '#compare', '#services', '#process', '#care', '#faq']) {
     const ok = await page.evaluate(id => { const el = document.querySelector(id); if (!el) return false; el.scrollIntoView(); return true; }, id);
     if (!ok) continue;
     await page.waitForTimeout(2500);
-    await page.screenshot({ path: `${out}/${label}-${v.name}-sec-${id.replace(/[^a-z]/g, '')}.jpg`, quality: 85, type: 'jpeg' });
+    await page.screenshot({ path: `${out}/${label}-${v.name}-sec-${id.replace(/[^a-z0-9]/g, '')}.jpg`, quality: 85, type: 'jpeg', timeout: 60000 }).catch(e => errors.push(`[${v.name}] shot ${id}: ${e.message.split('\n')[0]}`));
   }
   for (const p of finale) await shotAt('[data-cx-region="light"]', p, `finale-${String(Math.round(p * 1000)).padStart(4, '0')}`);
   const sections = await page.evaluate(() => [...document.querySelectorAll('main > *')].map(s => `${s.id || s.className.slice(0, 40)} h=${Math.round(s.getBoundingClientRect().height)}`));

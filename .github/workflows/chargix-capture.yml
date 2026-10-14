@@ -32,6 +32,7 @@ jobs:
           J=../jobs/capture.json
           node capture.mjs ../out/$(jq -r .label $J)/shots $(jq -r .theme $J) $(jq -r .label $J)
       - name: Commit
+        if: always()
         run: |
           git config user.name "chargix-pipeline"; git config user.email "pipeline@users.noreply.github.com"
           git add chargix/out && git commit -m "chargix: capture $(jq -r .label chargix/jobs/capture.json) [skip ci]" && git pull --rebase -q && git push
