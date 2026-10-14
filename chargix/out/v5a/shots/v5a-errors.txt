@@ -1,0 +1,82 @@
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/shopify_pay/accelerated_checkout net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] casa card -> shop: clicked
+[desk] state {"mono":true,"ready":true,"html":"js cx-cine cx-loaded","pv":"pv pv--on pv--ready","gates":2}
+[desk] package links []
+[desk] http 404: https://chargix.store/products/essential-website
+[desk] console: Failed to load resource: the server responded with a status of 404 ()
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] product essential-website: 404
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] essential-website add: no add button
+[desk] http 404: https://chargix.store/products/3d-experience-website
+[desk] console: Failed to load resource: the server responded with a status of 404 ()
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] product 3d-experience-website: 404
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] 3d-experience-website add: no add button
+[desk] http 404: https://chargix.store/products/business-launch
+[desk] console: Failed to load resource: the server responded with a status of 404 ()
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] product business-launch: 404
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] business-launch add: no add button
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] cart {"items":[],"total":0} checkout button: false
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] console: An import map is added after module script load was triggered.
+[mob] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[mob] reqfail: blob:https://chargix.store/24c7c093-7dc9-4787-8197-01b110a1a76e net::ERR_ABORTED
+[mob] pageerror: Failed to resolve module specifier "three". Relative references must start with either "/", "./", or "../".
+[mob] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/shopify_pay/accelerated_checkout net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/event/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/event/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/event/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/event/collect net::ERR_ABORTED
+[mob] casa api: page.waitForFunction: Timeout 120000ms exceeded.
+[mob] casa card -> shop: card hidden
+[mob] state {"mono":false,"ready":false,"html":"js cx-failsafe","pv":"pv","gates":2}
+[mob] package links []
