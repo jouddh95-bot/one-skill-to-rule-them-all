@@ -1,0 +1,5 @@
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[mob] console: An import map is added after module script load was triggered.
+[mob] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[mob] console: Multiple import maps are not yet supported. https://crbug.com/927119
