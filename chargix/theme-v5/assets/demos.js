@@ -455,6 +455,7 @@ function boot(root) {
       import(d.slFilm).then((m) => {
         api = m.init({ canvas, stage, base: d.slFilmBase, n: +d.csFilmN || 200, cws: ['casa'], state: { cw: 'casa' }, stem: () => d.csFilm, layout: 'cover' });
         cs.classList.add('cs--ready'); api.setActive(active); update();
+        if (location.search.includes('pvDebug')) window.__csApi = { ready: Promise.resolve(), shot: (p) => api.setProgress(p), fabric() {}, choose() {} };
       }).catch((err) => { console.warn('[demos] showroom film unavailable', err); cs.classList.remove('cs--on', 'cs--film'); });
     }, { rootMargin: '900px 0px' }).observe(track);
   }
