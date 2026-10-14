@@ -6,7 +6,7 @@
 // A colourway without its own film yet falls back to steel.
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 
-export function init({ canvas, stage, base, n, cws, state }) {
+export function init({ canvas, stage, base, n, cws, state, stem = (k) => `sl-${k}-`, layout = 'watch' }) {
   const g = canvas.getContext('2d', { alpha: true });
   if (!g) throw new Error('no 2d canvas');
   const have = new Set(cws);
@@ -36,7 +36,7 @@ export function init({ canvas, stage, base, n, cws, state }) {
       const im = new Image(); im.decoding = 'async';
       im.onload = () => { (im.decode ? im.decode() : Promise.resolve()).catch(() => {}).then(() => { s.imgs[i] = im; busy--; if (k === cw) { dirty = true; kick(); } pump(); }); };
       im.onerror = () => { busy--; pump(); };
-      im.src = `${base}sl-${k}-${pad(i)}.webp`;
+      im.src = `${base}${stem(k)}${pad(i)}.webp`;
     }
   }
   const near = (s, i, dir) => { for (let j = i; j >= 0 && j < n; j += dir) if (s.imgs[j]) return j; return -1; };
@@ -53,6 +53,10 @@ export function init({ canvas, stage, base, n, cws, state }) {
   // the screen (centre of the shot), with the copy below it.
   function rect(iw, ih) {
     const portrait = W / H < 0.9;
+    if (layout === 'cover') {
+      const s = Math.max(W / iw, H / ih), w = iw * s, h = ih * s;
+      return [(W - w) / 2, (H - h) / 2, w, h];
+    }
     if (portrait) {
       const h = H * 0.62, w = h * iw / ih;
       return [(W - w) / 2, 0, w, h];

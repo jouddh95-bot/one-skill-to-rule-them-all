@@ -415,6 +415,7 @@ function boot(root) {
 
   function initCasa(cs) {
     const gl = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } })();
+    if (!RM() && root.dataset.csFilm && 'IntersectionObserver' in window) { casaFilm(cs); return; }
     if (RM() || !gl || !root.dataset.modCasa || !('IntersectionObserver' in window)) return; // the storefront below carries the room
     cs.classList.add('cs--on');
     const d = root.dataset, assets = { hdr: d.csHdr, sofa: d.csSofa, chair: d.csChair, pouf: d.csPouf, cup: d.csCup, lamp: d.csLamp };
@@ -429,6 +430,33 @@ function boot(root) {
     }, { rootMargin: '900px 0px' });
     io.observe(cs);
     mqRM.addEventListener?.('change', () => { if (RM()) cs.classList.remove('cs--on'); });
+  }
+
+  // The house as a path-traced film (Blender Cycles frames) scrubbed by scroll.
+  function casaFilm(cs) {
+    const d = root.dataset;
+    const track = cs.querySelector('[data-cs-track]'), stage = cs.querySelector('[data-cs-stage]'), canvas = cs.querySelector('[data-cs-canvas]');
+    const meter = cs.querySelector('[data-cs-meter]');
+    const caps = [...cs.querySelectorAll('[data-cs-cap]')].map((el) => ({ el, a: +el.dataset.a / 100, b: +el.dataset.b / 100, v: -1 }));
+    const sm = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+    cs.classList.add('cs--on', 'cs--film');
+    let api = null, active = false;
+    function update() {
+      const r = track.getBoundingClientRect(); const p = clamp(-r.top / Math.max(1, r.height - innerHeight));
+      if (meter) meter.style.transform = `scaleX(${p.toFixed(4)})`;
+      caps.forEach((c) => { const v = (c.a <= 0 ? 1 : sm(c.a, c.a + 0.03, p)) * (c.b >= 1 ? 1 : 1 - sm(c.b - 0.03, c.b, p)); if (Math.abs(v - c.v) > 0.002) { c.v = v; c.el.style.opacity = v.toFixed(3); c.el.style.transform = `translate3d(0,${((1 - v) * 18).toFixed(1)}px,0)`; c.el.style.visibility = v > 0.01 ? 'visible' : 'hidden'; } });
+      api?.setProgress(p);
+    }
+    onScroll.add(() => active && update()); onResize.add(update); update();
+    let started = false;
+    new IntersectionObserver(([en]) => {
+      active = en.isIntersecting; api?.setActive(active);
+      if (!en.isIntersecting || started) return; started = true;
+      import(d.slFilm).then((m) => {
+        api = m.init({ canvas, stage, base: d.slFilmBase, n: +d.csFilmN || 200, cws: ['casa'], state: { cw: 'casa' }, stem: () => d.csFilm, layout: 'cover' });
+        cs.classList.add('cs--ready'); api.setActive(active); update();
+      }).catch((err) => { console.warn('[demos] showroom film unavailable', err); cs.classList.remove('cs--on', 'cs--film'); });
+    }, { rootMargin: '900px 0px' }).observe(track);
   }
 
   /* ═════════ Room 03 · store-admin console ═════════ */

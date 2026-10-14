@@ -605,3 +605,10 @@
 .co [tabindex="-1"]:focus, .co h1:focus { outline: none; }
 .co-drawer :focus:not(:focus-visible) { outline: none; }
 .co-qty button { min-width: 44px; min-height: 44px; }
+
+/* Room 03 · film mode: the house plays as a path-traced film */
+.cs-filmonly { display: none; }
+.cs--film .cs-filmonly { display: block; }
+.cs--film .cs-live, .cs--film .cs-chips, .cs--film .cs-hud__hint, .cs--film .cs-card { display: none !important; }
+.cs--film .cs-canvas { cursor: default; }
+.cs-filmonly a { color: inherit; text-underline-offset: 3px; }

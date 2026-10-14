@@ -82,7 +82,8 @@
   <body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
     {%- if template.name == 'index' -%}
       <canvas class="cx-gl" data-cx-gl data-film-base="{{ cx_asset_base }}" data-film-core="{{ 'film-core.js' | asset_url }}" aria-hidden="true"></canvas>
-      <script type="module" src="{{ 'monument-3d.js' | asset_url }}"></script>
+      {%- comment -%} The opening plays the path-traced film (Blender Cycles frames) instead of live browser 3D. {%- endcomment -%}
+      <script type="module" src="{{ 'film-core.js' | asset_url }}"></script>
     {%- endif -%}
     <a class="skip-link" href="#MainContent">Skip to content</a>
     <div class="grain" aria-hidden="true"></div>

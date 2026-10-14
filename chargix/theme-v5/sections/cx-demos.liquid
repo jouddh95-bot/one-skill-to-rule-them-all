@@ -26,7 +26,6 @@
   data-sl-film-base="{{ 'sl-film.js' | asset_url | split: 'sl-film.js' | first }}"
   data-sl-film-n="180"
   data-sl-film-cws="steel"
-  data-mod-pavilion="{{ 'demos-pavilion.js' | asset_url }}"
   data-mod-casa="{{ 'demos-casa.js' | asset_url }}"
   data-cs-hdr="{{ 'casa-sky.hdr' | asset_url }}"
   data-cs-sofa="{{ 'casa-sofa.glb' | asset_url }}"
@@ -435,7 +434,7 @@
       <div class="cs" id="co-house" data-cs>
         <div class="cs-track" data-cs-track>
           <div class="cs-stage" data-cs-stage>
-            <canvas class="cs-canvas" data-cs-canvas role="img" aria-label="Real-time 3D walk into the Casa Ocre house: an ochre entry court with a cobalt door, then a furnished living room with the Cántaro jars on a console. Scroll to move through it, click a jar to pick it up."></canvas>
+            <canvas class="cs-canvas" data-cs-canvas role="img" aria-label="Ray-traced walk into the Casa Ocre house: an ochre entry court with a cobalt door, then a furnished living room with the Cántaro jars on a console. Scroll to move through it."></canvas>
             <div class="cs-cap" data-cs-cap data-a="0" data-b="16">
               <p class="cs-k">Casa Ocre · the house</p>
               <p class="cs-h">Walk into <em>the shop.</em></p>
@@ -454,7 +453,8 @@
             <div class="cs-cap" data-cs-cap data-a="76" data-b="100">
               <p class="cs-k">The Cántaro range</p>
               <p class="cs-h">Pick one <em>up.</em></p>
-              <p class="cs-p">Click a jar to lift it, then open it in the shop.</p>
+              <p class="cs-p cs-live">Click a jar to lift it, then open it in the shop.</p>
+              <p class="cs-p cs-filmonly">Every piece on the console is in the storefront below. <a href="#co-store">Open the shop</a></p>
             </div>
             <div class="cs-card" data-cs-card hidden role="dialog" aria-label="Selected piece">
               <p class="cs-k">In the shop</p>
@@ -469,7 +469,8 @@
         </div>
         <aside class="cs-note" aria-label="What this room shows">
           <p class="cs-note__k">What you just walked through</p>
-          <p>A real-time 3D space rendered in your browser with three.js, not a video: the camera follows your scroll along one path, the jars and the lamp are clickable and lead into the storefront, and the upholstery switches between real fabric variants. Business Launch includes a 3D experience built to this standard around the client's own products, inside the agreed scope. On phones it renders at a lower resolution; with reduced motion or no WebGL it is skipped and the shop below carries the room.</p>
+          <p class="cs-filmonly">A path-traced film of a modelled 3D house, rendered in Blender Cycles and scrubbed by your scroll, so it looks the same on every phone and laptop. Business Launch includes a 3D experience built to this standard around the client's own products, inside the agreed scope. With reduced motion it is skipped and the shop below carries the room.</p>
+          <p class="cs-live">A real-time 3D space rendered in your browser with three.js, not a video: the camera follows your scroll along one path, the jars and the lamp are clickable and lead into the storefront, and the upholstery switches between real fabric variants. Business Launch includes a 3D experience built to this standard around the client's own products, inside the agreed scope. On phones it renders at a lower resolution; with reduced motion or no WebGL it is skipped and the shop below carries the room.</p>
           <p class="cs-note__c">Furniture: Khronos glTF Sample Assets by Wayfair LLC (GlamVelvetSofa, SpecularSilkPouf, AnisotropyBarnLamp, CC BY 4.0; SheenChair and DiffuseTransmissionTeacup, CC0). Sky light: Venice Sunset by Poly Haven, CC0. Walls, ceramics and the house are built for this demo.</p>
         </aside>
       </div>
