@@ -93,7 +93,7 @@ function posterTex() {
 }
 function stoneTex() {
   const c = cv(1024), g = c.getContext('2d');
-  g.fillStyle = '#3b342d'; g.fillRect(0, 0, 1024, 1024);
+  g.fillStyle = '#6e604f'; g.fillRect(0, 0, 1024, 1024);
   let s = 7; const r = () => ((s = (s * 16807) % 2147483647) / 2147483647);
   for (let i = 0; i < 30; i++) { g.strokeStyle = `rgba(190,180,165,${(0.03 + r() * 0.05).toFixed(3)})`; g.lineWidth = 0.6 + r() * 1.4; let x = r() * 1024, y = r() * 1024; g.beginPath(); g.moveTo(x, y); for (let k = 0; k < 5; k++) { const nx = x + (r() - 0.4) * 300, ny = y + (r() - 0.5) * 200; g.quadraticCurveTo((x + nx) / 2 + (r() - 0.5) * 90, (y + ny) / 2 + (r() - 0.5) * 90, nx, ny); x = nx; y = ny; } g.stroke(); }
   g.fillStyle = 'rgba(0,0,0,.45)'; for (let i = 0; i <= 2; i++) { g.fillRect(i * 512 - 1, 0, 2, 1024); g.fillRect(0, i * 512 - 1, 1024, 2); }
@@ -203,7 +203,7 @@ function build(renderer, low) {
   const brass = new THREE.MeshStandardMaterial({ color: 0x8c6a45, metalness: 1, roughness: 0.34 });
   const glow = brass;
   const cool = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.75, 0.84, 1.0).multiplyScalar(1.5) });
-  const floorM = new THREE.MeshStandardMaterial({ map: stoneTex(), roughness: 0.32, metalness: 0 });
+  const floorM = new THREE.MeshStandardMaterial({ map: stoneTex(), roughness: 0.5, metalness: 0, envMapIntensity: 0.35 });
   const box = (w, h, d, m, x, y, z, ry = 0) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); o.position.set(x, y, z); o.rotation.y = ry; o.castShadow = o.receiveShadow = true; scene.add(o); return o; };
 
   // floor (one reflective plane for outside and in) and the pool

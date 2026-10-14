@@ -15,7 +15,7 @@ const cv = (w, h = w) => { const c = document.createElement('canvas'); c.width =
 function rng(seed) { let s = seed; return () => ((s = (s * 16807) % 2147483647) / 2147483647); }
 
 // ---- textures
-function dialMap(d, size) {
+export function dialMap(d, size) {
   const c = cv(size), g = c.getContext('2d'), o = size / 2, k = size / 1024;
   const gr = g.createRadialGradient(o, o, 0, o, o, o); gr.addColorStop(0, d.dial2); gr.addColorStop(0.55, d.dial); gr.addColorStop(1, d.dial);
   g.fillStyle = gr; g.fillRect(0, 0, size, size);
@@ -37,7 +37,7 @@ function dialMap(d, size) {
 }
 // anisotropy direction map: radial brushing (a sunburst), strength in blue
 let _sun = null;
-function sunburstAniso(size = 512) {
+export function sunburstAniso(size = 512) {
   if (_sun) return _sun;
   const c = cv(size), g = c.getContext('2d'), img = g.createImageData(size, size), o = size / 2;
   for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
@@ -48,7 +48,7 @@ function sunburstAniso(size = 512) {
 }
 // circular brushing for the case flanks (tangential direction on a lathe UV = along u)
 let _grain = null;
-function leatherGrain() {
+export function leatherGrain() {
   if (_grain) return _grain;
   const c = cv(1024), g = c.getContext('2d'), r = rng(41);
   g.fillStyle = '#808080'; g.fillRect(0, 0, 1024, 1024);
