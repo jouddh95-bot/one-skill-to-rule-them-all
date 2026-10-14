@@ -1,0 +1,33 @@
+name: chargix-film
+on:
+  push:
+    branches: [claude/project-thread-extkzj]
+    paths: [chargix/jobs/film.json]
+permissions:
+  contents: write
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 20
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+      - name: Install Blender (bpy) and Pillow
+        run: |
+          sudo apt-get install -y -q libxrender1 libxi6 libxkbcommon0 libsm6 libgl1 libxxf86vm1 libxfixes3 >/dev/null || true
+          pip install -q bpy==5.2.2 pillow
+      - name: Render shard
+        run: bash chargix/tools/film-shard.sh ${{ matrix.shard }} 20
+      - name: Commit frames
+        run: |
+          git config user.name "chargix-pipeline"; git config user.email "pipeline@users.noreply.github.com"
+          git add chargix/out/film
+          git commit -qm "chargix: film shard ${{ matrix.shard }} [skip ci]" || exit 0
+          for t in 1 2 3 4 5 6 7 8; do git pull -q --rebase && git push -q && exit 0; sleep $((RANDOM % 20 + 5)); done
+          exit 1
