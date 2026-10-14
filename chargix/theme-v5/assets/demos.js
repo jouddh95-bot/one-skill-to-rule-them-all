@@ -389,7 +389,7 @@ function boot(root) {
     const io = new IntersectionObserver(([en]) => {
       if (!en.isIntersecting || started) return; started = true; io.disconnect();
       import(root.dataset.modPavilion).then(async (m) => {
-        const api = await m.init({ root: pv, isTouch, onColourway: (k) => sl?.__setCw?.(k, 'pv') });
+        const api = await m.init({ root: pv, isTouch, assets: { hdr: root.dataset.csHdr }, onColourway: (k) => sl?.__setCw?.(k, 'pv') });
         pv.classList.add('pv--ready');
         sl?.addEventListener('sl:cw', (e) => api.setColourway(e.detail));
         if (location.search.includes('pvDebug')) window.__pvApi = api;
