@@ -41,6 +41,20 @@ for (const v of views) {
     await page.screenshot({ path: `${out}/${label}-${v.name}-sec-${id.replace(/[^a-z0-9]/g, '')}.jpg`, quality: 85, type: 'jpeg', timeout: 60000 }).catch(e => errors.push(`[${v.name}] shot ${id}: ${e.message.split('\n')[0]}`));
   }
   for (const p of finale) await shotAt('[data-cx-region="light"]', p, `finale-${String(Math.round(p * 1000)).padStart(4, '0')}`);
+  // Room 02 pavilion (walk-in 3D) and Room 03 store admin + store interactions
+  for (const p of [0, 0.2, 0.38, 0.5, 0.7, 0.95]) await shotAt('[data-pv-track]', p, `pv-${String(Math.round(p * 1000)).padStart(4, '0')}`);
+  for (const p of [0.1, 0.5, 0.9]) await shotAt('[data-sl-track]', p, `sl-${String(Math.round(p * 1000)).padStart(4, '0')}`);
+  const state = await page.evaluate(() => ({ mono: !!window.__cxMono, ready: !!window.__cxReady, html: document.documentElement.className, pv: document.querySelector('[data-pv]')?.className, gates: document.querySelectorAll('.dm-gate').length }));
+  errors.push(`[${v.name}] state ${JSON.stringify(state)}`);
+  const clickShot = async (sel, tag) => { const ok = await page.evaluate(sel => { const el = document.querySelector(sel); if (!el) return false; el.scrollIntoView({ block: 'center' }); el.click(); return true; }, sel); if (!ok) { errors.push(`[${v.name}] missing ${sel}`); return; } await page.waitForTimeout(1500); await page.screenshot({ path: `${out}/${label}-${v.name}-${tag}.jpg`, quality: 85, type: 'jpeg', timeout: 60000 }).catch(e => errors.push(`[${v.name}] shot ${tag}: ${e.message.split('\n')[0]}`)); };
+  await clickShot('#adm-t-products', 'adm-products');
+  await clickShot('#adm-t-brand', 'adm-brand');
+  await clickShot('#adm-t-channels', 'adm-channels');
+  await clickShot('#adm-t-launch', 'adm-launch');
+  await clickShot('[data-co-store] [data-co-go="product"]', 'store-pdp');
+  await clickShot('[data-co-store] [data-co-add], [data-co-store] .co-add, [data-co-store] button[type="submit"]', 'store-add');
+  await clickShot('[data-co-cart]', 'store-cart');
+  await page.evaluate(() => document.querySelector('dialog[open]')?.close());
   const sections = await page.evaluate(() => [...document.querySelectorAll('main > *')].map(s => `${s.id || s.className.slice(0, 40)} h=${Math.round(s.getBoundingClientRect().height)}`));
   fs.writeFileSync(`${out}/${label}-${v.name}-sections.txt`, sections.join('\n'));
   await ctx.close();
