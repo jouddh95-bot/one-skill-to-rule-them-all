@@ -162,6 +162,13 @@ def mat_dial(img_path):
     t.direction_type = "RADIAL"
     t.axis = "Z"
     nt.links.new(t.outputs[0], b.inputs["Tangent"])
+    # printed ink reads as crisp, slightly raised white: a touch of emission keeps it legible under the lacquer
+    b.inputs["Emission Color"].default_value = (*[c / 255 for c in hexrgb_int(C["ink"])], 1)
+    em = nt.nodes.new("ShaderNodeMath")
+    em.operation = "MULTIPLY"
+    em.inputs[1].default_value = 0.35
+    nt.links.new(sep.outputs[0], em.inputs[0])
+    nt.links.new(em.outputs[0], b.inputs["Emission Strength"])
     # lacquer
     b.inputs["Coat Weight"].default_value = 0.6
     b.inputs["Coat Roughness"].default_value = 0.04
