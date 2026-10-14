@@ -313,3 +313,8 @@
 /* Gate panels slide past the viewport edges; clip them horizontally (clip keeps position: sticky working). */
 #demos.dm { overflow-x: clip; }
 
+
+/* v5 consistency pass: demo rooms use the site's button and price system */
+.dm-btn { min-height: 52px; padding: 0 26px; font: 600 12.5px/1.1 var(--dm-sans); font-stretch: 112%; letter-spacing: .12em; text-transform: uppercase; }
+.dm-price__v { font-weight: 200; letter-spacing: -.035em; }
+@media (max-width: 760px) { .dm-price { flex-wrap: wrap; } .dm-price__m { flex-basis: 100%; letter-spacing: .1em; } }

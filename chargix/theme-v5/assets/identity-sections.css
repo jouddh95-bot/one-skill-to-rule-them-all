@@ -425,3 +425,7 @@
 .pkg__demo { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px; padding: 6px 0; font-size: 13px; color: var(--stone); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); }
 .pkg__demo:hover, .pkg__demo:focus-visible { color: var(--bone, #ece6dc); }
 .pkg__demo svg { width: 12px; height: 12px; }
+
+/* v5: compare summary prices line up when a package name wraps */
+.cmpx__cols > span { align-content: space-between; }
+.cmpx__cols > span b { min-height: 2.4em; }

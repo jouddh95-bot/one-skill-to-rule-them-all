@@ -599,3 +599,9 @@
   .cs-note { grid-template-columns: 1fr; }
   .cs-note__c { grid-column: 1; }
 }
+
+/* v5 consistency pass: store admin in a loaded font and light form controls; no stray focus rings */
+.co-adm { color-scheme: light; font-family: "Geist", "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif; }
+.co [tabindex="-1"]:focus, .co h1:focus { outline: none; }
+.co-drawer :focus:not(:focus-visible) { outline: none; }
+.co-qty button { min-width: 44px; min-height: 44px; }

@@ -146,7 +146,7 @@
       if ('IntersectionObserver' in window && targets.length) {
         var spy = new IntersectionObserver(function (entries) {
           entries.forEach(function (en) {
-            if (!en.isIntersecting) return;
+            if (!en.isIntersecting) { if (active && map[en.target.id] === active) { active.classList.remove('is-active'); active = null; moveInd(null); } return; }
             navLinks.forEach(function (a) { a.classList.remove('is-active'); });
             active = map[en.target.id]; active.classList.add('is-active'); moveInd(active);
           });
