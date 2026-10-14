@@ -22,6 +22,10 @@
 <section id="demos" class="dm" aria-labelledby="{{ section.id }}-h"
   data-dm
   data-mod-watch="{{ 'demos-3d.js' | asset_url }}"
+  data-sl-film="{{ 'sl-film.js' | asset_url }}"
+  data-sl-film-base="{{ 'sl-film.js' | asset_url | split: 'sl-film.js' | first }}"
+  data-sl-film-n="180"
+  data-sl-film-cws="steel"
   data-mod-pavilion="{{ 'demos-pavilion.js' | asset_url }}"
   data-mod-casa="{{ 'demos-casa.js' | asset_url }}"
   data-cs-hdr="{{ 'casa-sky.hdr' | asset_url }}"
@@ -323,10 +327,10 @@
             <img data-sl-img alt="Studio render of the Solenne Ligne 39 watch, steel case with ink-blue radial-brushed dial" width="1200" height="1200" loading="lazy" decoding="async">
             <img data-sl-img-x alt="" aria-hidden="true" class="sl-still__x" width="1200" height="1200" loading="lazy" decoding="async">
           </figure>
-          <canvas class="sl-canvas" data-sl-canvas role="img" aria-label="Interactive 3D model of the Solenne Ligne 39 watch. Drag sideways to turn it."></canvas>
+          <canvas class="sl-canvas" data-sl-canvas role="img" aria-label="Ray-traced film of the Solenne Ligne 39 watch that moves with your scroll."></canvas>
           <nav class="sl-nav" aria-label="Solenne demo navigation">
             <span class="sl-logo">SOLENNE</span>
-            <span class="sl-nav__l"><a href="#sl-b1">Materials</a><a href="#sl-b2">Calibre</a><a href="#sl-b3">Colourways</a><a href="#sl-b4">Buy</a></span>
+            <span class="sl-nav__l"><a href="#sl-b1">Materials</a><a href="#sl-b2">Dial</a><a href="#sl-b3">Colourways</a><a href="#sl-b4">Buy</a></span>
             <span class="sl-bagc">Bag <b data-sl-count>0</b></span>
           </nav>
           <div class="sl-hot" data-sl-hot>
@@ -354,7 +358,7 @@
             <div class="sl-copy">
               <p class="sl-k">Ligne 39 · Calibre S-01</p>
               <h4 class="sl-h"><span class="sl-line"><span>Time,</span></span> <span class="sl-line"><em>held still.</em></span></h4>
-              <p class="sl-p">A 39 mm automatic watch, drawn with a ruler and finished by hand. Turn it, take it apart, choose its colour.</p>
+              <p class="sl-p">A 39 mm automatic watch, drawn with a ruler and finished by hand. Scroll to move around it, then choose its colour.</p>
             </div>
           </section>
           <section class="sl-beat sl-beat--1" id="sl-b1" data-beat="1" aria-label="Materials">
@@ -369,14 +373,14 @@
               </dl>
             </div>
           </section>
-          <section class="sl-beat sl-beat--2" id="sl-b2" data-beat="2" aria-label="The calibre, exploded">
+          <section class="sl-beat sl-beat--2" id="sl-b2" data-beat="2" aria-label="The dial">
             <div class="sl-copy">
-              <p class="sl-k">02 · Calibre</p>
-              <h4 class="sl-h">Seven layers, <em>one movement.</em></h4>
-              <p class="sl-p">Open the watch layer by layer. Select a point on the model to read about each part.</p>
+              <p class="sl-k">02 · Dial</p>
+              <h4 class="sl-h">Light travels <em>across the sunburst.</em></h4>
+              <p class="sl-p">Faceted dauphine hands, twelve applied indices with lume and a date at three, under a domed sapphire crystal.</p>
               <ol class="sl-parts">
-                <li><b>Crystal</b> domed sapphire</li><li><b>Bezel</b> coin-edge steel</li><li><b>Hands</b> faceted, lumed tips</li>
-                <li><b>Dial</b> radial-brushed, applied indices</li><li><b>Case</b> 904L steel</li><li><b>Calibre</b> S-01, 70 h reserve</li><li><b>Caseback</b> sapphire window</li>
+                <li><b>Dial</b> sunburst-brushed</li><li><b>Hands</b> faceted dauphine</li><li><b>Indices</b> applied, lumed</li>
+                <li><b>Date</b> framed at three</li><li><b>Crystal</b> domed sapphire</li><li><b>Calibre</b> S-01, 70 h reserve</li>
               </ol>
             </div>
           </section>
@@ -416,7 +420,7 @@
           </section>
         </div>
       </div>
-      <p class="sl-foot">This room shows one interactive 3D scene, as included in the {{ section.settings.ch2_name }} package. With reduced motion or without WebGL you see rendered stills instead.</p>
+      <p class="sl-foot">This room plays a ray-traced 3D film of the watch that moves with your scroll, the kind of scene included in the {{ section.settings.ch2_name }} package. With reduced motion you see rendered stills instead.</p>
     </div>
 
     {%- else -%}

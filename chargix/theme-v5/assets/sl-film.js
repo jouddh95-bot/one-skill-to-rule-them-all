@@ -54,11 +54,14 @@ export function init({ canvas, stage, base, n, cws, state }) {
   function rect(iw, ih) {
     const portrait = W / H < 0.9;
     if (portrait) {
-      const h = H * 0.6, w = h * iw / ih;
-      return [(W - w) / 2, H * 0.04, w, h];
+      const h = H * 0.62, w = h * iw / ih;
+      return [(W - w) / 2, 0, w, h];
     }
-    const s = Math.max(W / iw, H / ih) * 1.02, w = iw * s, h = ih * s;
-    return [W * 0.6 - w / 2, (H - h) / 2, w, h];
+    // copy sits left for beats 0-2 and right for 3-4: slide the shot away from it
+    const t = clamp((p - 0.56) / 0.16), e = t * t * (3 - 2 * t);
+    const ox = W * (0.1 - 0.2 * e);
+    const s = Math.max((W + 2 * Math.abs(ox)) / iw, H / ih), w = iw * s, h = ih * s;
+    return [(W - w) / 2 + ox, (H - h) / 2, w, h];
   }
 
   function draw() {
