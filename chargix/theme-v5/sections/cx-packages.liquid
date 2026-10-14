@@ -1,0 +1,132 @@
+{%- liquid
+  assign tiers = section.settings.stages | split: '|'
+  assign cart_base = routes.root_url | append: '/cart/' | replace: '//', '/'
+-%}
+<section class="section pkgs" id="{{ section.settings.anchor }}" data-tone="obsidian" data-scene="packages" aria-labelledby="{{ section.id }}-h">
+  <div class="pkgs__shaft" aria-hidden="true"></div>
+  <div class="wrap is-ruled">
+    <div class="sec-head">
+      <div>
+        <p class="eyebrow">{%- if section.settings.num != blank -%}<span class="sec-num">{{ section.settings.num }}</span>{%- endif -%}{{ section.settings.eyebrow }}</p>
+        <h2 class="h-1" id="{{ section.id }}-h" data-split="lines">{{ section.settings.heading }}</h2>
+      </div>
+      <div class="sec-head__side">
+        <p class="lede" data-reveal>{{ section.settings.text }}</p>
+        {%- if section.settings.assure != blank -%}<p class="pk__assure" data-reveal>{{ section.settings.assure }}</p>{%- endif -%}
+      </div>
+    </div>
+    <div class="pk">
+      {%- for block in section.blocks -%}
+        {%- assign p = block.settings.product -%}
+        {%- assign v = p.selected_or_first_available_variant -%}
+        {%- liquid
+          assign feats = block.settings.features | newline_to_br | split: '<br />'
+          capture pkg_price
+            if v
+              echo v.price | money_without_trailing_zeros
+            else
+              echo block.settings.fallback_price
+            endif
+          endcapture
+          capture pkg_lines
+            for f in feats limit: 2
+              echo f | strip | escape | append: '|'
+            endfor
+            echo block.settings.timeline | escape
+          endcapture
+          assign tier_i = forloop.index | at_most: 3
+          assign tier_name = tiers[forloop.index0] | strip
+          assign tier_icon = 'tier-' | append: tier_i
+          case forloop.index
+            when 1
+              assign roman = 'I'
+            when 2
+              assign roman = 'II'
+            when 3
+              assign roman = 'III'
+            else
+              assign roman = 'IV'
+          endcase
+        -%}
+        <article class="pkg{% if block.settings.featured %} pkg--feature{% endif %}" data-pkg data-name="{{ block.settings.name | escape }}" data-price="{{ pkg_price | strip }}" data-featured="{{ block.settings.featured }}" data-lines="{{ pkg_lines | strip }}" data-tilt-card data-reveal style="--d: {{ forloop.index0 }}" aria-labelledby="{{ block.id }}-n" {{ block.shopify_attributes }}>
+          <div class="pkg__slab">
+            <div class="pkg__top">
+              <span class="pkg__n"><span class="pkg__roman">{{ roman }}</span>{% if tier_name != blank %}<span>{{ tier_name }}</span>{% endif %}</span>
+              {%- if block.settings.badge != blank -%}<span class="pkg__badge">{{ block.settings.badge }}</span>{%- endif -%}
+            </div>
+            <span class="pkg__glyph">{% render 'cx-icon', icon: tier_icon %}</span>
+            <div class="pkg__head">
+              <h3 class="pkg__name" id="{{ block.id }}-n">{{ block.settings.name }}</h3>
+              {%- if block.settings.kind != blank -%}<p class="pkg__kind">{{ block.settings.kind }}</p>{%- endif -%}
+              <p class="pkg__for">{{ block.settings.for }}</p>
+            </div>
+            <div class="pkg__price">
+              <span class="pkg__amt">{{ pkg_price | strip }}</span>
+              <small>{{ section.settings.price_note }}</small>
+            </div>
+            <div class="pkg__meta">
+              {%- if block.settings.timeline != blank -%}<span class="chip">{{ block.settings.timeline }}</span>{%- endif -%}
+              {%- if block.settings.revisions != blank -%}<span class="chip">{{ block.settings.revisions }}</span>{%- endif -%}
+            </div>
+            <ul class="ticks">
+              {%- for f in feats -%}{%- assign f2 = f | strip -%}{%- if f2 != blank -%}<li>{{ f2 }}</li>{%- endif -%}{%- endfor -%}
+            </ul>
+            <div class="pkg__cta">
+              {%- if v and v.available -%}
+                <a class="btn btn--primary btn--block" href="{{ cart_base }}{{ v.id }}:1">{{ section.settings.buy_label }}<span class="visually-hidden">: {{ block.settings.name }}</span> {% render 'cx-icon', icon: 'arrow' %}</a>
+                <a class="btn btn--block btn--sm" href="{{ p.url }}">{{ section.settings.details_label }}<span class="visually-hidden">: {{ block.settings.name }}</span></a>
+              {%- else -%}
+                <a class="btn btn--primary btn--block" href="{{ section.settings.fallback_link }}">{{ section.settings.fallback_label }}<span class="visually-hidden">: {{ block.settings.name }}</span> {% render 'cx-icon', icon: 'arrow' %}</a>
+              {%- endif -%}
+              {%- if block.settings.demo != blank -%}<a class="pkg__demo" href="{{ block.settings.demo }}">{{ section.settings.demo_label }}<span class="visually-hidden">: {{ block.settings.name }}</span> {% render 'cx-icon', icon: 'arrow' %}</a>{%- endif -%}
+              {%- if block.settings.fine != blank -%}<p class="pkg__fine">{{ block.settings.fine }}</p>{%- endif -%}
+            </div>
+          </div>
+          <div class="pkg__base" aria-hidden="true"><span>{{ roman }}</span></div>
+        </article>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.foot != blank -%}<div class="pk__foot" data-reveal>{{ section.settings.foot }}</div>{%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Studio packages",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "packages" },
+    { "type": "text", "id": "num", "label": "Number", "default": "V" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Vault · Packages" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Three packages, <em>set in stone.</em>" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Three fixed-price packages, each a complete, working Shopify website. Pay online, fill in a short project form, and we begin. No calls required, no surprise invoices." },
+    { "type": "text", "id": "assure", "label": "Small line under text", "default": "Fixed price · Paid once at checkout · USD" },
+    { "type": "text", "id": "stages", "label": "Tier names (separate with |)", "default": "Foundation|Atrium|Landmark" },
+    { "type": "text", "id": "price_note", "label": "Price note", "default": "One-time · USD" },
+    { "type": "text", "id": "buy_label", "label": "Buy button", "default": "Buy & start" },
+    { "type": "text", "id": "details_label", "label": "Details button", "default": "Full details" },
+    { "type": "text", "id": "fallback_label", "label": "Button when product unavailable", "default": "Ask about this package" },
+    { "type": "text", "id": "fallback_link", "label": "Link when product unavailable", "default": "/pages/contact" },
+    { "type": "text", "id": "demo_label", "label": "Demo link label", "default": "Walk through its demo room" },
+    { "type": "richtext", "id": "foot", "label": "Note under packages", "default": "<p>Your Shopify plan, domain, paid apps and ad spend are paid by you, directly to those providers. <a href=\"#compare\">Compare every package line by line</a>.</p>" }
+  ],
+  "blocks": [
+    { "type": "package", "name": "Package", "settings": [
+      { "type": "product", "id": "product", "label": "Product (sets price and checkout)" },
+      { "type": "text", "id": "name", "label": "Name", "default": "Essential Website" },
+      { "type": "text", "id": "for", "label": "Who it's for", "default": "For freelancers, service providers and first businesses." },
+      { "type": "text", "id": "kind", "label": "What you get, in one line" },
+      { "type": "text", "id": "demo", "label": "Demo room link (e.g. #demo-essential)" },
+      { "type": "text", "id": "fallback_price", "label": "Price shown if product is unavailable", "default": "$750" },
+      { "type": "text", "id": "badge", "label": "Badge" },
+      { "type": "checkbox", "id": "featured", "label": "Highlight", "default": false },
+      { "type": "text", "id": "timeline", "label": "Timeline chip", "default": "~10 business days" },
+      { "type": "text", "id": "revisions", "label": "Revisions chip", "default": "2 revision rounds" },
+      { "type": "textarea", "id": "features", "label": "Features (one per line)" },
+      { "type": "text", "id": "fine", "label": "Fine print" }
+    ] }
+  ],
+  "max_blocks": 4,
+  "presets": [ { "name": "Studio packages" } ]
+}
+{% endschema %}
+
