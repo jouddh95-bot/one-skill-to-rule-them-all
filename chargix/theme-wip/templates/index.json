@@ -106,8 +106,8 @@
           "type": "tag",
           "settings": {
             "key": "n0",
-            "a": "61",
-            "b": "81",
+            "a": "57.5",
+            "b": "61.5",
             "eyebrow": "01",
             "text": "Information architecture",
             "link": ""
@@ -117,8 +117,8 @@
           "type": "tag",
           "settings": {
             "key": "n1",
-            "a": "63.5",
-            "b": "81",
+            "a": "59",
+            "b": "66",
             "eyebrow": "02",
             "text": "Navigation & page structure",
             "link": ""
@@ -128,8 +128,8 @@
           "type": "tag",
           "settings": {
             "key": "n2",
-            "a": "66",
-            "b": "81",
+            "a": "62.5",
+            "b": "71",
             "eyebrow": "03",
             "text": "Product organisation",
             "link": ""
@@ -139,8 +139,8 @@
           "type": "tag",
           "settings": {
             "key": "n3",
-            "a": "68.5",
-            "b": "81",
+            "a": "67.5",
+            "b": "75.5",
             "eyebrow": "04",
             "text": "Mobile-ready layouts",
             "link": ""
@@ -150,8 +150,8 @@
           "type": "tag",
           "settings": {
             "key": "n4",
-            "a": "71",
-            "b": "81",
+            "a": "72",
+            "b": "80.5",
             "eyebrow": "05",
             "text": "Technical foundations",
             "link": ""
@@ -161,8 +161,8 @@
           "type": "tag",
           "settings": {
             "key": "n5",
-            "a": "73.5",
-            "b": "81",
+            "a": "77",
+            "b": "83.5",
             "eyebrow": "06",
             "text": "Checkout & payments setup",
             "link": ""
