@@ -44,7 +44,7 @@ function boot() {
   const base = canvas.dataset.filmBase || '';
   let portrait = innerWidth / innerHeight < 0.9;
   const pad = (i, n) => String(i).padStart(n > 99 ? 3 : 2, '0');
-  const url = (r, i) => `${base}${r.film.stem}${portrait ? 'm-' : ''}${pad(i, r.film.n)}.webp`;
+  const url = (r, i) => `${base}${r.film.stem}${portrait ? 'm-' : ''}${pad(i, r.film.n)}.webp?v=f2`;   // v: bust CDN copies of the previous film
 
   // ----- progressive loading: every 16th frame, then 8th, 4th, 2nd, all
   function order(n) {
