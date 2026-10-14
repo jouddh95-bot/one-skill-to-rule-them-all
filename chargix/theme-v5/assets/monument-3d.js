@@ -8,7 +8,7 @@
 // points, the rail and the threshold flash are synced to the same progress.
 // Reduced motion holds one rendered still per chapter (CSS). Without WebGL
 // the previous frame film (film-core.js) takes over.
-import * as THREE from 'three';
+import * as THREE from './three.module.min.js';
 
 const doc = document.documentElement;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -579,7 +579,7 @@ function boot() {
   const paths = { hall: makePath(HALL), light: makePath(LIGHT) };
 
   // ---- sizing and adaptive resolution
-  let vw = 0, vh = 0, maxDpr = Math.min(devicePixelRatio || 1, lowGPU ? 1.5 : 1.75), dpr = Math.min(maxDpr, lowGPU ? 1.25 : 1.5);
+  let vw = 0, vh = 0, maxDpr = Math.min(devicePixelRatio || 1, lowGPU ? 1.75 : 2), dpr = Math.min(maxDpr, lowGPU ? 1.5 : 2);
   function resize() {
     vw = innerWidth; vh = canvas.clientHeight || innerHeight;
     renderer.setPixelRatio(dpr); renderer.setSize(vw, vh, false);

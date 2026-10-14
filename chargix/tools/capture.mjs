@@ -23,6 +23,10 @@ for (const v of views) {
   page.on('response', r => { if (r.status() >= 400) errors.push(`[${v.name}] http ${r.status()}: ${r.url()}`); });
   await page.goto(url, { waitUntil: 'networkidle', timeout: 90000 });
   await page.waitForTimeout(4000);
+  if (v.name === 'desk') { // keep a copy of theme modules that are not mirrored in the repo
+    fs.mkdirSync(`${out}/../src`, { recursive: true });
+    for (const k of ['modWatch', 'modShop']) { const src = await page.evaluate(k => { const u = document.querySelector('[data-dm]')?.dataset[k]; return u ? fetch(u).then(r => r.text()) : ''; }, k).catch(() => ''); if (src) fs.writeFileSync(`${out}/../src/${k}.js`, src); }
+  }
   const shotAt = async (sel, p, tag) => {
     const y = await page.evaluate(([sel, p]) => {
       const el = document.querySelector(sel); if (!el) return null;

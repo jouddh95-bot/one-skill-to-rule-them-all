@@ -3,6 +3,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    {%- comment -%}
+      Import map first in <head>, before any script, so no module load can race it. "three" points at
+      the same un-versioned URL that the 3D modules also import relatively ('./three.module.min.js'),
+      so both paths resolve to a single copy of the library.
+    {%- endcomment -%}
+    {%- assign cx_asset_base = 'three.module.min.js' | asset_url | split: 'three.module.min.js' | first -%}
+    <script type="importmap">{ "imports": {
+      "three": "{{ cx_asset_base }}three.module.min.js",
+      "three/addons/": "{{ cx_asset_base }}"
+    } }</script>
     <meta name="theme-color" content="#0a0a0b">
     <meta name="color-scheme" content="dark">
     <link rel="canonical" href="{{ canonical_url }}">
@@ -64,16 +74,6 @@
       // If the monument never reports ready (window.__cxReady is set by monument-3d.js / film-core.js), show everything anyway.
       setTimeout(function () { if (!window.__cxReady) document.documentElement.classList.add('cx-failsafe'); }, 6000);
     </script>
-    {%- comment -%}
-      Import map for the real-time 3D (monument-3d.js on the opening, demos-pavilion.js in Room 02).
-      "three/addons/" maps to the flat assets folder. film-core.js (pre-rendered frames) stays as the
-      fallback that monument-3d.js loads when WebGL is unavailable.
-    {%- endcomment -%}
-    {%- assign cx_asset_base = 'three.module.min.js' | asset_url | split: 'three.module.min.js' | first -%}
-    <script type="importmap">{ "imports": {
-      "three": "{{ 'three.module.min.js' | asset_url }}",
-      "three/addons/": "{{ cx_asset_base }}"
-    } }</script>
     <script src="{{ 'gsap.min.js' | asset_url }}" defer></script>
     <script src="{{ 'gsap-scrolltrigger.min.js' | asset_url }}" defer></script>
     <script src="{{ 'studio.js' | asset_url }}" defer></script>

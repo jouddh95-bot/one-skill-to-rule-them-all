@@ -6,8 +6,9 @@
 // click); clicking a vitrine lifts its glass and picks that colourway for the
 // product viewer further down; dragging looks around. The floor is a real
 // planar reflection. Exposes init({ root, onColourway }) → { setColourway }.
-import * as THREE from 'three';
+import * as THREE from './three.module.min.js';
 import { RGBELoader, EffectComposer, RenderPass, GTAOPass, OutputPass } from './cx-gl-addons.js';
+import { buildWatch } from './solenne-watch.js';
 
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const smooth = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
@@ -120,7 +121,10 @@ function walnut() {
 }
 
 // ------------------------------------------------------------------ the watch (simplified, for the vitrines and the salon)
-function watch(k) {
+// the detailed Solenne model (solenne-watch.js); the crystal is a light transparent dome here so the pavilion renders in one pass
+let _r = null;
+function watch(k) { const W = buildWatch({ cw: k, renderer: _r, hq: false }); W.group.userData = { sh: W.hands.sh }; return W.group; }
+function watchOld(k) {
   const d = CW[k], g = new THREE.Group();
   const metal = new THREE.MeshPhysicalMaterial({ color: d.metal, metalness: 1, roughness: d.rough, clearcoat: 0.3 });
   const polish = new THREE.MeshPhysicalMaterial({ color: d.metal, metalness: 1, roughness: 0.08 });
@@ -190,6 +194,7 @@ function reflector(renderer, scene, mesh, scale = 0.5) {
 
 // ------------------------------------------------------------------ the pavilion
 function build(renderer, low) {
+  _r = renderer;
   const scene = new THREE.Scene();
   { const c = cv(16, 256), g = c.getContext('2d'), gr = g.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, '#5f7fa6'); gr.addColorStop(0.6, '#c9b9a6'); gr.addColorStop(1, '#e9d2b0'); g.fillStyle = gr; g.fillRect(0, 0, 16, 256); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; scene.background = t; }
   scene.fog = new THREE.FogExp2(0xd9cbb7, 0.006);
@@ -247,7 +252,7 @@ function build(renderer, low) {
     const ring = new THREE.Mesh(new THREE.BoxGeometry(1.0, 0.012, 1.0), glow); ring.position.y = 1.095; grp.add(ring);
     const glass = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.95, 0.95), new THREE.MeshPhysicalMaterial({ color: 0xdfe8ff, roughness: 0.02, transparent: true, opacity: 0.12, envMapIntensity: 3, depthWrite: false, side: THREE.DoubleSide }));
     glass.position.y = 1.58; grp.add(glass);
-    const w = watch(k); w.scale.setScalar(0.27); w.position.y = 1.58; grp.add(w);
+    const w = watch(k); w.scale.setScalar(0.15); w.position.y = 1.58; grp.add(w);
     const spot = new THREE.SpotLight(0xffe2bb, 0, 7, 0.28, 0.6, 1.2); spot.position.set(0, 5.5, 0.6); spot.target = w; grp.add(spot);
     pl.userData.vitrine = grp; glass.userData.vitrine = grp;
     grp.userData = { k, glass, w, spot, open: 0, target: 0, hover: 0 };
@@ -269,7 +274,7 @@ function build(renderer, low) {
   const ring2 = new THREE.Mesh(new THREE.TorusGeometry(3.25, 0.03, 8, 160), brass); bigRing.add(ring2);
   const heroPl = new THREE.Mesh(new THREE.CylinderGeometry(1.3, 1.45, 1.0, 64), lacq); heroPl.position.set(SC.x, 0.5, SC.z); heroPl.castShadow = heroPl.receiveShadow = true; scene.add(heroPl);
   const heroRim = new THREE.Mesh(new THREE.TorusGeometry(1.31, 0.025, 8, 96), glow); heroRim.rotation.x = Math.PI / 2; heroRim.position.set(SC.x, 1.0, SC.z); scene.add(heroRim);
-  let hero = watch('steel'); hero.scale.setScalar(0.62); hero.position.set(SC.x, 2.25, SC.z); scene.add(hero);
+  let hero = watch('steel'); hero.scale.setScalar(0.5); hero.position.set(SC.x, 2.7, SC.z); scene.add(hero);
 
   // light: moonlit outside, warm inside; a shadowed key in the salon
   const pm = new THREE.PMREMGenerator(renderer), es = new THREE.Scene();
@@ -309,7 +314,7 @@ export async function init({ root, onColourway = () => {}, isTouch = false, asse
   let composer = null;
   if (!low) { composer = new EffectComposer(renderer); composer.addPass(new RenderPass(S.scene, camera)); const ao = new GTAOPass(S.scene, camera, 2, 2); ao.updateGtaoMaterial({ radius: 0.9, distanceExponent: 1.4, thickness: 1.5, scale: 1.0, samples: 12 }); ao.blendIntensity = 0.8; composer.addPass(ao); composer.addPass(new OutputPass()); }
   const path = makePath(KEYS);
-  let W = 1, H = 1, dpr = Math.min(devicePixelRatio || 1, low ? 1.4 : 1.6);
+  let W = 1, H = 1, dpr = Math.min(devicePixelRatio || 1, low ? 1.5 : 2);
   const resize = () => { W = stage.clientWidth || innerWidth; H = stage.clientHeight || innerHeight; renderer.setPixelRatio(dpr); renderer.setSize(W, H, false); composer?.setPixelRatio(dpr); composer?.setSize(W, H); camera.aspect = W / H; camera.fov = W / H < 0.9 ? 62 : 46; camera.updateProjectionMatrix(); };
   new ResizeObserver(resize).observe(stage); resize();
 
@@ -327,7 +332,7 @@ export async function init({ root, onColourway = () => {}, isTouch = false, asse
   };
   function choose(grp) {
     S.vitrines.forEach(v => { v.userData.target = v === grp ? 1 : 0; });
-    if (current !== grp.userData.k) { current = grp.userData.k; const h = watch(current); h.scale.setScalar(0.62); h.position.copy(S.heroRef.get().position); h.rotation.copy(S.heroRef.get().rotation); S.heroRef.set(h); onColourway(current); }
+    if (current !== grp.userData.k) { current = grp.userData.k; const h = watch(current); h.scale.setScalar(0.5); h.position.copy(S.heroRef.get().position); h.rotation.copy(S.heroRef.get().rotation); S.heroRef.set(h); onColourway(current); }
     kick();
   }
   canvas.addEventListener('pointerdown', e => { look.drag = true; look.sx = e.clientX; look.sy = e.clientY; look.bx = look.tx; look.by = look.ty; look.moved = false; });

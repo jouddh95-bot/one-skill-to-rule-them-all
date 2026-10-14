@@ -5,7 +5,7 @@
 // Scroll walks the camera through; clicking a vessel lifts it and opens its card, whose
 // button goes to the same product in the storefront below; fabric chips re-cover the sofa
 // and chairs through KHR_materials_variants. Exposes init({ root, isTouch, assets }).
-import * as THREE from 'three';
+import * as THREE from './three.module.min.js';
 import { GLTFLoader, RGBELoader, RoundedBoxGeometry, EffectComposer, RenderPass, GTAOPass, OutputPass } from './cx-gl-addons.js';
 
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
@@ -253,7 +253,7 @@ export async function init({ root, isTouch = false, assets = {} }) {
   const refl = reflector(renderer, S.scene, S.floor, low ? 0.3 : 0.5); refl.uniforms.uRefl.value = 0.1;
   const camera = new THREE.PerspectiveCamera(50, 1, 0.05, 200);
   const path = makePath(KEYS);
-  let W = 1, H = 1, dpr = Math.min(devicePixelRatio || 1, low ? 1.4 : 1.6);
+  let W = 1, H = 1, dpr = Math.min(devicePixelRatio || 1, low ? 1.5 : 2);
   // ambient occlusion (desktop only): grounds the furniture and the wall/floor junctions
   let composer = null, gtao = null;
   if (!low) { composer = new EffectComposer(renderer); composer.addPass(new RenderPass(S.scene, camera)); gtao = new GTAOPass(S.scene, camera, 2, 2); gtao.updateGtaoMaterial({ radius: 0.6, distanceExponent: 1.4, thickness: 1.2, scale: 1.0, samples: 12 }); gtao.blendIntensity = 0.85; composer.addPass(gtao); composer.addPass(new OutputPass()); }
