@@ -337,6 +337,7 @@ function boot(root) {
       if (beat !== lastBeat) { lastBeat = beat; sl.dataset.beat = beat; nEl.textContent = '0' + (beat + 1); }
       bar.style.transform = `scaleX(${p.toFixed(4)})`;
       if (mode === 'gl') { api.setProgress(p); setHot(Math.abs(p - .5) < .09); }
+      else if (mode === 'film') api.setProgress(p);
     }
     onScroll.add(update); onResize.add(update); update();
 
@@ -360,7 +361,16 @@ function boot(root) {
     function hasGL() { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } }
 
     const start = async () => {
-      if (RM() || !hasGL()) { useStill(); return; }
+      if (RM()) { useStill(); return; }
+      if (root.dataset.slFilm) {
+        try {
+          const mod = await import(root.dataset.slFilm);
+          api = mod.init({ canvas, stage, base: root.dataset.slFilmBase, n: +root.dataset.slFilmN || 180, cws: (root.dataset.slFilmCws || 'steel').split(','), state });
+          mode = 'film'; sl.classList.add('sl--gl', 'sl--film'); api.setActive(active); update();
+          return;
+        } catch (err) { console.warn('[demos] film unavailable', err); }
+      }
+      if (!hasGL()) { useStill(); return; }
       try {
         const mod = await import(root.dataset.modWatch);
         api = await mod.init({ canvas, stage, isTouch, state, onFrame: placeHot, onDrag: () => dragHint.classList.add('is-used') });
@@ -373,7 +383,7 @@ function boot(root) {
     new IntersectionObserver(([en]) => {
       active = en.isIntersecting;
       if (en.isIntersecting && !started) { started = true; start(); }
-      api?.setActive(active && mode === 'gl');
+      api?.setActive(active && (mode === 'gl' || mode === 'film'));
     }, { rootMargin: '600px 0px' }).observe(track);
   }
 
