@@ -1,0 +1,78 @@
+[desk] http 502: https://chargix.store/cdn/shop/t/29/assets/cx.js?v=156136612902109742131792034637
+[desk] console: Failed to load resource: the server responded with a status of 502 ()
+[desk] console: Refused to execute script from 'https://chargix.store/cdn/shop/t/29/assets/cx.js?v=156136612902109742131792034637' because its MIME type ('') is not executable, and strict MIME type checking is enable
+[desk] sections: shopify-section-template--27925067792437__film, shopify-section-template--27925067792437__studio, shopify-section-template--27925067792437__packages, shopify-section-template--27925067792437__compare, shopify-section-template--27925067792437__process, shopify-section-template--27925067792437__care, shopify-section-template--27925067792437__faq, shopify-section-template--27925067792437__closing
+[desk] film 0: caption "A small idea"
+[desk] film 0.03: caption "A small idea"
+[desk] film 0.06: caption "A small idea"
+[desk] film 0.1: caption "A small idea"
+[desk] film 0.2: caption "Finding CHARGIX"
+[desk] film 0.3: caption "The kitchen becomes a bakery"
+[desk] film 0.45: caption "First batch"
+[desk] film 0.55: caption "First batch"
+[desk] film 0.66: caption "CHARGIX builds, she bakes"
+[desk] film 0.75: caption "CHARGIX builds, she bakes"
+[desk] film 0.81: caption "The store goes live"
+[desk] film 0.88: caption "Demo orders, packed by hand"
+[desk] film 0.97: caption "The next morning"
+[desk] package buttons: ["$0","$0","$0"]
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': Unrecognized type: "prefetchCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': Unrecognized type: "prerenderCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': No recognized types specified.
+[desk] console: An import map is added after module script load was triggered.
+[desk] http 401: https://chargix.store/private_access_tokens?id=0ee8c487b203ea8f8cea72639b8a3507&checkout_type=c1
+[desk] console: Failed to load resource: the server responded with a status of 401 ()
+[desk] console: [Report Only] Refused to frame 'https://pay.google.com/' because an ancestor violates the following Content Security Policy directive: "frame-ancestors 'self'".
+
+[desk] console: [Report Only] Refused to frame 'https://pay.google.com/' because an ancestor violates the following Content Security Policy directive: "frame-ancestors 'self'".
+
+[desk] http 403: https://shop.app/accounts/login/embedded?analytics_context=loginWithShopCheckoutModal&analytics_trace_id=158e773c-80f7-4894-bc65-6156a1e25ee6&auth_state=mkJcXKK
+[desk] console: Failed to load resource: the server responded with a status of 403 ()
+[desk] after Buy now: https://chargix.store/checkouts/cn/hWNHzEWX61xD9vEtl8lbwW5o/en-us
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/clear?preview_theme_id=188990849077': Unrecognized type: "prefetchCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/clear?preview_theme_id=188990849077': Unrecognized type: "prerenderCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/clear?preview_theme_id=188990849077': No recognized types specified.
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/clear': Unrecognized type: "prefetchCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/clear': Unrecognized type: "prerenderCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/clear': No recognized types specified.
+[desk] http 404: https://chargix.store/nope-404
+[desk] console: Failed to load resource: the server responded with a status of 404 ()
+[desk] eta: Wed, Oct 21 – Tue, Oct 27
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': Unrecognized type: "prefetchCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': Unrecognized type: "prerenderCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': No recognized types specified.
+[desk] cart lines: 1
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/clear?preview_theme_id=188990849077': Unrecognized type: "prefetchCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/clear?preview_theme_id=188990849077': Unrecognized type: "prerenderCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/clear?preview_theme_id=188990849077': No recognized types specified.
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/clear': Unrecognized type: "prefetchCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/clear': Unrecognized type: "prerenderCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/clear': No recognized types specified.
+[mob] sections: shopify-section-template--27925067792437__film, shopify-section-template--27925067792437__studio, shopify-section-template--27925067792437__packages, shopify-section-template--27925067792437__compare, shopify-section-template--27925067792437__process, shopify-section-template--27925067792437__care, shopify-section-template--27925067792437__faq, shopify-section-template--27925067792437__closing
+[mob] film 0: caption "A small idea"
+[mob] film 0.03: caption "A small idea"
+[mob] film 0.06: caption "A small idea"
+[mob] film 0.1: caption "A small idea"
+[mob] film 0.2: caption "Finding CHARGIX"
+[mob] film 0.3: caption "The kitchen becomes a bakery"
+[mob] film 0.45: caption "First batch"
+[mob] film 0.55: caption "First batch"
+[mob] film 0.66: caption "CHARGIX builds, she bakes"
+[mob] film 0.75: caption "CHARGIX builds, she bakes"
+[mob] film 0.81: caption "The store goes live"
+[mob] film 0.88: caption "Demo orders, packed by hand"
+[mob] film 0.97: caption "The next morning"
+[mob] package buttons: ["$0","$0","$0"]
+[mob] http 404: https://chargix.store/nope-404
+[mob] console: Failed to load resource: the server responded with a status of 404 ()
+[mob] eta: Wed, Oct 21 – Tue, Oct 27
+[mob] console: Clear-Site-Data header on 'https://chargix.store/cart/add': Unrecognized type: "prefetchCache".
+[mob] console: Clear-Site-Data header on 'https://chargix.store/cart/add': Unrecognized type: "prerenderCache".
+[mob] console: Clear-Site-Data header on 'https://chargix.store/cart/add': No recognized types specified.
+[mob] cart lines: 1
+[mob] console: Clear-Site-Data header on 'https://chargix.store/cart/clear?preview_theme_id=188990849077': Unrecognized type: "prefetchCache".
+[mob] console: Clear-Site-Data header on 'https://chargix.store/cart/clear?preview_theme_id=188990849077': Unrecognized type: "prerenderCache".
+[mob] console: Clear-Site-Data header on 'https://chargix.store/cart/clear?preview_theme_id=188990849077': No recognized types specified.
+[mob] console: Clear-Site-Data header on 'https://chargix.store/cart/clear': Unrecognized type: "prefetchCache".
+[mob] console: Clear-Site-Data header on 'https://chargix.store/cart/clear': Unrecognized type: "prerenderCache".
+[mob] console: Clear-Site-Data header on 'https://chargix.store/cart/clear': No recognized types specified.
