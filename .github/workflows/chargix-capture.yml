@@ -30,7 +30,7 @@ jobs:
         run: |
           cd chargix/tools && npm init -y >/dev/null && npm i playwright@1.48.2 >/dev/null && npx playwright install --with-deps chromium >/dev/null
           J=../jobs/capture.json
-          node capture.mjs ../out/$(jq -r .label $J)/shots $(jq -r .theme $J) $(jq -r .label $J)
+          node $(jq -r '.script // "capture.mjs"' $J) ../out/$(jq -r .label $J)/shots $(jq -r .theme $J) $(jq -r .label $J)
       - name: Commit
         if: always()
         run: |
