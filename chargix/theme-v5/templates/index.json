@@ -846,10 +846,283 @@
         "ch2_button": "3D Experience details",
         "ch3_button": "Business Launch details"
       }
+    },
+    "diorama": {
+      "type": "cx-diorama",
+      "blocks": {
+        "co0": {
+          "type": "caption",
+          "settings": {
+            "story": "cookie",
+            "a": "0",
+            "b": "6.5",
+            "time": "7:12 AM",
+            "heading": "An idea over coffee",
+            "text": "He bakes the best cookies anyone in the building has tasted. What if strangers could order them?",
+            "packages": false
+          }
+        },
+        "co1": {
+          "type": "caption",
+          "settings": {
+            "story": "cookie",
+            "a": "7.1",
+            "b": "17.6",
+            "time": "9:00 AM",
+            "heading": "Looking for a way to sell",
+            "text": "A search for how to open an online shop leads him to CHARGIX.",
+            "packages": false
+          }
+        },
+        "co2": {
+          "type": "caption",
+          "settings": {
+            "story": "cookie",
+            "a": "18.2",
+            "b": "28.7",
+            "time": "10:48 AM",
+            "heading": "Choosing a package",
+            "text": "He picks Business Launch, so the website, the 3D and the whole launch are handled together.",
+            "packages": true
+          }
+        },
+        "co3": {
+          "type": "caption",
+          "settings": {
+            "story": "cookie",
+            "a": "29.3",
+            "b": "39.8",
+            "time": "1:12 PM",
+            "heading": "Baking day",
+            "text": "Flour, butter and one big bowl. The first batch for paying customers.",
+            "packages": false
+          }
+        },
+        "co4": {
+          "type": "caption",
+          "settings": {
+            "story": "cookie",
+            "a": "40.4",
+            "b": "50.9",
+            "time": "4:12 PM",
+            "heading": "Out of the oven",
+            "text": "Trays cooling on the counter, kraft boxes waiting to be filled.",
+            "packages": false
+          }
+        },
+        "co5": {
+          "type": "caption",
+          "settings": {
+            "story": "cookie",
+            "a": "51.6",
+            "b": "62.1",
+            "time": "6:36 PM",
+            "heading": "A brand takes shape",
+            "text": "Sweet & Co. gets a logo, labels and packaging, designed alongside the website.",
+            "packages": false
+          }
+        },
+        "co6": {
+          "type": "caption",
+          "settings": {
+            "story": "cookie",
+            "a": "62.7",
+            "b": "73.2",
+            "time": "7:48 PM",
+            "heading": "The store opens",
+            "text": "The Sweet & Co. store goes live, with a 3D scene customers can explore.",
+            "packages": false
+          }
+        },
+        "co7": {
+          "type": "caption",
+          "settings": {
+            "story": "cookie",
+            "a": "73.8",
+            "b": "84.3",
+            "time": "9:12 PM",
+            "heading": "First orders",
+            "text": "Orders come in and boxes go out. These orders are demo data, for illustration.",
+            "packages": false
+          }
+        },
+        "co8": {
+          "type": "caption",
+          "settings": {
+            "story": "cookie",
+            "a": "84.9",
+            "b": "95.4",
+            "time": "11:00 PM",
+            "heading": "Looking back at day one",
+            "text": "A sample sales view for the first day. Demo data, not a promise of results.",
+            "packages": false
+          }
+        },
+        "co9": {
+          "type": "caption",
+          "settings": {
+            "story": "cookie",
+            "a": "92",
+            "b": "101",
+            "time": "11:54 PM",
+            "heading": "Your turn",
+            "text": "Every business on this site started as an idea in a small room.",
+            "packages": false,
+            "label": "Start your project",
+            "link": "#packages"
+          }
+        },
+        "cl0": {
+          "type": "caption",
+          "settings": {
+            "story": "clothing",
+            "a": "0",
+            "b": "6.5",
+            "time": "7:12 AM",
+            "heading": "An idea in a sketchbook",
+            "text": "A tee design he keeps drawing. What if it became a label people could buy?",
+            "packages": false
+          }
+        },
+        "cl1": {
+          "type": "caption",
+          "settings": {
+            "story": "clothing",
+            "a": "7.1",
+            "b": "17.6",
+            "time": "9:00 AM",
+            "heading": "Looking for a way to sell",
+            "text": "A search for how to launch a clothing brand online leads him to CHARGIX.",
+            "packages": false
+          }
+        },
+        "cl2": {
+          "type": "caption",
+          "settings": {
+            "story": "clothing",
+            "a": "18.2",
+            "b": "28.7",
+            "time": "10:48 AM",
+            "heading": "Choosing a package",
+            "text": "He picks Business Launch, so the website, the 3D and the whole launch are handled together.",
+            "packages": true
+          }
+        },
+        "cl3": {
+          "type": "caption",
+          "settings": {
+            "story": "clothing",
+            "a": "29.3",
+            "b": "39.8",
+            "time": "1:12 PM",
+            "heading": "The first print run",
+            "text": "A heat press on the table and a rail of blank tees by the wall.",
+            "packages": false
+          }
+        },
+        "cl4": {
+          "type": "caption",
+          "settings": {
+            "story": "clothing",
+            "a": "40.4",
+            "b": "50.9",
+            "time": "4:12 PM",
+            "heading": "Folded and stacked",
+            "text": "Printed tees folded on the table, ready for their mailers.",
+            "packages": false
+          }
+        },
+        "cl5": {
+          "type": "caption",
+          "settings": {
+            "story": "clothing",
+            "a": "51.6",
+            "b": "62.1",
+            "time": "6:36 PM",
+            "heading": "NOVA gets its look",
+            "text": "A logo, tags and mailers, designed alongside the website.",
+            "packages": false
+          }
+        },
+        "cl6": {
+          "type": "caption",
+          "settings": {
+            "story": "clothing",
+            "a": "62.7",
+            "b": "73.2",
+            "time": "7:48 PM",
+            "heading": "The store opens",
+            "text": "The NOVA store goes live, with a 3D scene customers can explore.",
+            "packages": false
+          }
+        },
+        "cl7": {
+          "type": "caption",
+          "settings": {
+            "story": "clothing",
+            "a": "73.8",
+            "b": "84.3",
+            "time": "9:12 PM",
+            "heading": "First orders",
+            "text": "Orders come in and mailers go out. These orders are demo data, for illustration.",
+            "packages": false
+          }
+        },
+        "cl8": {
+          "type": "caption",
+          "settings": {
+            "story": "clothing",
+            "a": "84.9",
+            "b": "95.4",
+            "time": "11:00 PM",
+            "heading": "Looking back at day one",
+            "text": "A sample sales view for the first day. Demo data, not a promise of results.",
+            "packages": false
+          }
+        },
+        "cl9": {
+          "type": "caption",
+          "settings": {
+            "story": "clothing",
+            "a": "92",
+            "b": "101",
+            "time": "11:54 PM",
+            "heading": "Your turn",
+            "text": "Every business on this site started as an idea in a small room.",
+            "packages": false,
+            "label": "Start your project",
+            "link": "#packages"
+          }
+        }
+      },
+      "block_order": [
+        "co0",
+        "co1",
+        "co2",
+        "co3",
+        "co4",
+        "co5",
+        "co6",
+        "co7",
+        "co8",
+        "co9",
+        "cl0",
+        "cl1",
+        "cl2",
+        "cl3",
+        "cl4",
+        "cl5",
+        "cl6",
+        "cl7",
+        "cl8",
+        "cl9"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "story",
+    "diorama",
     "worlds",
     "demos",
     "packages",
