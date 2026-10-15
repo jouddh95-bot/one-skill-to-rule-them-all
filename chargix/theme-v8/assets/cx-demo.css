@@ -1,0 +1,41 @@
+/* Demo storefront: a made-up bakery in its own palette, so it reads as a client's site, not CHARGIX. */
+.dm { --c: #3b2314; --c2: rgba(59, 35, 20, .68); --bg: #fbf5ec; --bg2: #f3e8d8; --acc: #b5532d; background: var(--bg); color: var(--c); font: 400 16px/1.6 var(--f-sans); min-height: 100svh; }
+.dm-bar { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; gap: 6px 18px; justify-content: space-between; align-items: center; padding: 10px var(--gutter); background: #0d0c0f; color: #f2ece2; font-size: 13px; }
+.dm-bar a { display: inline-flex; gap: 6px; align-items: center; color: #d6b07c; text-decoration: none; }
+.dm-bar svg { width: 14px; height: 14px; }
+.dm-hdr { display: flex; align-items: center; gap: 24px; padding: 22px var(--gutter); border-bottom: 1px solid rgba(59, 35, 20, .1); }
+.dm-logo { font: 400 26px/1 var(--f-display); }
+.dm-hdr nav { display: none; gap: 22px; margin: 0 auto; font-size: 14px; color: var(--c2); }
+@media (min-width: 900px) { .dm-hdr nav { display: flex; } }
+.dm-end { margin-left: auto; display: flex; gap: 16px; align-items: center; font-size: 13px; }
+.dm-end svg { width: 20px; height: 20px; }
+.dm-lang { border: 1px solid rgba(59, 35, 20, .25); border-radius: 99px; padding: 4px 10px; }
+.dm-hero { display: grid; gap: 32px; padding: clamp(32px, 6vw, 88px) var(--gutter); align-items: center; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .dm-hero { grid-template-columns: 1fr 1fr; } }
+.dm-k { font: 500 12px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--acc); margin: 0 0 18px; }
+.dm h1 { font: 400 clamp(40px, 6vw, 84px)/1 var(--f-display); margin: 0; letter-spacing: -.01em; }
+.dm h2 { font: 400 clamp(30px, 3.4vw, 46px)/1.05 var(--f-display); margin: 0 0 24px; }
+.dm-hero__copy > p:not(.dm-k) { color: var(--c2); max-width: 46ch; font-size: 18px; }
+.dm-es { font-style: italic; color: var(--acc) !important; font-size: 16px !important; }
+.dm-hero__art { position: relative; aspect-ratio: 1; border-radius: 18px; overflow: hidden; background: var(--bg2); }
+.dm-hero__art img { width: 100%; height: 100%; object-fit: cover; }
+.dm-3d { position: absolute; left: 14px; bottom: 14px; display: inline-flex; gap: 8px; align-items: center; background: rgba(251, 245, 236, .9); border-radius: 99px; padding: 8px 14px; font-size: 13px; pointer-events: none; }
+.dm-3d svg { width: 16px; height: 16px; }
+.dm-btn { display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; border-radius: 99px; background: var(--c); color: var(--bg); font-weight: 500; margin-top: 12px; cursor: default; }
+.dm-btn--sm { min-height: 38px; padding: 0 16px; font-size: 14px; margin-top: 4px; width: fit-content; background: transparent; color: var(--c); border: 1px solid rgba(59, 35, 20, .3); }
+.dm-sec { padding: clamp(48px, 7vw, 104px) var(--gutter); border-top: 1px solid rgba(59, 35, 20, .08); }
+.dm-grid { display: grid; gap: 28px 18px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 900px) { .dm-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.dm-card { display: grid; gap: 6px; }
+.dm-card__img { aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: var(--bg2); }
+.dm-card__img img { width: 100%; height: 100%; object-fit: cover; }
+.dm-card__t { font-weight: 600; } .dm-card__p { color: var(--c2); }
+.dm-split { display: grid; gap: 32px; align-items: center; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .dm-split { grid-template-columns: 1.1fr .9fr; } }
+.dm-split img { border-radius: 14px; width: 100%; }
+.dm-split p { color: var(--c2); max-width: 44ch; }
+.dm-launch { display: grid; gap: 32px; grid-template-columns: 1fr; background: var(--bg2); }
+@media (min-width: 900px) { .dm-launch { grid-template-columns: 1fr 1fr; align-items: center; } }
+.dm-social { display: grid; gap: 6px; font: 400 clamp(26px, 3vw, 40px)/1.1 var(--f-display); }
+.dm-social span + span { font: 400 14px var(--f-sans); color: var(--c2); }
+.dm-ftr { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; padding: 40px var(--gutter); background: var(--c); color: var(--bg); font-size: 13px; }

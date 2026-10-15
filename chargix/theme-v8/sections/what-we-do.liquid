@@ -1,0 +1,46 @@
+<section class="sec tone-paper" id="{{ section.settings.anchor }}" aria-labelledby="{{ section.id }}-h">
+  <div class="wrap">
+    <header class="sec__head sec__head--split plinth" data-reveal>
+      <div>
+        <p class="eyebrow"><span class="idx">{{ section.settings.index }}</span>{{ section.settings.eyebrow }}</p>
+        <h2 class="d-2" id="{{ section.id }}-h">{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.text != blank -%}<p class="lede">{{ section.settings.text }}</p>{%- endif -%}
+    </header>
+    <div class="pillars">
+      {%- for block in section.blocks -%}{%- if block.type != 'pillar' -%}{%- continue -%}{%- endif -%}
+        <div class="pillar" data-reveal {{ block.shopify_attributes }}>
+          <span class="idx">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <h3 class="h-4">{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- for block in section.blocks -%}{%- if block.type != 'serve' -%}{%- continue -%}{%- endif -%}
+      <div class="serve" data-reveal {{ block.shopify_attributes }}>
+        <h3 class="d-3">{{ block.settings.title }}</h3>
+        <ul class="serve__list">
+          {%- assign items = block.settings.items | split: ',' -%}
+          {%- for i in items -%}<li>{{ i | strip }}</li>{%- endfor -%}
+        </ul>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "What we do",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "studio" },
+    { "type": "text", "id": "index", "label": "Index number", "default": "01" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "What CHARGIX does" },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "text", "label": "Text" }
+  ],
+  "blocks": [
+    { "type": "pillar", "name": "Pillar", "settings": [ { "type": "text", "id": "title", "label": "Title" }, { "type": "textarea", "id": "text", "label": "Text" } ] },
+    { "type": "serve", "name": "Who we serve", "limit": 1, "settings": [ { "type": "text", "id": "title", "label": "Title", "default": "Who it is for" }, { "type": "textarea", "id": "items", "label": "Items (comma separated)" } ] }
+  ],
+  "presets": [ { "name": "What we do" } ]
+}
+{% endschema %}

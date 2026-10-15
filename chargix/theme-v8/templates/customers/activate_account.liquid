@@ -1,0 +1,9 @@
+<section class="sec sec--tight tone-paper"><div class="wrap narrow">
+  <header class="sec__head plinth"><h1 class="d-2">{{ 'customer.activate' | t }}</h1></header>
+  {%- form 'activate_customer_password', class: 'form' -%}
+    {%- if form.errors -%}<div class="alert alert--err" role="alert">{{ form.errors | default_errors }}</div>{%- endif -%}
+    <div class="field"><label for="a-pass">{{ 'customer.password' | t }}</label><input class="input" id="a-pass" type="password" name="customer[password]" autocomplete="new-password" required></div>
+    <div class="field"><label for="a-pass2">{{ 'customer.password' | t }}</label><input class="input" id="a-pass2" type="password" name="customer[password_confirmation]" autocomplete="new-password" required></div>
+    <div class="form__end"><button class="btn btn--solid" type="submit">{{ 'customer.activate' | t }}</button><button class="btn" type="submit" name="decline">{{ 'customer.decline' | t }}</button></div>
+  {%- endform -%}
+</div></section>

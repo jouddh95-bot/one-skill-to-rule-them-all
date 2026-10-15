@@ -1,0 +1,55 @@
+{%- comment -%}
+  Delivery estimate for physical products. Variants whose supplier SKU carries the "ships from
+  United States" code (201336106) use the US-warehouse range; the rest use the overseas range.
+  Ranges are business days, editable on the Product section. Dates are worked out in the
+  shopper's browser so cached pages never show stale dates.
+{%- endcomment -%}
+{%- liquid
+  assign us_min = section.settings.eta_us_min | default: 4
+  assign us_max = section.settings.eta_us_max | default: 8
+  assign intl_min = section.settings.eta_intl_min | default: 7
+  assign intl_max = section.settings.eta_intl_max | default: 14
+  assign route = 'intl'
+  if variant.sku contains '201336106'
+    assign route = 'us'
+  endif
+-%}
+<div class="eta" data-eta data-us="{{ us_min }},{{ us_max }}" data-intl="{{ intl_min }},{{ intl_max }}" data-route="{{ route }}" data-holiday="{{ section.settings.eta_holiday_date }}" data-holiday-label="{{ section.settings.eta_holiday_label | escape }}">
+  <div class="eta__head"><span>{% render 'icon', i: 'truck' %} {{ 'products.eta_label' | t }}</span><span class="eta__badge" data-eta-badge hidden></span></div>
+  <p class="eta__range" data-eta-range>{%- if route == 'us' -%}{{ 'products.eta_fallback' | t: min: us_min, max: us_max }}{%- else -%}{{ 'products.eta_fallback' | t: min: intl_min, max: intl_max }}{%- endif -%}</p>
+  <ol class="eta__steps" data-eta-steps hidden>
+    <li><b>{{ 'products.eta_ordered' | t }}</b><span data-eta-step="0"></span></li>
+    <li><b>{{ 'products.eta_shipped' | t }}</b><span data-eta-step="1"></span></li>
+    <li><b>{{ 'products.eta_delivered' | t }}</b><span data-eta-step="2"></span></li>
+  </ol>
+  <p class="eta__note" data-eta-note>{%- if route == 'us' -%}{{ 'products.eta_note_us' | t }}{%- else -%}{{ 'products.eta_note_intl' | t }}{%- endif -%}</p>
+  <script type="application/json" data-eta-variants>{ {%- for x in product.variants -%}"{{ x.id }}": "{% if x.sku contains '201336106' %}us{% else %}intl{% endif %}"{% unless forloop.last %},{% endunless %}{%- endfor -%} }</script>
+  <script type="application/json" data-eta-text>{ "note_us": {{ 'products.eta_note_us' | t | json }}, "note_intl": {{ 'products.eta_note_intl' | t | json }}, "today": {{ 'products.eta_today' | t | json }} }</script>
+</div>
+<script>
+  (function () {
+    var box = document.currentScript.previousElementSibling;
+    if (!box || !box.matches('[data-eta]')) return;
+    var routes = {}, text = {};
+    try { routes = JSON.parse(box.querySelector('[data-eta-variants]').textContent); } catch (e) {}
+    try { text = JSON.parse(box.querySelector('[data-eta-text]').textContent); } catch (e) {}
+    var fmt = new Intl.DateTimeFormat(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+    var short = new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric' });
+    var add = function (from, n) { var d = new Date(from.getFullYear(), from.getMonth(), from.getDate()); while (n > 0) { d.setDate(d.getDate() + 1); var w = d.getDay(); if (w !== 0 && w !== 6) n--; } return d; };
+    var render = function (route) {
+      var r = (box.dataset[route] || box.dataset.intl).split(',').map(Number), today = new Date(), from = add(today, r[0]), to = add(today, r[1]);
+      box.dataset.route = route;
+      box.querySelector('[data-eta-range]').textContent = fmt.format(from) + ' – ' + fmt.format(to);
+      box.querySelector('[data-eta-step="0"]').textContent = text.today || short.format(today);
+      box.querySelector('[data-eta-step="1"]').textContent = short.format(add(today, 1)) + ' – ' + short.format(add(today, 3));
+      box.querySelector('[data-eta-step="2"]').textContent = short.format(from) + ' – ' + short.format(to);
+      box.querySelector('[data-eta-steps]').hidden = false;
+      box.querySelector('[data-eta-note]').textContent = route === 'us' ? text.note_us : text.note_intl;
+      var badge = box.querySelector('[data-eta-badge]'), hd = box.dataset.holiday;
+      if (badge && hd) { var p = hd.split('-').map(Number), h = new Date(p[0], p[1] - 1, p[2]), ok = to <= h && today <= h; badge.hidden = !ok; if (ok) badge.textContent = box.dataset.holidayLabel; }
+    };
+    render(box.dataset.route);
+    var pdp = box.closest('[data-product]');
+    if (pdp) pdp.addEventListener('change', function (e) { if (e.target.matches('[data-option-input]')) render(routes[e.target.value] || 'intl'); });
+  })();
+</script>

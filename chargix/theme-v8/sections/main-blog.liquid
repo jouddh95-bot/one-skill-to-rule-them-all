@@ -1,0 +1,8 @@
+<section class="sec sec--tight tone-paper"><div class="wrap">
+  <header class="sec__head plinth"><h1 class="d-2">{{ blog.title | escape }}</h1></header>
+  {%- paginate blog.articles by 12 -%}
+    <div class="grid">{%- for a in blog.articles -%}<a class="card" href="{{ a.url }}"><div class="card__img">{%- if a.image -%}{{ a.image | image_url: width: 640 | image_tag: loading: 'lazy', alt: a.title }}{%- endif -%}</div><span class="card__t">{{ a.title | escape }}</span><span class="card__p">{{ a.published_at | time_tag: format: 'date' }}</span></a>{%- endfor -%}</div>
+    {%- if paginate.pages > 1 -%}<nav class="pager">{{ paginate | default_pagination }}</nav>{%- endif -%}
+  {%- endpaginate -%}
+</div></section>
+{% schema %}{ "name": "Blog" }{% endschema %}

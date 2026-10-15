@@ -1,0 +1,99 @@
+{%- comment -%}
+  The box film: one open-front miniature room on its plinth, path-traced offline in Blender Cycles
+  (CC0 Poly Haven assets, CC0 MakeHuman figure) into one frame sequence. Scrolling the track scrubs
+  the film; film.js plays it. Chapters are blocks with a scroll window in % (a → b). Without JS, or
+  with reduced motion, the poster still and every chapter show as a readable list.
+{%- endcomment -%}
+{%- liquid
+  assign prefix = section.settings.prefix
+  assign first = prefix | append: '-000.webp'
+  assign base = first | asset_url | split: first | first
+  assign poster_name = prefix | append: '-' | append: section.settings.poster | append: '.webp'
+-%}
+<section class="film" id="{{ section.settings.anchor }}" data-film data-base="{{ base }}" data-prefix="{{ prefix }}" data-frames="{{ section.settings.frames }}" data-intro="{{ section.settings.intro_end }}" aria-label="{{ section.settings.label | escape }}">
+  <div class="film__track" data-film-track style="--len: {{ section.settings.length }}svh">
+    <div class="film__stage">
+      <img class="film__poster" src="{{ poster_name | asset_url }}" alt="{{ section.settings.poster_alt | escape }}" width="1440" height="900" fetchpriority="high">
+      <canvas class="film__canvas" data-film-canvas aria-hidden="true"></canvas>
+      <div class="film__shade" aria-hidden="true"></div>
+
+      <div class="film__intro">
+        <p class="eyebrow"><b>{{ section.settings.eyebrow }}</b></p>
+        <h1 class="d-1">{{ section.settings.heading }}</h1>
+        {%- if section.settings.text != blank -%}<p class="lede">{{ section.settings.text }}</p>{%- endif -%}
+        <span class="film__cue" aria-hidden="true"><i></i>{{ section.settings.cue }}</span>
+      </div>
+
+      <div class="film__clock" aria-hidden="true"><span class="film__time" data-film-time></span><span class="film__day" data-film-day></span></div>
+
+      <nav class="film__rail" aria-label="{{ 'film.chapters' | t }}">
+        {%- assign ch = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.settings.rail != blank -%}
+            <a href="#{{ section.settings.anchor }}" data-rail="{{ block.settings.chapter }}"><i></i><span>{{ block.settings.rail }}</span></a>
+          {%- endif -%}
+        {%- endfor -%}
+      </nav>
+
+      <div class="film__caps">
+        {%- for block in section.blocks -%}
+          <article class="cap" data-cap data-chapter="{{ block.settings.chapter }}" data-a="{{ block.settings.a }}" data-b="{{ block.settings.b }}" data-time="{{ block.settings.time }}" data-day="{{ block.settings.day }}" aria-hidden="true" {{ block.shopify_attributes }}>
+            <span class="cap__n">{{ block.settings.chapter | prepend: '0' | slice: -2, 2 }} · {{ block.settings.time }}</span>
+            <h2 class="cap__h">{{ block.settings.heading }}</h2>
+            {%- if block.settings.text != blank -%}<p class="cap__t">{{ block.settings.text }}</p>{%- endif -%}
+            {%- if block.settings.label != blank or block.settings.label2 != blank -%}
+              <div class="cap__actions">
+                {%- if block.settings.label != blank -%}<a class="btn btn--brass btn--sm" href="{{ block.settings.link }}">{{ block.settings.label }} {% render 'icon', i: 'arrow' %}</a>{%- endif -%}
+                {%- if block.settings.label2 != blank -%}<a class="btn btn--sm" href="{{ block.settings.link2 }}">{{ block.settings.label2 }}</a>{%- endif -%}
+              </div>
+            {%- endif -%}
+            {%- if block.settings.demo -%}<p class="cap__demo">{{ 'film.demo' | t }}</p>{%- endif -%}
+          </article>
+        {%- endfor -%}
+      </div>
+
+      <p class="film__note">{{ section.settings.note }}</p>
+      <span class="film__bar" aria-hidden="true"><i data-film-bar></i></span>
+    </div>
+  </div>
+</section>
+<script type="module" src="{{ 'film.js' | asset_url }}"></script>
+
+{% schema %}
+{
+  "name": "Box film",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "work" },
+    { "type": "text", "id": "label", "label": "Accessible name", "default": "The CHARGIX story, a scroll film inside one miniature room" },
+    { "type": "text", "id": "prefix", "label": "Frame file prefix", "default": "story" },
+    { "type": "number", "id": "frames", "label": "Frame count", "default": 300 },
+    { "type": "text", "id": "poster", "label": "Poster frame number (3 digits)", "default": "000" },
+    { "type": "text", "id": "poster_alt", "label": "Poster description", "default": "A miniature studio apartment on a dark plinth, morning light through the window." },
+    { "type": "range", "id": "length", "label": "Scroll length (screens × 100)", "min": 400, "max": 2400, "step": 100, "unit": "vh", "default": 1400 },
+    { "type": "range", "id": "intro_end", "label": "Opening title leaves at (%)", "min": 1, "max": 15, "step": 1, "unit": "%", "default": 4 },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "CHARGIX · websites & 3D" },
+    { "type": "text", "id": "heading", "label": "Heading (<em> allowed)", "default": "Every business starts <em>in a small room.</em>" },
+    { "type": "textarea", "id": "text", "label": "Text" },
+    { "type": "text", "id": "cue", "label": "Scroll cue", "default": "Scroll to watch" },
+    { "type": "text", "id": "note", "label": "Small print", "default": "Illustrative story. Brands, orders and figures shown are demo data." }
+  ],
+  "blocks": [
+    { "type": "chapter", "name": "Chapter caption", "settings": [
+      { "type": "number", "id": "chapter", "label": "Chapter number", "default": 1 },
+      { "type": "text", "id": "rail", "label": "Chapter name in the side rail (leave empty for sub-captions)" },
+      { "type": "text", "id": "a", "label": "Appears at (%)", "default": "0" },
+      { "type": "text", "id": "b", "label": "Leaves at (%)", "default": "10" },
+      { "type": "text", "id": "time", "label": "Scene time", "default": "7:10 AM" },
+      { "type": "text", "id": "day", "label": "Day label", "default": "Day one" },
+      { "type": "text", "id": "heading", "label": "Heading" },
+      { "type": "textarea", "id": "text", "label": "Text" },
+      { "type": "text", "id": "label", "label": "Button" },
+      { "type": "text", "id": "link", "label": "Button link" },
+      { "type": "text", "id": "label2", "label": "Second button" },
+      { "type": "text", "id": "link2", "label": "Second button link" },
+      { "type": "checkbox", "id": "demo", "label": "Shows demo data", "default": false }
+    ] }
+  ],
+  "presets": [ { "name": "Box film" } ]
+}
+{% endschema %}

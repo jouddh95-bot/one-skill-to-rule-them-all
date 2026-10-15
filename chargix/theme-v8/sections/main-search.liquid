@@ -1,0 +1,24 @@
+<section class="sec sec--tight tone-paper" aria-labelledby="s-h">
+  <div class="wrap">
+    <header class="sec__head plinth"><h1 class="d-2" id="s-h">{{ 'general.search' | t }}</h1></header>
+    <form action="{{ routes.search_url }}" method="get" role="search" style="display:flex;gap:12px;margin-bottom:var(--s-7)">
+      <label class="vh" for="q">{{ 'general.search' | t }}</label>
+      <input class="input" id="q" type="search" name="q" value="{{ search.terms | escape }}">
+      <input type="hidden" name="options[prefix]" value="last">
+      <button class="btn btn--solid" type="submit">{{ 'general.search' | t }}</button>
+    </form>
+    {%- if search.performed -%}
+      {%- paginate search.results by 24 -%}
+        <p class="small" style="color:var(--text-3)">{{ 'general.results' | t: count: search.results_count, terms: search.terms }}</p>
+        <div class="grid">
+          {%- for r in search.results -%}
+            {%- if r.object_type == 'product' -%}{% render 'card', p: r %}
+            {%- else -%}<a class="card" href="{{ r.url }}"><span class="card__t">{{ r.title | escape }}</span><span class="card__p">{{ r.content | strip_html | truncate: 90 }}</span></a>{%- endif -%}
+          {%- endfor -%}
+        </div>
+        {%- if paginate.pages > 1 -%}<nav class="pager">{{ paginate | default_pagination }}</nav>{%- endif -%}
+      {%- endpaginate -%}
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}{ "name": "Search" }{% endschema %}

@@ -1,0 +1,46 @@
+{%- assign brand = settings.brand_name | default: 'CHARGIX' -%}
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__grid">
+      <div class="ftr__brand">
+        <a class="hdr__logo" href="{{ routes.root_url }}">{% render 'logo' %}<span>{{ brand }}</span></a>
+        <p>{{ section.settings.text }}</p>
+        {%- if settings.contact_email != blank -%}<p><a href="mailto:{{ settings.contact_email }}">{{ settings.contact_email }}</a></p>{%- endif -%}
+      </div>
+      {%- for i in (1..3) -%}
+        {%- assign key = 'menu_' | append: i -%}{%- assign tkey = 'title_' | append: i -%}
+        {%- assign m = linklists[section.settings[key]] -%}
+        {%- if m.links.size > 0 -%}
+          <nav aria-label="{{ section.settings[tkey] | escape }}"><h2>{{ section.settings[tkey] }}</h2><ul>{%- for l in m.links -%}<li><a href="{{ l.url }}">{{ l.title | escape }}</a></li>{%- endfor -%}</ul></nav>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <div class="ftr__base">
+      <span>© {{ 'now' | date: '%Y' }} {{ brand }}. {{ section.settings.legal }}</span>
+      {%- if localization.available_languages.size > 1 -%}
+        {%- form 'localization', class: 'ftr__loc' -%}
+          <label class="vh" for="FtrLang">{{ 'general.language' | t }}</label>
+          <select id="FtrLang" name="locale_code" onchange="this.form.submit()">
+            {%- for l in localization.available_languages -%}<option value="{{ l.iso_code }}"{% if l.iso_code == localization.language.iso_code %} selected{% endif %}>{{ l.endonym_name | capitalize }}</option>{%- endfor -%}
+          </select>
+        {%- endform -%}
+      {%- endif -%}
+      <div class="ftr__pay" aria-label="{{ 'general.payments' | t }}">{%- for t in shop.enabled_payment_types -%}{{ t | payment_type_svg_tag }}{%- endfor -%}</div>
+    </div>
+  </div>
+</footer>
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Websites, 3D experiences and full store launches for new brands in the US and Mexico. Fixed prices, in English or Spanish." },
+    { "type": "text", "id": "legal", "label": "Legal line", "default": "Prices in USD." },
+    { "type": "text", "id": "title_1", "label": "Column 1 title", "default": "Studio" },
+    { "type": "link_list", "id": "menu_1", "label": "Column 1 menu" },
+    { "type": "text", "id": "title_2", "label": "Column 2 title", "default": "Shop" },
+    { "type": "link_list", "id": "menu_2", "label": "Column 2 menu" },
+    { "type": "text", "id": "title_3", "label": "Column 3 title", "default": "Help" },
+    { "type": "link_list", "id": "menu_3", "label": "Column 3 menu" }
+  ]
+}
+{% endschema %}
