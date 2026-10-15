@@ -1,6 +1,4 @@
-# seq 1: list the CC0 MakeHuman asset repos
+# seq 2: Poly Haven CC0 catalogue (models, textures, hdris) with categories and dimensions
 O=$(realpath $1); cd /tmp
-for r in makehuman makehuman-assets mpfb2 makehuman-system-assets; do
-  git clone -q --depth 1 https://github.com/makehumancommunity/$r.git $r 2>&1 | tail -2 || true
-  [ -d $r ] && (cd $r && git lfs ls-files 2>/dev/null | head -3; find . -path ./.git -prune -o -type f -printf '%s %p\n' | sort -k2 > $O/$r-files.txt; wc -l $O/$r-files.txt)
-done
+for t in models textures hdris; do curl -sfL "https://api.polyhaven.com/assets?t=$t" -o $O/ph-$t.json; ls -la $O/ph-$t.json; done
+curl -sfL "https://api.polyhaven.com/categories/models" -o $O/ph-model-cats.json
