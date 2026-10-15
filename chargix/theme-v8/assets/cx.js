@@ -1,5 +1,6 @@
 // CHARGIX · site behaviour: header state, mobile menu, reveals, small form helpers.
 (function () {
+  document.documentElement.classList.add('cx-ready');
   var hdr = document.querySelector('[data-hdr]');
   if (hdr) {
     var solid = function () { hdr.classList.toggle('is-solid', scrollY > 24 && !document.body.classList.contains('film-on')); };

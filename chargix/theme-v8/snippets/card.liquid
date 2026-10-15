@@ -1,5 +1,5 @@
 <a class="card" href="{{ p.url }}">
   <div class="card__img">{%- if p.featured_media -%}{{ p.featured_media | image_url: width: 640 | image_tag: loading: 'lazy', widths: '320,480,640', sizes: '(min-width: 990px) 25vw, 50vw', alt: p.featured_media.alt | default: p.title }}{%- endif -%}</div>
   <span class="card__t">{{ p.title | escape }}</span>
-  <span class="card__p">{%- if p.price_varies -%}{{ 'products.from' | t: price: p.price_min | money }}{%- else -%}{{ p.price | money }}{%- endif -%}{%- if p.compare_at_price > p.price -%}<s>{{ p.compare_at_price | money }}</s>{%- endif -%}</span>
+  <span class="card__p">{%- if p.price_varies -%}{%- assign pm = p.price_min | money -%}{{ 'products.from' | t: price: pm }}{%- else -%}{{ p.price | money }}{%- endif -%}{%- if p.compare_at_price > p.price -%}<s>{{ p.compare_at_price | money }}</s>{%- endif -%}</span>
 </a>

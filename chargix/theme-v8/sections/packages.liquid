@@ -60,7 +60,7 @@
                 <input type="hidden" name="quantity" value="1">
                 <input type="hidden" name="return_to" value="/checkout">
                 <button class="btn btn--block{% if block.settings.pick %} btn--brass{% else %} btn--solid{% endif %}" type="submit" name="add"{% unless v.available %} disabled{% endunless %}>
-                  {%- if v.available -%}{{ 'packages.buy' | t: price: v.price | money_without_trailing_zeros }}{%- else -%}{{ 'products.unavailable' | t }}{%- endif -%}
+                  {%- if v.available -%}{%- assign vp = v.price | money_without_trailing_zeros -%}{{ 'packages.buy' | t: price: vp }}{%- else -%}{{ 'products.unavailable' | t }}{%- endif -%}
                 </button>
               {%- endform -%}
               <div class="pk__links">

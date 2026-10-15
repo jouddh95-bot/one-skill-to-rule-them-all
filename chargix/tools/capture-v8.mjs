@@ -30,6 +30,7 @@ for (const v of views) {
     note(`[${v.name}] film ${p}: caption "${cap}"`);
     await shot(`film-${String(Math.round(p * 100)).padStart(2, '0')}`);
   }
+  await page.evaluate(() => document.querySelectorAll('[data-reveal]').forEach((e) => e.classList.add('is-in')));
   for (const id of ['studio', 'packages', 'compare', 'process', 'care', 'faq']) {
     const el = await page.$('#' + id); if (!el) { note(`[${v.name}] missing #${id}`); continue; }
     await el.scrollIntoViewIfNeeded(); await page.waitForTimeout(900);
