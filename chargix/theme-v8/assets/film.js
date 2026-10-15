@@ -13,7 +13,8 @@ function player(canvas, { base, prefix, n, step }) {
   const order = []; const seen = new Set();
   for (const s of [16, 8, 4, 2, 1]) for (let k = 0; k < idx.length; k += s) if (!seen.has(k)) { seen.add(k); order.push(idx[k]); }
   if (!seen.has(idx.length - 1)) order.splice(1, 0, idx[idx.length - 1]);
-  let p = 0, raf = 0, W = 0, H = 0, dpr = 1, shown = '', active = true, busy = 0, q = order.slice(), first = null;
+  // p eases toward the scroll target (critically damped, ~140 ms), so wheel steps and touch flicks glide
+  let p = 0, target = 0, last = 0, raf = 0, W = 0, H = 0, dpr = 1, shown = '', active = true, busy = 0, q = order.slice(), first = null, onp = null;
   const ready = new Promise((r) => { first = r; });
   function pump() {
     while (busy < 6 && q.length) {
@@ -37,8 +38,13 @@ function player(canvas, { base, prefix, n, step }) {
     const s = Math.min(W / iw, H / ih) * (W > 1100 ? 1.0 : 1.05), w = iw * s, h = ih * s;
     return [(W - w) / 2 + (W > 1100 ? W * 0.06 : 0), (H - h) / 2, w, h];
   }
-  function draw() {
+  function draw(now) {
     raf = 0;
+    const dt = Math.min(64, last ? now - last : 16); last = now;
+    p += (target - p) * (1 - Math.exp(-dt / 140));
+    if (Math.abs(target - p) < 0.00005) p = target;
+    if (onp) onp(p);
+    if (p !== target) kick(); else last = 0;
     const f = p * (n - 1), i0 = Math.floor(f);
     let a = near(i0, -1); if (a < 0) a = near(i0, 1); if (a < 0) return;
     let b = near(Math.min(n - 1, i0 + 1), 1); if (b < 0) b = a;
@@ -51,7 +57,7 @@ function player(canvas, { base, prefix, n, step }) {
   }
   function kick(force) { if (force) shown = ''; if (!raf && active) raf = requestAnimationFrame(draw); }
   addEventListener('resize', resize, { passive: true }); resize(); pump();
-  return { set(v) { p = clamp(v); kick(); }, active(on) { active = on; if (on) kick(true); }, ready };
+  return { set(v, jump) { target = clamp(v); if (jump) p = target; kick(); }, active(on) { active = on; if (on) kick(true); }, onprogress(f) { onp = f; }, ready };
 }
 
 export function init(root) {
@@ -69,8 +75,8 @@ export function init(root) {
   const span = () => track.offsetHeight - innerHeight;
   const progress = () => { const r = track.getBoundingClientRect(); const s = span(); return s > 0 ? clamp(-r.top / s) : 0; };
   let last = -1;
-  function update() {
-    const p = progress(); film.set(p);
+  function update() { film.set(progress()); }
+  function paint(p) {
     if (bar) bar.style.transform = `scaleX(${p})`;
     root.classList.toggle('is-past-intro', p > introEnd);
     let cur = -1;
@@ -94,9 +100,10 @@ export function init(root) {
     scrollTo({ top: track.getBoundingClientRect().top + scrollY + span() * at, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   }));
   new IntersectionObserver((es) => es.forEach((e) => { film.active(e.isIntersecting); document.dispatchEvent(new CustomEvent('cx:film', { detail: { on: e.isIntersecting } })); }), { rootMargin: '0px' }).observe(track);
+  film.onprogress(paint);
   addEventListener('scroll', update, { passive: true }); addEventListener('resize', update, { passive: true });
   caps.forEach((c) => { c.inert = true; });
-  update();
+  film.set(progress(), true); paint(progress());
   window.__cxFilm = { seek: (p) => scrollTo(0, track.getBoundingClientRect().top + scrollY + span() * p), ready: film.ready };
 }
 

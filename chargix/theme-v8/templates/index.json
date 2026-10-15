@@ -2,9 +2,176 @@
   "sections": {
     "film": {
       "type": "film",
-      "settings": {},
-      "blocks": {},
-      "block_order": []
+      "settings": {
+        "anchor": "work",
+        "prefix": "story",
+        "frames": 480,
+        "poster": "000",
+        "poster_alt": "A miniature apartment on a dark plinth at sunrise: a sofa, a kitchen, a desk and a big window over the city.",
+        "length": 2200,
+        "intro_end": 3,
+        "eyebrow": "CHARGIX · websites & 3D",
+        "heading": "Every business starts <em>in a small room.</em>",
+        "text": "Scroll to watch one day of a new cookie business, from the first idea to the first orders.",
+        "cue": "Scroll to watch",
+        "note": "Illustrative story: a pre-rendered animation played by your scroll. Brands and orders shown are demo data."
+      },
+      "blocks": {
+        "ch1": {
+          "type": "chapter",
+          "settings": {
+            "chapter": 1,
+            "rail": "The idea",
+            "a": "0.0",
+            "b": "12.2",
+            "time": "7:00 AM",
+            "day": "Day one",
+            "heading": "A small idea",
+            "text": "She bakes the best cookies anyone she knows has tasted. Every morning starts with the same thought: what if strangers could order them?",
+            "label": "",
+            "link": "",
+            "label2": "",
+            "link2": "",
+            "demo": false
+          }
+        },
+        "ch2": {
+          "type": "chapter",
+          "settings": {
+            "chapter": 2,
+            "rail": "Finding CHARGIX",
+            "a": "12.2",
+            "b": "27.8",
+            "time": "7:40 AM",
+            "day": "Day one",
+            "heading": "Finding CHARGIX",
+            "text": "One search, one site, three fixed prices. She picks Business Launch: the store, the brand, a 3D scene and her socials, set up for her.",
+            "label": "See the packages",
+            "link": "#packages",
+            "label2": "",
+            "link2": "",
+            "demo": false
+          }
+        },
+        "ch3": {
+          "type": "chapter",
+          "settings": {
+            "chapter": 3,
+            "rail": "Setting up",
+            "a": "27.8",
+            "b": "40.4",
+            "time": "8:15 AM",
+            "day": "Day one",
+            "heading": "The kitchen becomes a bakery",
+            "text": "She sends her project form and clears the counter. CHARGIX starts on the store.",
+            "label": "",
+            "link": "",
+            "label2": "",
+            "link2": "",
+            "demo": false
+          }
+        },
+        "ch4": {
+          "type": "chapter",
+          "settings": {
+            "chapter": 4,
+            "rail": "First batch",
+            "a": "40.4",
+            "b": "57.4",
+            "time": "9:30 AM",
+            "day": "Day one",
+            "heading": "First batch",
+            "text": "Mix, scoop, twelve on the tray, into the oven.",
+            "label": "",
+            "link": "",
+            "label2": "",
+            "link2": "",
+            "demo": false
+          }
+        },
+        "ch5": {
+          "type": "chapter",
+          "settings": {
+            "chapter": 5,
+            "rail": "The build",
+            "a": "57.4",
+            "b": "78.9",
+            "time": "10:30 AM",
+            "day": "Day one",
+            "heading": "CHARGIX builds, she bakes",
+            "text": "Brand, product pages, a 3D gift box and Spanish pages come together on the screen while the first batch comes out golden.",
+            "label": "",
+            "link": "",
+            "label2": "",
+            "link2": "",
+            "demo": false
+          }
+        },
+        "ch6": {
+          "type": "chapter",
+          "settings": {
+            "chapter": 6,
+            "rail": "Launch",
+            "a": "78.9",
+            "b": "84.4",
+            "time": "2:00 PM",
+            "day": "Day one",
+            "heading": "The store goes live",
+            "text": "Sweet & Co., designed and launched with Business Launch. It is a made-up brand, built for this story.",
+            "label": "See the demo store",
+            "link": "/?view=launch-demo",
+            "label2": "",
+            "link2": "",
+            "demo": true
+          }
+        },
+        "ch7": {
+          "type": "chapter",
+          "settings": {
+            "chapter": 7,
+            "rail": "Orders",
+            "a": "84.4",
+            "b": "93.3",
+            "time": "6:30 PM",
+            "day": "Day one",
+            "heading": "Demo orders, packed by hand",
+            "text": "Each order gets a box, four cookies and a ribbon.",
+            "label": "",
+            "link": "",
+            "label2": "",
+            "link2": "",
+            "demo": true
+          }
+        },
+        "ch8": {
+          "type": "chapter",
+          "settings": {
+            "chapter": 8,
+            "rail": "Day two",
+            "a": "93.3",
+            "b": "100.2",
+            "time": "7:00 AM",
+            "day": "Day two",
+            "heading": "The next morning",
+            "text": "Boxes ready by the window. From a thought on the sofa to a business that ships. Your turn.",
+            "label": "Start your project",
+            "link": "#packages",
+            "label2": "Compare packages",
+            "link2": "#compare",
+            "demo": false
+          }
+        }
+      },
+      "block_order": [
+        "ch1",
+        "ch2",
+        "ch3",
+        "ch4",
+        "ch5",
+        "ch6",
+        "ch7",
+        "ch8"
+      ]
     },
     "studio": {
       "type": "what-we-do",
@@ -379,7 +546,7 @@
     "closing": {
       "type": "closing",
       "settings": {
-        "asset": "",
+        "asset": "story-479.webp",
         "eyebrow": "Ready when you are",
         "heading": "Your business, <em>open for orders.</em>",
         "text": "Pick a package and pay online. We start as soon as your project form is in.",
