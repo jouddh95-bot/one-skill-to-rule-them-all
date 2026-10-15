@@ -175,12 +175,12 @@ def retint(root, sat=1.0, val=1.0, screen=None, amt=0.0):
 
 # ------------------------------------------------------------------ materials library
 M = {}
-M["floor"] = pbr("parquet", "herringbone_parquet", scale=0.8, tint="#f4ece4", rough_mul=0.85, sat=0.72)
-M["wallL"] = plaster_wall("wallL", "#d8c4b4"); M["wallB"] = plaster_wall("wallB", "#d4c2b4")
-M["cap"] = flat("cap", "#e9e4ef", 0.65)
+M["floor"] = pbr("parquet", "herringbone_parquet", scale=0.8, tint="#e8cbab", rough_mul=0.92, sat=0.85)
+M["wallL"] = plaster_wall("wallL", "#cfb7a2"); M["wallB"] = plaster_wall("wallB", "#c9b09a")
+M["cap"] = flat("cap", "#ece2d6", 0.65)
 M["plinth"] = flat("plinth", "#1c1b22", 0.38)
 M["plinthDark"] = flat("plinthDark", "#16151c", 0.5)
-M["neon"] = emission("neon", "#d6b07c", 0.9)
+M["neon"] = emission("neon", "#ffb977", 2.4)
 M["ground"] = flat("ground", "#060609", 0.4); M["ground"].node_tree.nodes["Principled BSDF"].inputs["Specular IOR Level"].default_value = 0.3
 M["cab"] = flat("cabinet", "#33353a", 0.48, coat=0.0) if False else flat("cabinet", "#34363b", 0.5)
 M["cabFront"] = pbr("cabFront", "kitchen_wood", scale=0.6, tint="#5b5e66", rough_mul=0.9)
@@ -191,8 +191,8 @@ M["black"] = flat("blackMetal", "#151517", 0.38, 0.6)
 M["glass"] = glass_mat()
 M["ceramic"] = flat("ceramic", "#efebe5", 0.25)
 M["linen"] = pbr("linen", "rough_linen", scale=3, tint="#e6ddd3", sat=0.0)
-M["rug"] = pbr("rug", "knitted_fleece", scale=2.0, tint="#a8a2a6", normal=1.4)
-M["trug"] = pbr("trug", "knitted_fleece", scale=2.2, tint="#cdbca4", normal=1.3, sat=0.5)
+M["rug"] = pbr("rug", "rough_linen", scale=2.4, tint="#9a8a7d", sat=0.0, normal=1.6)
+M["trug"] = pbr("trug", "rough_linen", scale=2.6, tint="#c4a585", sat=0.0, normal=1.6)
 M["krug"] = pbr("krug", "rough_linen", scale=2.5, tint="#77706a", sat=0.0)
 M["curtain"] = pbr("curtain", "rough_linen", scale=2.2, tint="#efe2d4", sat=0.0)
 M["oak"] = pbr("oak", "oak_veneer_01", scale=0.9, tint="#c89a74", rough_mul=0.8)
@@ -782,7 +782,7 @@ LAMP = point("floorLamp", V(lampX, lampY, 1.52), 0, WARM, 0.12)
 KLED_L = area("kitchenLED", V(KX[0] + KX[2] * 1.6, RY - 0.3, 1.59), 1.4, 0, (1.0, 0.78, 0.55), (0, 0, 0), sy=0.06)
 DESK_L = area("deskLamp", V(dl[0] + 0.05, dl[1] - 0.18, 1.12), 0.08, 0, (1.0, 0.8, 0.55), (0.6, 0, 0))
 SHELF_L = area("shelfGlow", V(3.05, RY - 0.4, 1.7), 0.35, 0, (1.0, 0.8, 0.6), (math.pi / 2 - 0.3, 0, 0), sy=1.0)
-FILL = area("fill", V(6, -7, 7), 6, 0, (0.9, 0.93, 1.0), (55 * DEG, 0, 40 * DEG))
+FILL = area("fill", V(6, -7, 7), 6, 0, (1.0, 0.92, 0.84), (55 * DEG, 0, 40 * DEG))
 HOLO_L = point("cardSpill", V(0, 0, 2.0), 0, (1.0, 0.94, 0.86), 0.6)
 PL_NEON = area("plinthSpill", V(1.5, -FY - 0.5, -0.31), 6, 0, (1.0, 0.8, 0.55), (math.pi, 0, 0), sy=0.4)
 GROUND_EX = bpy.data.collections.new("groundExclude"); GROUND_EX.objects.link(bpy.data.objects["ground"])
@@ -791,6 +791,28 @@ for o in (FILL, HOLO_L, PL_NEON): o.visible_glossy = False
 # lamp shade glow (emissive inner surface)
 shade_em = emission("shadeIn", "#ffcf96", 0.0)
 inner = cyl("shadeInner", 0.19, 0.28, V(lampX, lampY, 1.55), shade_em, 48, r2=0.165); inner.visible_shadow = False
+
+# warm practicals that make the room read as lived-in after dark (and give the work zone its own pool of light)
+SCONCE_EM = emission("sconceIn", "#ffc98a", 0.0)
+gltf("industrial_wall_lamp", V(0.12, RY - 0.004, 1.62), 0, 1.0)
+cyl("sconceBulb", 0.035, 0.05, V(0.12, RY - 0.1, 1.55), SCONCE_EM, 24).visible_shadow = False
+SCONCE_L = point("sconce", V(0.12, RY - 0.16, 1.5), 0, WARM, 0.05)
+st_top = 0.55 * 0.9
+cyl("tlBase", 0.07, 0.24, V(3.1, -0.25, st_top + 0.12), M["ceramic"], 48, r2=0.05, bevel=0.01)
+tsh = cyl("tlShade", 0.15, 0.2, V(3.1, -0.25, st_top + 0.36), M["linen"], 64, r2=0.12); tsh.modifiers.new("s", "SOLIDIFY").thickness = 0.004
+bm = bmesh.new(); bm.from_mesh(tsh.data)
+for f in [f for f in bm.faces if abs(f.normal.z) > 0.9]: bm.faces.remove(f)
+bm.to_mesh(tsh.data); bm.free()
+TLAMP_EM = emission("tlampIn", "#ffcf96", 0.0)
+cyl("tlInner", 0.14, 0.18, V(3.1, -0.25, st_top + 0.36), TLAMP_EM, 48, r2=0.115).visible_shadow = False
+TLAMP_L = point("tableLamp", V(3.1, -0.25, st_top + 0.34), 0, WARM, 0.08)
+CARTON = flat("carton", "#9c6c42", 0.82)
+# a stool at the worktable and a stack of flat-packed shipping cartons waiting by the side table
+gltf("bar_chair_round_01", V(2.32, -0.18, 0), 0.5, 0.92)
+for i, (dx, dy, sz, rz) in enumerate(((0, 0, (0.52, 0.4, 0.3), 0.08), (0.02, 0.01, (0.46, 0.36, 0.26), -0.06), (-0.01, 0.0, (0.38, 0.3, 0.2), 0.15))):
+    zb = sum(((0.52, 0.4, 0.3), (0.46, 0.36, 0.26), (0.38, 0.3, 0.2))[k][2] for k in range(i))
+    block(f"carton{i}", sz, V(2.5 + dx, -1.5 + dy, zb + sz[2] / 2), CARTON, 0.008, rz)
+    block(f"cartonT{i}", (sz[0] + 0.004, 0.06, 0.003), V(2.5 + dx, -1.5 + dy, zb + sz[2] + 0.0015), flat(f"ctape{i}", "#cdb48a", 0.35), 0, rz)
 
 
 # ------------------------------------------------------------------ the view out of the window: a city plate behind the glass
@@ -876,7 +898,7 @@ def sun_state(h):
 # ------------------------------------------------------------------ camera: the reference's elevated three-quarter view
 cam_d = bpy.data.cameras.new("cam"); cam = link(bpy.data.objects.new("cam", cam_d)); scene.camera = cam
 cam_d.sensor_fit = "VERTICAL"; cam_d.angle_y = 24 * DEG; cam_d.clip_start = 1; cam_d.clip_end = 80
-CAM_TGT = V(0.1, 0.12, 0.62); CAM_DIR = V(1.0, -1.08, 0.92).normalized(); CAM_DIST = float(os.environ.get("CX_DIST", "17.6"))
+CAM_TGT = V(0.1, 0.12, 0.62); CAM_DIR = V(1.0, -1.08, 0.92).normalized(); CAM_DIST = float(os.environ.get("CX_DIST", "16.2"))
 cam_d.dof.use_dof = True; cam_d.dof.aperture_fstop = 4.0
 CITY, CITY_M1, CITY_M2, CITY_E = city_plate()
 for o in (sun, FILL, LAMP, KLED_L, DESK_L, SHELF_L, HOLO_L, CITY):
@@ -891,8 +913,8 @@ def seg(u, a, b): return clamp((u - a) / (b - a))
 def ease(t): return t * t * (3 - 2 * t)
 def angle_lerp(a, b, t):
     d = (b - a + 180) % 360 - 180; return a + d * t
-HOURS = [(0, 7.0), (42, 7.35), (150, 7.9), (186, 8.1), (208, 8.3), (218, 9.4), (258, 10.2), (310, 10.6), (332, 10.9), (350, 12.6),
-         (372, 13.0), (398, 13.3), (426, 14.0), (456, 18.4), (504, 20.8), (522, 23.2), (531, 27.5), (540, 31.0)]
+HOURS = [(0, 18.6), (42, 19.3), (150, 21.6), (166, 22.6), (204, 31.4), (218, 32.6), (258, 33.6), (310, 34.4), (332, 34.8), (350, 36.0),
+         (372, 36.6), (398, 37.2), (426, 40.6), (456, 42.4), (504, 44.6), (522, 46.4), (531, 51.0), (540, 55.0)]
 def hour_at(u):
     for (a, ha), (b, hb) in zip(HOURS, HOURS[1:]):
         if u <= b: return lerp(ha, hb, seg(u, a, b))
@@ -1152,21 +1174,23 @@ def set_state(p):
     try:
         sky.sun_elevation = max(elev, 0.02) if night < 0.5 else -0.05; sky.sun_rotation = math.pi + az
     except Exception: pass
-    skyB.inputs["Strength"].default_value = 0.22 * (day + 0.6 * dusk) + 0.01
+    skyB.inputs["Strength"].default_value = 0.16 * (day + 0.6 * dusk) + 0.008
     mixC.inputs["Factor"].default_value = night
     gr = (lerp(1.0, 1.15, dusk), lerp(1.0, 0.82, dusk), lerp(1.0, 0.7, dusk), 1); lvl = 0.9 * day + 1.0 * dusk + 0.9 * night
     gradeC.inputs[7].default_value = (gr[0] * lvl, gr[1] * lvl, gr[2] * lvl, 1)
     CITY_M1.inputs["Factor"].default_value = clamp(dusk * 1.4)
     CITY_M2.inputs["Factor"].default_value = night
     CITY_E.inputs["Strength"].default_value = 1.5 * day + 1.2 * dusk + 1.6 * night + 0.2
-    on = max(smooth(17.4, 19.2, h), 0) * (1 - smooth(29.0, 30.5, h))
-    kon = max(on, smooth(12.6, 13.6, hh) * 0.6 * (1 - smooth(24.5, 25.0, h)))
-    LAMP.data.energy = on * 110; shade_em.node_tree.nodes["Emission"].inputs["Strength"].default_value = on * 6
-    KLED_L.data.energy = kon * 55; KLED.data.materials[0].node_tree.nodes["Emission"].inputs["Strength"].default_value = kon * 12
-    DESK_L.data.energy = on * 18; SHELF_L.data.energy = on * 22
-    FILL.data.energy = 150 * (0.25 + 0.75 * day) + 25 * night; FILL.data.color = (lerp(0.86, 1.0, day), lerp(0.86, 0.96, day), lerp(1.0, 0.9, day))
-    PL_NEON.data.energy = 6 + 10 * night
-    scene.view_settings.exposure = 0.15 + 0.2 * night + 0.1 * dusk
+    on = clamp(max(dusk * 1.3, night))                       # practical lamps follow the light outside
+    kon = clamp(0.35 + 0.65 * on)                              # the under-cabinet strip is on whenever someone is cooking
+    LAMP.data.energy = on * 130; shade_em.node_tree.nodes["Emission"].inputs["Strength"].default_value = on * 6
+    KLED_L.data.energy = kon * 70; KLED.data.materials[0].node_tree.nodes["Emission"].inputs["Strength"].default_value = kon * 12
+    DESK_L.data.energy = (0.25 + 0.75 * on) * 22; SHELF_L.data.energy = (0.2 + 0.8 * on) * 26
+    SCONCE_L.data.energy = on * 40; SCONCE_EM.node_tree.nodes["Emission"].inputs["Strength"].default_value = on * 8
+    TLAMP_L.data.energy = (0.15 + 0.85 * on) * 28; TLAMP_EM.node_tree.nodes["Emission"].inputs["Strength"].default_value = (0.15 + 0.85 * on) * 7
+    FILL.data.energy = 95 * (0.2 + 0.8 * day) + 12 * night; FILL.data.color = (1.0, lerp(0.86, 0.93, day), lerp(0.78, 0.86, day))
+    PL_NEON.data.energy = 8 + 8 * night
+    scene.view_settings.exposure = 0.2 + 0.25 * night + 0.1 * dusk
     # oven: glows while baking, door on its hinge
     bake_on = smooth(300, 306, u) * (1 - smooth(374, 380, u))
     OVEN_GLOW.data.materials[0].node_tree.nodes["Emission"].inputs["Strength"].default_value = bake_on * (2.2 + 0.2 * math.sin(clock * 2))
@@ -1268,9 +1292,38 @@ print("coffee table", tuple(round(x, 2) for x in ct0), tuple(round(x, 2) for x i
 if FRAMES.startswith("p:"): items = [(f"p{i}", float(x)) for i, x in enumerate(FRAMES[2:].split(","))]
 elif FRAMES.startswith("u:"): items = [(f"u{int(float(x)):03d}", float(x) / U) for x in FRAMES[2:].split(",")]
 else: items = [(f"{PREFIX}-{int(x):03d}", int(x) / (N - 1)) for x in FRAMES.split(",") if x != ""]
+# ------------------------------------------------------------------ virtual-camera track for the web player
+# For every frame: where the action is in the image (normalised, y down) and how far the player may push in.
+from bpy_extras.object_utils import world_to_camera_view
+Z_KEYS = [(0, 1.1), (40, 1.15), (60, 1.45), (160, 1.45), (180, 1.15), (212, 1.15), (220, 1.45), (256, 1.45), (270, 1.35), (350, 1.35),
+          (360, 1.2), (420, 1.2), (428, 1.0), (452, 1.0), (462, 1.35), (500, 1.35), (520, 1.05), (540, 1.0)]
+CARD_PULL = {"dream": 0.35, "phone": 0.3, "build": 0.25, "store": 0.6, "orders": 0.35}
+def track_point(p):
+    u = clamp(p) * U
+    z = Z_KEYS[-1][1]
+    for (a, za), (b, zb) in zip(Z_KEYS, Z_KEYS[1:]):
+        if u <= b: z = lerp(za, zb, ease(seg(u, a, b))); break
+    pt = bw("head") * 0.45 + (bw("hand_l") + bw("hand_r")) / 2 * 0.55
+    best, w = None, 0.0
+    for key, (a, b, c, d2, t0, t1) in CARD_T.items():
+        f = ease(seg(u, a, b)) * (1 - ease(seg(u, c, d2))) * CARD_PULL[key]
+        if f > w: best, w = CARDS[key]["at"], f
+    if best is not None: pt = pt.lerp(best, w)
+    q = world_to_camera_view(scene, cam, pt)
+    return [q.x, 1 - q.y, z]
+
+TRACK = []
 for name, p in items:
     set_state(p)
+    TRACK.append(track_point(p))
     r.filepath = os.path.join(OUT, f"{name}.png")
-    if os.environ.get("CX_DRY"): print("posed", name, flush=True); continue
+    if os.environ.get("CX_DRY"): print("posed", name, [round(x, 3) for x in TRACK[-1]], flush=True); continue
     bpy.ops.render.render(write_still=True)
     print("rendered", name, round(p, 3), flush=True)
+if os.environ.get("CX_TRACK"):
+    import json
+    sig = 4.0; n = len(TRACK); sm = []
+    for i in range(n):
+        ws = [(math.exp(-((j - i) / sig) ** 2 / 2), TRACK[j]) for j in range(max(0, i - 12), min(n, i + 13))]
+        tw = sum(w for w, _ in ws); sm.append([round(sum(w * t[k] for w, t in ws) / tw, 4) for k in range(3)])
+    json.dump(sm, open(os.environ["CX_TRACK"], "w")); print("track", os.environ["CX_TRACK"], n, flush=True)
