@@ -190,10 +190,10 @@ body:not(.t-index) .hdr, .hdr.is-solid { background: rgba(13, 12, 15, .82); back
 .film__note { position: absolute; right: var(--gutter); bottom: 14px; margin: 0; font: 500 10px/1.4 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); text-align: right; max-width: 46ch; }
 @media (max-width: 749px) {
   .film__poster { object-fit: cover; object-position: 50% 30%; }
-  .film__caps { bottom: 34px; }
+  .film__caps { bottom: 48px; }
   .cap__t { font-size: 15px; }
   .film__intro { bottom: 40px; }
-  .film__note { left: var(--gutter); right: var(--gutter); top: calc(var(--hdr) + 64px); bottom: auto; text-align: left; }
+  .film__note { left: var(--gutter); right: var(--gutter); bottom: 10px; text-align: left; font-size: 9px; max-width: none; }
   .film__clock { top: calc(var(--hdr) + 12px); }
   .cap { background: linear-gradient(transparent, rgba(13, 12, 15, .7) 30%); padding-top: 24px; }
 }
