@@ -175,7 +175,7 @@ def retint(root, sat=1.0, val=1.0, screen=None, amt=0.0):
 
 # ------------------------------------------------------------------ materials library
 M = {}
-M["floor"] = pbr("parquet", "herringbone_parquet", scale=0.8, tint="#e8cbab", rough_mul=0.92, sat=0.85)
+M["floor"] = pbr("parquet", "herringbone_parquet", scale=0.8, tint="#e8cbab", rough_mul=1.15, sat=0.85)
 M["wallL"] = plaster_wall("wallL", "#cfb7a2"); M["wallB"] = plaster_wall("wallB", "#c9b09a")
 M["cap"] = flat("cap", "#ece2d6", 0.65)
 M["plinth"] = flat("plinth", "#1c1b22", 0.38)
@@ -1309,7 +1309,7 @@ def track_point(p):
         f = ease(seg(u, a, b)) * (1 - ease(seg(u, c, d2))) * CARD_PULL[key]
         if f > w: best, w = CARDS[key]["at"], f
     if best is not None: pt = pt.lerp(best, w)
-    q = world_to_camera_view(scene, cam, pt)
+    upd(); q = world_to_camera_view(scene, cam, pt)
     return [q.x, 1 - q.y, z]
 
 TRACK = []
