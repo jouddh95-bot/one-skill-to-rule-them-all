@@ -1172,7 +1172,7 @@ def set_state(p):
     CITY_E.inputs["Strength"].default_value = 1.5 * day + 1.2 * dusk + 1.6 * night + 0.2
     on = clamp(max(dusk * 1.3, night))
     kon = clamp(0.4 + 0.6 * on)
-    LAMP.data.energy = on * 130; shade_em.node_tree.nodes["Emission"].inputs["Strength"].default_value = on * 6
+    LAMP.data.energy = on * 95; shade_em.node_tree.nodes["Emission"].inputs["Strength"].default_value = on * 6
     KLED_L.data.energy = kon * 70; KLED.data.materials[0].node_tree.nodes["Emission"].inputs["Strength"].default_value = kon * 12
     DESK_L.data.energy = (0.25 + 0.75 * on) * 26; SHELF_L.data.energy = (0.2 + 0.8 * on) * 26
     SCONCE_L.data.energy = on * 40; SCONCE_EM.node_tree.nodes["Emission"].inputs["Strength"].default_value = on * 8
