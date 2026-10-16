@@ -23,14 +23,15 @@ STORIES = {
       "note": "Pre-rendered animation played by your scroll. Brands and orders are made-up demo data.",
     },
     "chapters": [
-      ch(1, "The idea", "4.0", "7.8", "6:40 PM", "Day one", "A small idea, after a long day."),
-      ch(2, "Finding CHARGIX", "7.8", "31.5", "8:30 PM", "Day one", "One search. Three fixed prices.", "See the packages", "#packages"),
-      ch(3, "Setting up", "31.5", "43.0", "8:00 AM", "Day two", "Next morning, the kitchen becomes a bakery."),
-      ch(4, "First batch", "43.0", "56.3", "10:00 AM", "Day two", "Twelve on the tray. Into the oven."),
-      ch(5, "The build", "56.3", "78.9", "1:00 PM", "Day two", "We build the store. She bakes."),
-      ch(6, "Launch", "78.9", "84.4", "4:30 PM", "Day two", "Sweet & Co. goes live.", "See the demo store", "/?view=launch-demo", True),
-      ch(7, "Orders", "84.4", "93.3", "6:30 PM", "Day two", "Demo orders, packed by hand.", demo=True),
-      ch(8, "Morning", "93.3", "100.2", "7:00 AM", "Day three", "The next morning. Your turn.", "Start your project", "#packages"),
+      ch(1, "The idea", "4.0", "7.8", "7:00 PM", "Day one", "A small idea, after a long day."),
+      ch(2, "Finding CHARGIX", "7.8", "30.4", "7:20 PM", "Day one", "One search. Three fixed prices.", "See the packages", "#packages"),
+      ch(3, "Overnight", "30.4", "37.4", "10:30 PM", "Day one", "Lights out. The plan can wait."),
+      ch(4, "Setting up", "37.4", "43.0", "7:00 AM", "Day two", "Morning. The kitchen becomes a bakery."),
+      ch(5, "First batch", "43.0", "56.3", "9:00 AM", "Day two", "Twelve on the tray. Into the oven."),
+      ch(6, "The build", "56.3", "78.9", "10:15 AM", "Day two", "We build the store. She bakes."),
+      ch(7, "Launch", "78.9", "84.4", "4:30 PM", "Day two", "Sweet & Co. goes live.", "See the demo store", "/?view=launch-demo", True),
+      ch(8, "Orders", "84.4", "93.3", "6:20 PM", "Day two", "Demo orders, packed by hand.", demo=True),
+      ch(9, "Next day", "93.3", "100.2", "8:30 PM", "Day two", "Night falls, then morning. Your turn.", "Start your project", "#packages"),
     ],
   },
   # Story two: a clothing label in the same box. Placeholder timings: align a/b/time to the film.
@@ -44,14 +45,15 @@ STORIES = {
       "note": "Pre-rendered animation played by your scroll. Brands and orders are made-up demo data.",
     },
     "chapters": [
-      ch(1, "The design", "4", "12.2", "9:40 PM", "Day one", "Late night. Picking the first design."),
-      ch(2, "The pick", "12.2", "29.6", "10:30 PM", "Day one", "She picks Business Launch, then sleeps.", "See the packages", "#packages"),
-      ch(3, "The press", "29.6", "56.7", "8:30 AM", "Day two", "Blank tee, transfer, heat. Peel."),
-      ch(4, "The rack", "56.7", "64.1", "11:00 AM", "Day two", "Tee after tee. The rack fills."),
-      ch(5, "The build", "64.1", "78.1", "2:00 PM", "Day two", "We build the store. She folds."),
-      ch(6, "Launch", "78.1", "84.8", "6:00 PM", "Day two", "NOVA goes live. A made-up label.", demo=True),
-      ch(7, "Orders", "84.8", "93.7", "7:30 PM", "Day two", "Demo orders, folded into mailers.", demo=True),
-      ch(8, "Next", "93.7", "100.2", "9:30 PM", "Day two", "Same box. Your business next.", "Start your project", "#packages"),
+      ch(1, "The design", "4", "12.2", "9:50 PM", "Day one", "Late night. Picking the first design."),
+      ch(2, "The pick", "12.2", "29.6", "10:20 PM", "Day one", "She picks Business Launch.", "See the packages", "#packages"),
+      ch(3, "Overnight", "29.6", "35.7", "11:45 PM", "Day one", "Lights out. Tomorrow, the press."),
+      ch(4, "The press", "35.7", "56.7", "7:00 AM", "Day two", "Blank tee, transfer, heat. Peel."),
+      ch(5, "The rack", "56.7", "64.1", "10:00 AM", "Day two", "Tee after tee. The rack fills."),
+      ch(6, "The build", "64.1", "78.1", "1:10 PM", "Day two", "We build the store. She folds."),
+      ch(7, "Launch", "78.1", "84.8", "4:30 PM", "Day two", "NOVA goes live. A made-up label.", demo=True),
+      ch(8, "Orders", "84.8", "93.7", "6:20 PM", "Day two", "Demo orders, folded into mailers.", demo=True),
+      ch(9, "Next", "93.7", "100.2", "8:00 PM", "Day two", "Same box. Your business next.", "Start your project", "#packages"),
     ],
   },
 }
@@ -60,6 +62,13 @@ for key in STORIES:
     over = os.path.join(ROOT, f'story-{key}.json')
     if os.path.exists(over):
         STORIES[key] = json.load(open(over))
+
+# Live film clock: the HOURS table each render is lit with (blender/*.py), as "progress%:hour" pairs.
+def clock(src):
+    t = open(os.path.join(ROOT, '..', 'blender', src)).read(); i = t.index("HOURS = ["); j = t.index("]\n", i)
+    return ",".join(f"{u / 5.4:.2f}:{h:g}" for u, h in eval(t[i + 8:j + 1]))
+STORIES["cookie"]["settings"].setdefault("clock", clock("diorama2.py"))
+STORIES["nova"]["settings"].setdefault("clock", clock("nova.py"))
 
 def blocks(prefix, items):
     b = {f"{prefix}{i+1}": it for i, it in enumerate(items)}

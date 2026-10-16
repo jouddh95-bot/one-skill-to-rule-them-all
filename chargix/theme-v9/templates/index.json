@@ -18,7 +18,8 @@
         "heading": "Every business starts <em>in a small room.</em>",
         "text": "Two days of a new cookie business.",
         "cue": "Scroll to play",
-        "note": "Pre-rendered animation played by your scroll. Brands and orders are made-up demo data."
+        "note": "Pre-rendered animation played by your scroll. Brands and orders are made-up demo data.",
+        "clock": "0.00:18.6,7.78:19.3,27.78:21.6,30.74:22.6,37.78:31.4,40.37:32.6,47.78:33.6,57.41:34.4,61.48:34.8,64.81:36,68.89:36.6,73.70:37.2,78.89:40.6,84.44:42.4,93.33:44.6,96.67:46.4,98.33:51,100.00:55"
       },
       "blocks": {
         "ch1": {
@@ -28,7 +29,7 @@
             "rail": "The idea",
             "a": "4.0",
             "b": "7.8",
-            "time": "6:40 PM",
+            "time": "7:00 PM",
             "day": "Day one",
             "line": "A small idea, after a long day.",
             "label": "",
@@ -42,8 +43,8 @@
             "chapter": 2,
             "rail": "Finding CHARGIX",
             "a": "7.8",
-            "b": "31.5",
-            "time": "8:30 PM",
+            "b": "30.4",
+            "time": "7:20 PM",
             "day": "Day one",
             "line": "One search. Three fixed prices.",
             "label": "See the packages",
@@ -55,12 +56,12 @@
           "type": "chapter",
           "settings": {
             "chapter": 3,
-            "rail": "Setting up",
-            "a": "31.5",
-            "b": "43.0",
-            "time": "8:00 AM",
-            "day": "Day two",
-            "line": "Next morning, the kitchen becomes a bakery.",
+            "rail": "Overnight",
+            "a": "30.4",
+            "b": "37.4",
+            "time": "10:30 PM",
+            "day": "Day one",
+            "line": "Lights out. The plan can wait.",
             "label": "",
             "link": "",
             "demo": false
@@ -70,12 +71,12 @@
           "type": "chapter",
           "settings": {
             "chapter": 4,
-            "rail": "First batch",
-            "a": "43.0",
-            "b": "56.3",
-            "time": "10:00 AM",
+            "rail": "Setting up",
+            "a": "37.4",
+            "b": "43.0",
+            "time": "7:00 AM",
             "day": "Day two",
-            "line": "Twelve on the tray. Into the oven.",
+            "line": "Morning. The kitchen becomes a bakery.",
             "label": "",
             "link": "",
             "demo": false
@@ -85,12 +86,12 @@
           "type": "chapter",
           "settings": {
             "chapter": 5,
-            "rail": "The build",
-            "a": "56.3",
-            "b": "78.9",
-            "time": "1:00 PM",
+            "rail": "First batch",
+            "a": "43.0",
+            "b": "56.3",
+            "time": "9:00 AM",
             "day": "Day two",
-            "line": "We build the store. She bakes.",
+            "line": "Twelve on the tray. Into the oven.",
             "label": "",
             "link": "",
             "demo": false
@@ -100,6 +101,21 @@
           "type": "chapter",
           "settings": {
             "chapter": 6,
+            "rail": "The build",
+            "a": "56.3",
+            "b": "78.9",
+            "time": "10:15 AM",
+            "day": "Day two",
+            "line": "We build the store. She bakes.",
+            "label": "",
+            "link": "",
+            "demo": false
+          }
+        },
+        "ch7": {
+          "type": "chapter",
+          "settings": {
+            "chapter": 7,
             "rail": "Launch",
             "a": "78.9",
             "b": "84.4",
@@ -111,14 +127,14 @@
             "demo": true
           }
         },
-        "ch7": {
+        "ch8": {
           "type": "chapter",
           "settings": {
-            "chapter": 7,
+            "chapter": 8,
             "rail": "Orders",
             "a": "84.4",
             "b": "93.3",
-            "time": "6:30 PM",
+            "time": "6:20 PM",
             "day": "Day two",
             "line": "Demo orders, packed by hand.",
             "label": "",
@@ -126,16 +142,16 @@
             "demo": true
           }
         },
-        "ch8": {
+        "ch9": {
           "type": "chapter",
           "settings": {
-            "chapter": 8,
-            "rail": "Morning",
+            "chapter": 9,
+            "rail": "Next day",
             "a": "93.3",
             "b": "100.2",
-            "time": "7:00 AM",
-            "day": "Day three",
-            "line": "The next morning. Your turn.",
+            "time": "8:30 PM",
+            "day": "Day two",
+            "line": "Night falls, then morning. Your turn.",
             "label": "Start your project",
             "link": "#packages",
             "demo": false
@@ -150,7 +166,8 @@
         "ch5",
         "ch6",
         "ch7",
-        "ch8"
+        "ch8",
+        "ch9"
       ]
     },
     "interlude": {
@@ -182,7 +199,8 @@
         "heading": "NOVA, <em>a made-up label.</em>",
         "text": "A clothing label, printed at home.",
         "cue": "Scroll to play",
-        "note": "Pre-rendered animation played by your scroll. Brands and orders are made-up demo data."
+        "note": "Pre-rendered animation played by your scroll. Brands and orders are made-up demo data.",
+        "clock": "0.00:21.6,27.78:23.4,30.00:23.9,36.67:32.2,48.52:33.2,56.67:34,64.07:37.2,77.78:40.4,84.44:42.3,93.33:44,100.00:45.6"
       },
       "blocks": {
         "ch1": {
@@ -192,7 +210,7 @@
             "rail": "The design",
             "a": "4",
             "b": "12.2",
-            "time": "9:40 PM",
+            "time": "9:50 PM",
             "day": "Day one",
             "line": "Late night. Picking the first design.",
             "label": "",
@@ -207,9 +225,9 @@
             "rail": "The pick",
             "a": "12.2",
             "b": "29.6",
-            "time": "10:30 PM",
+            "time": "10:20 PM",
             "day": "Day one",
-            "line": "She picks Business Launch, then sleeps.",
+            "line": "She picks Business Launch.",
             "label": "See the packages",
             "link": "#packages",
             "demo": false
@@ -219,12 +237,12 @@
           "type": "chapter",
           "settings": {
             "chapter": 3,
-            "rail": "The press",
+            "rail": "Overnight",
             "a": "29.6",
-            "b": "56.7",
-            "time": "8:30 AM",
-            "day": "Day two",
-            "line": "Blank tee, transfer, heat. Peel.",
+            "b": "35.7",
+            "time": "11:45 PM",
+            "day": "Day one",
+            "line": "Lights out. Tomorrow, the press.",
             "label": "",
             "link": "",
             "demo": false
@@ -234,12 +252,12 @@
           "type": "chapter",
           "settings": {
             "chapter": 4,
-            "rail": "The rack",
-            "a": "56.7",
-            "b": "64.1",
-            "time": "11:00 AM",
+            "rail": "The press",
+            "a": "35.7",
+            "b": "56.7",
+            "time": "7:00 AM",
             "day": "Day two",
-            "line": "Tee after tee. The rack fills.",
+            "line": "Blank tee, transfer, heat. Peel.",
             "label": "",
             "link": "",
             "demo": false
@@ -249,12 +267,12 @@
           "type": "chapter",
           "settings": {
             "chapter": 5,
-            "rail": "The build",
-            "a": "64.1",
-            "b": "78.1",
-            "time": "2:00 PM",
+            "rail": "The rack",
+            "a": "56.7",
+            "b": "64.1",
+            "time": "10:00 AM",
             "day": "Day two",
-            "line": "We build the store. She folds.",
+            "line": "Tee after tee. The rack fills.",
             "label": "",
             "link": "",
             "demo": false
@@ -264,27 +282,27 @@
           "type": "chapter",
           "settings": {
             "chapter": 6,
-            "rail": "Launch",
-            "a": "78.1",
-            "b": "84.8",
-            "time": "6:00 PM",
+            "rail": "The build",
+            "a": "64.1",
+            "b": "78.1",
+            "time": "1:10 PM",
             "day": "Day two",
-            "line": "NOVA goes live. A made-up label.",
+            "line": "We build the store. She folds.",
             "label": "",
             "link": "",
-            "demo": true
+            "demo": false
           }
         },
         "ch7": {
           "type": "chapter",
           "settings": {
             "chapter": 7,
-            "rail": "Orders",
-            "a": "84.8",
-            "b": "93.7",
-            "time": "7:30 PM",
+            "rail": "Launch",
+            "a": "78.1",
+            "b": "84.8",
+            "time": "4:30 PM",
             "day": "Day two",
-            "line": "Demo orders, folded into mailers.",
+            "line": "NOVA goes live. A made-up label.",
             "label": "",
             "link": "",
             "demo": true
@@ -294,10 +312,25 @@
           "type": "chapter",
           "settings": {
             "chapter": 8,
+            "rail": "Orders",
+            "a": "84.8",
+            "b": "93.7",
+            "time": "6:20 PM",
+            "day": "Day two",
+            "line": "Demo orders, folded into mailers.",
+            "label": "",
+            "link": "",
+            "demo": true
+          }
+        },
+        "ch9": {
+          "type": "chapter",
+          "settings": {
+            "chapter": 9,
             "rail": "Next",
             "a": "93.7",
             "b": "100.2",
-            "time": "9:30 PM",
+            "time": "8:00 PM",
             "day": "Day two",
             "line": "Same box. Your business next.",
             "label": "Start your project",
@@ -314,7 +347,8 @@
         "ch5",
         "ch6",
         "ch7",
-        "ch8"
+        "ch8",
+        "ch9"
       ]
     },
     "packages": {
@@ -391,8 +425,7 @@
             "list": "*Everything in 3D Experience\n*Up to 40 products uploaded, descriptions written\n*Logo refresh and mini brand guide\nInstagram, Facebook and TikTok profiles set up\nMeta and TikTok pixels; 1 ad campaign drafted, not launched\nSpanish versions of key pages\nUp to 10 pages, 2 custom landing pages",
             "time": "4 to 5 weeks",
             "demo_link": "/?view=launch-demo",
-            "demo_label": "See a demo",
-            "orbit": "-25deg 50deg auto"
+            "demo_label": "See a demo"
           }
         }
       },

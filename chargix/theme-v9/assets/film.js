@@ -134,6 +134,20 @@ export function init(root) {
   const bar = root.querySelector('[data-film-bar]');
   const time = root.querySelector('[data-film-time]'), day = root.querySelector('[data-film-day]');
   const introEnd = (+root.dataset.intro || 4) / 100;
+  // live clock: the time of day the render itself is lit for at this point of the film
+  const clock = (root.dataset.clock || '').split(',').map((k) => k.split(':').map(Number)).filter((k) => k.length === 2 && k.every(isFinite));
+  let shownClock = '';
+  function tick(p) {
+    if (clock.length < 2 || !time) return false;
+    const x = p * 100; let i = 0; while (i < clock.length - 2 && x > clock[i + 1][0]) i++;
+    const [a, ha] = clock[i], [b, hb] = clock[i + 1];
+    const h = ha + (hb - ha) * clamp((x - a) / (b - a || 1));
+    const m = Math.floor((h * 60) / 5) * 5, hh = Math.floor(m / 60) % 24, mm = m % 60;
+    const t = `${hh % 12 || 12}:${String(mm).padStart(2, '0')} ${hh < 12 ? 'AM' : 'PM'}`;
+    const d = ['Day one', 'Day two', 'Day three', 'Day four'][Math.min(3, Math.floor(m / 1440))];
+    if (t + d !== shownClock) { shownClock = t + d; time.textContent = t; if (day) day.textContent = d; }
+    return true;
+  }
   const phone = matchMedia('(max-width: 749px)').matches;
   root.classList.add('is-live');
   caps.forEach((c) => { c.setAttribute('aria-hidden', 'true'); c.inert = true; });
@@ -152,6 +166,7 @@ export function init(root) {
   function paint(p) {
     if (bar) bar.style.transform = `scaleX(${p})`;
     root.classList.toggle('is-past-intro', p > introEnd);
+    const live = tick(p);
     let cur = -1;
     caps.forEach((c, i) => {
       const on = p >= c.dataset.a / 100 && p < c.dataset.b / 100;
@@ -160,8 +175,8 @@ export function init(root) {
     });
     if (cur !== last && cur >= 0) {
       last = cur; const c = caps[cur];
-      if (time && c.dataset.time) time.textContent = c.dataset.time;
-      if (day && c.dataset.day) day.textContent = c.dataset.day;
+      if (!live && time && c.dataset.time) time.textContent = c.dataset.time;
+      if (!live && day && c.dataset.day) day.textContent = c.dataset.day;
       rail.forEach((r) => r.classList.toggle('is-on', +r.dataset.rail === +c.dataset.chapter));
     }
   }

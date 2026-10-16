@@ -14,7 +14,7 @@
   assign track_name = prefix | append: '-track.json'
   assign anchor = section.settings.anchor | default: section.id
 -%}
-<section class="film" id="{{ anchor }}" data-film data-anchor="{{ anchor }}" data-base="{{ base }}" data-prefix="{{ prefix }}" data-frames="{{ section.settings.frames }}" data-intro="{{ section.settings.intro_end }}"{% if section.settings.track %} data-track="{{ track_name | asset_url }}"{% endif %} aria-label="{{ section.settings.label | escape }}">
+<section class="film" id="{{ anchor }}" data-film data-anchor="{{ anchor }}" data-base="{{ base }}" data-prefix="{{ prefix }}" data-frames="{{ section.settings.frames }}" data-intro="{{ section.settings.intro_end }}"{% if section.settings.clock != blank %} data-clock="{{ section.settings.clock | escape }}"{% endif %}{% if section.settings.track %} data-track="{{ track_name | asset_url }}"{% endif %} aria-label="{{ section.settings.label | escape }}">
   <div class="film__track" data-film-track style="--len: {{ section.settings.length }}svh">
     <div class="film__stage">
       <div class="film__frame">
@@ -44,7 +44,7 @@
         <ol class="film__caps">
           {%- for block in section.blocks -%}
             <li class="cap" data-cap data-chapter="{{ block.settings.chapter }}" data-a="{{ block.settings.a }}" data-b="{{ block.settings.b }}" data-time="{{ block.settings.time }}" data-day="{{ block.settings.day }}" {{ block.shopify_attributes }}>
-              <span class="cap__n">{{ block.settings.chapter | prepend: '0' | slice: -2, 2 }}{%- if block.settings.rail != blank %} · {{ block.settings.rail }}{% endif %}<span class="cap__time"> · {{ block.settings.time }}</span></span>
+              <span class="cap__n">{{ block.settings.chapter | prepend: '0' | slice: -2, 2 }}{%- if block.settings.rail != blank %} · {{ block.settings.rail }}{% endif %}</span>
               <p class="cap__line">{{ block.settings.line }}</p>
               {%- if block.settings.label != blank -%}<a class="btn btn--lamp btn--sm cap__btn" href="{{ block.settings.link }}">{{ block.settings.label }} {% render 'icon', i: 'arrow' %}</a>{%- endif -%}
               {%- if block.settings.demo -%}<span class="cap__demo">{{ 'film.demo' | t }}</span>{%- endif -%}
@@ -71,6 +71,7 @@
     { "type": "number", "id": "frames", "label": "Frame count", "default": 480 },
     { "type": "text", "id": "poster", "label": "Poster frame number (3 digits)", "default": "000" },
     { "type": "text", "id": "poster_alt", "label": "Poster description", "default": "A miniature room on a dark plinth." },
+    { "type": "text", "id": "clock", "label": "Film clock", "info": "Progress %:hour pairs taken from the render (hours past midnight of day one, e.g. 4:18.9,37:31). The clock then follows the film's own light. Blank: each chapter's time is shown." },
     { "type": "checkbox", "id": "track", "label": "Use camera track (prefix-track.json)", "info": "Frames the action like a virtual camera, tighter on phones. Leave on; without the file the film falls back to the full frame.", "default": true },
     { "type": "checkbox", "id": "eager", "label": "First thing on the page (load poster eagerly)", "default": false },
     { "type": "checkbox", "id": "h1", "label": "Heading is the page title (h1)", "default": false },
