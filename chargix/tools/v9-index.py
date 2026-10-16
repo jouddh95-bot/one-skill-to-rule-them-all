@@ -25,7 +25,7 @@ STORIES = {
     "chapters": [
       ch(1, "The idea", "4.0", "7.8", "7:00 PM", "Day one", "A small idea, after a long day."),
       ch(2, "Finding CHARGIX", "7.8", "30.4", "7:20 PM", "Day one", "One search. Three fixed prices.", "See the packages", "#packages"),
-      ch(3, "Overnight", "30.4", "37.4", "10:30 PM", "Day one", "Lights out. The plan can wait."),
+      ch(3, "Overnight", "30.4", "37.4", "10:30 PM", "Day one", "Overnight. Morning comes fast."),
       ch(4, "Setting up", "37.4", "43.0", "7:00 AM", "Day two", "Morning. The kitchen becomes a bakery."),
       ch(5, "First batch", "43.0", "56.3", "9:00 AM", "Day two", "Twelve on the tray. Into the oven."),
       ch(6, "The build", "56.3", "78.9", "10:15 AM", "Day two", "We build the store. She bakes."),
@@ -47,7 +47,7 @@ STORIES = {
     "chapters": [
       ch(1, "The design", "4", "12.2", "9:50 PM", "Day one", "Late night. Picking the first design."),
       ch(2, "The pick", "12.2", "29.6", "10:20 PM", "Day one", "She picks Business Launch.", "See the packages", "#packages"),
-      ch(3, "Overnight", "29.6", "35.7", "11:45 PM", "Day one", "Lights out. Tomorrow, the press."),
+      ch(3, "Overnight", "29.6", "35.7", "11:45 PM", "Day one", "Overnight. The press waits for morning."),
       ch(4, "The press", "35.7", "56.7", "7:00 AM", "Day two", "Blank tee, transfer, heat. Peel."),
       ch(5, "The rack", "56.7", "64.1", "10:00 AM", "Day two", "Tee after tee. The rack fills."),
       ch(6, "The build", "64.1", "78.1", "1:10 PM", "Day two", "We build the store. She folds."),
