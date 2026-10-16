@@ -45,7 +45,7 @@
                     {%- assign poster_url = poster | asset_url -%}
                   {%- endif -%}
                   {%- if block.settings.glb != blank -%}
-                    <template data-mv-tpl><model-viewer class="pk__mv" src="{{ block.settings.glb | asset_url }}"{% if poster_url != blank %} poster="{{ poster_url }}"{% endif %} alt="{{ block.settings.model_alt | escape }}" camera-controls disable-zoom touch-action="pan-y" auto-rotate auto-rotate-delay="0" rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="1" shadow-softness=".9" exposure="1.05" environment-image="neutral" camera-orbit="30deg 72deg auto"></model-viewer></template>
+                    <template data-mv-tpl><model-viewer class="pk__mv" src="{{ block.settings.glb | asset_url }}"{% if poster_url != blank %} poster="{{ poster_url }}"{% endif %} alt="{{ block.settings.model_alt | escape }}" camera-controls disable-zoom touch-action="pan-y" auto-rotate auto-rotate-delay="0" rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="1" shadow-softness=".9" exposure="1.05" environment-image="neutral" camera-orbit="{{ block.settings.orbit | default: '30deg 72deg auto' }}"></model-viewer></template>
                     <span class="pk__hint" aria-hidden="true">{% render 'icon', i: 'hand' %}{{ 'packages.drag' | t }}</span>
                   {%- endif -%}
                 </div>
@@ -211,6 +211,7 @@
       { "type": "image_picker", "id": "image", "label": "Preview / poster image" },
       { "type": "text", "id": "asset", "label": "Or preview / poster from theme assets (file name)" },
       { "type": "text", "id": "glb", "label": "3D model from theme assets (.glb file name)", "info": "Leave blank to show the poster only." },
+      { "type": "text", "id": "orbit", "label": "3D camera angle", "default": "30deg 72deg auto", "info": "model-viewer camera-orbit: turn, tilt, distance." },
       { "type": "text", "id": "model_alt", "label": "3D model description", "default": "A 3D scene you can turn around" },
       { "type": "text", "id": "mini_url", "label": "Mockup address bar", "default": "sweetandco.demo" },
       { "type": "text", "id": "mini_brand", "label": "Drawn mockup: brand", "default": "Sweet & Co." },

@@ -391,7 +391,8 @@
             "list": "*Everything in 3D Experience\n*Up to 40 products uploaded, descriptions written\n*Logo refresh and mini brand guide\nInstagram, Facebook and TikTok profiles set up\nMeta and TikTok pixels; 1 ad campaign drafted, not launched\nSpanish versions of key pages\nUp to 10 pages, 2 custom landing pages",
             "time": "4 to 5 weeks",
             "demo_link": "/?view=launch-demo",
-            "demo_label": "See a demo"
+            "demo_label": "See a demo",
+            "orbit": "-25deg 50deg auto"
           }
         }
       },

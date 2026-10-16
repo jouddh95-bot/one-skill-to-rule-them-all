@@ -1,4 +1,4 @@
-# CHARGIX · nova-box.glb for the Business Launch package card: a folded NOVA tee on an open black
+# CHARGIX · nova-box.glb for the Business Launch package card: a folded bone NOVA tee (the design picked in the story) on an open black
 # poly mailer, with a second sealed mailer behind it. Plain glTF materials (colour + one print texture),
 # so it loads fast in <model-viewer>.
 # usage: python nova_glb.py <out.glb>
@@ -38,14 +38,14 @@ def png(path, size, bg, draw):
     im = Image.new("RGBA" if len(bg) == 4 else "RGB", size, bg); draw(ImageDraw.Draw(im), size); im.save(path); return path
 def tee_print(d, s):
     w, h = s; acc = (184, 143, 88)
-    d.ellipse((int(w * .15), int(h * .30), int(w * .85), int(h * .58)), outline=acc, width=14)
-    d.text((w / 2, h * .45), "NOVA", font=ImageFont.truetype(FONT_B, int(w * .22)), fill=(240, 236, 228), anchor="mm")
-    d.text((w / 2, h * .68), "STUDIO · EST. 2026", font=ImageFont.truetype(FONT, int(w * .05)), fill=(240, 236, 228), anchor="mm")
+    d.ellipse((int(w * .15), int(h * .30), int(w * .85), int(h * .58)), outline=acc + (255,), width=14)
+    d.text((w / 2, h * .45), "NOVA", font=ImageFont.truetype(FONT_B, int(w * .22)), fill=(22, 22, 26, 255), anchor="mm")
+    d.text((w / 2, h * .68), "STUDIO · EST. 2026", font=ImageFont.truetype(FONT, int(w * .05)), fill=(22, 22, 26, 255), anchor="mm")
 def label(d, s):
     w, h = s
     d.text((w / 2, h * .42), "NOVA", font=ImageFont.truetype(FONT_B, int(h * .38)), fill=(18, 18, 22), anchor="mm")
     d.text((w / 2, h * .78), "nova.example · demo", font=ImageFont.truetype(FONT, int(h * .1)), fill=(18, 18, 22), anchor="mm")
-P = png(os.path.join(TMP, "print.png"), (1024, 1024), (40, 40, 46, 0), tee_print)
+P = png(os.path.join(TMP, "print.png"), (1024, 1024), (236, 231, 222, 0), tee_print)
 Lb = png(os.path.join(TMP, "label.png"), (768, 384), (244, 241, 234), label)
 
 def jersey(path_out, tint):
@@ -66,7 +66,7 @@ def uvs(ob, rep):
     bpy.context.view_layer.objects.active = ob
     for o in col.objects: o.select_set(o == ob)
     bpy.ops.object.mode_set(mode="EDIT"); bpy.ops.mesh.select_all(action="SELECT"); bpy.ops.uv.cube_project(cube_size=1.0 / rep); bpy.ops.object.mode_set(mode="OBJECT")
-M_mail = mat("mailer", "#141416", 0.38); M_in = mat("mailerIn", "#e9e6e0", 0.8); M_tee = fabric("tee", (40, 40, 46))
+M_mail = mat("mailer", "#141416", 0.38); M_in = mat("mailerIn", "#e9e6e0", 0.8); M_tee = fabric("tee", (236, 231, 222))
 M_print = mat("print", "#ffffff", 0.9, P); _nt = M_print.node_tree
 _nt.links.new([n for n in _nt.nodes if n.type == "TEX_IMAGE"][0].outputs["Alpha"], _nt.nodes["Principled BSDF"].inputs["Alpha"])
 if hasattr(M_print, "surface_render_method"): M_print.surface_render_method = "BLENDED"; M_lab = mat("label", "#ffffff", 0.7, Lb)

@@ -261,7 +261,7 @@ main { display: block; outline: 0; }
 .pk--plus .pk__preview, .pk--premium .pk__preview { background: radial-gradient(80% 70% at 50% 40%, #2a2420, var(--bg-2)); }
 .pk__badges { position: absolute; left: 10px; top: 10px; right: 10px; display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none; z-index: 3; }
 .pk__stage { position: absolute; inset: 0; }
-.pk__preview--site .pk__badges, .pk__preview--image .pk__badges { top: 38px; }
+.pk__preview--site .pk__badges, .pk__preview--image .pk__badges { top: auto; bottom: 10px; }
 .pk__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .5s var(--ease); }
 .pk__stage.is-ready .pk__poster { opacity: 0; }
 .pk__mv { position: absolute; inset: 0; width: 100%; height: 100%; background: transparent; --poster-color: transparent; --progress-bar-color: var(--lamp); }
