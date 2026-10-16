@@ -1,0 +1,28 @@
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/shopify_pay/accelerated_checkout net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] shot sl-0100: page.screenshot: Timeout 60000ms exceeded.
+[desk] state {"mono":true,"ready":true,"html":"js cx-cine cx-loaded","pv":"pv pv--on pv--ready","gates":2}
+[mob] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[mob] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/shopify_pay/accelerated_checkout net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] shot sl-0100: page.screenshot: Timeout 60000ms exceeded.
+[mob] state {"mono":true,"ready":true,"html":"js cx-cine cx-loaded","pv":"pv pv--on pv--ready","gates":2}

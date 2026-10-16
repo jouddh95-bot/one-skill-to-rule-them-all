@@ -1,0 +1,111 @@
+{%- comment -%}
+  Product page. Studio services (product type "Service", or tagged "service") get the service
+  layout: description, fixed price, what happens after you pay, straight to checkout. Everything
+  else is a physical product: gallery, variant picker, quantity, delivery estimate, add to cart.
+{%- endcomment -%}
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign is_service = false
+  if product.type == 'Service' or product.tags contains 'service' or product.handle == 'essential-website' or product.handle == '3d-experience-website' or product.handle == 'business-launch' or product.handle == 'care-plan'
+    assign is_service = true
+  endif
+-%}
+<section class="pdp{% if is_service %} pdp--service{% else %} pdp--goods{% endif %}" data-product>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="{{ 'general.breadcrumb' | t }}">
+      <a href="{{ routes.root_url }}">{{ settings.brand_name | default: 'CHARGIX' }}</a><span aria-hidden="true">/</span>
+      {%- if is_service -%}<a href="{{ routes.root_url }}#packages">{{ 'packages.title' | t }}</a>
+      {%- elsif collection -%}<a href="{{ collection.url }}">{{ collection.title | escape }}</a>
+      {%- else -%}<a href="{{ routes.all_products_collection_url }}">{{ 'products.shop' | t }}</a>{%- endif -%}
+    </nav>
+    <div class="pdp__grid">
+      <div>
+        {%- if is_service -%}
+          <p class="label-mono"><i class="dot" aria-hidden="true"></i>{{ product.type | default: 'Service' }}</p>
+          <h1 class="t-h2">{{ product.title | escape }}</h1>
+          <div class="prose pdp__desc">{{ product.description }}</div>
+        {%- else -%}
+          <div class="gal">
+            {%- for m in product.media limit: 8 -%}
+              {%- if m.media_type == 'image' -%}
+                {%- assign ld = 'lazy' -%}{%- if forloop.first -%}{%- assign ld = 'eager' -%}{%- endif -%}
+                {{ m | image_url: width: 1400 | image_tag: loading: ld, widths: '480,800,1100,1400', sizes: '(min-width: 990px) 55vw, 100vw', alt: m.alt | default: product.title }}
+              {%- endif -%}
+            {%- else -%}<div class="gal__empty">{% render 'icon', i: 'box' %}</div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+      <aside>
+        <div class="buy glass">
+          {%- unless is_service -%}<h1 class="t-h3">{{ product.title | escape }}</h1>{%- endunless -%}
+          <div>
+            <p class="label-mono">{%- if is_service -%}{{ 'products.fixed_price' | t }}{%- else -%}{{ 'products.price' | t }}{%- endif -%}</p>
+            <p class="buy__price" data-price-out>{{ v.price | money_without_trailing_zeros }}{%- if v.compare_at_price > v.price -%} <s class="buy__was">{{ v.compare_at_price | money }}</s>{%- endif -%}</p>
+            <p class="buy__note">{%- if is_service -%}{{ 'products.service_note' | t }}{%- else -%}{{ 'products.tax_note' | t }}{%- endif -%}</p>
+          </div>
+          {%- form 'product', product, class: 'buy__form', data-product-form: '' -%}
+            {%- if product.has_only_default_variant -%}
+              <input type="hidden" name="id" value="{{ v.id }}" data-variant-id>
+            {%- else -%}
+              <fieldset class="opts" data-price-group="[data-price-out]">
+                <legend class="label">{{ product.options | join: ' / ' }}</legend>
+                {%- for x in product.variants -%}
+                  <label class="opt"><input class="opt__in" type="radio" name="id" value="{{ x.id }}" data-price="{{ x.price | money_without_trailing_zeros }}" data-option-input{% if x.id == v.id %} checked{% endif %}{% unless x.available %} disabled{% endunless %}> <span class="opt__t">{{ x.title | escape }}</span><span class="opt__p">{%- if x.available -%}{{ x.price | money_without_trailing_zeros }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}</span></label>
+                {%- endfor -%}
+              </fieldset>
+              <input type="hidden" value="{{ v.id }}" data-variant-id>
+            {%- endif -%}
+            {%- if is_service -%}
+              <input type="hidden" name="quantity" value="1">
+              <input type="hidden" name="return_to" value="/checkout">
+              <button class="btn btn--lamp btn--block" type="submit" name="add"{% unless v.available %} disabled{% endunless %}>{%- if v.available -%}{{ 'products.buy_now' | t }} {% render 'icon', i: 'arrow' %}{%- else -%}{{ 'products.unavailable' | t }}{%- endif -%}</button>
+            {%- else -%}
+              <div class="buy__row">
+                <div class="qty" data-qty><button type="button" data-step="-" aria-label="{{ 'cart.minus' | t }}">−</button><input type="number" name="quantity" value="1" min="1" aria-label="{{ 'cart.qty' | t }}"><button type="button" data-step="+" aria-label="{{ 'cart.plus' | t }}">+</button></div>
+                <button class="btn btn--lamp buy__add" type="submit" name="add"{% unless v.available %} disabled{% endunless %}>{%- if v.available -%}{{ 'products.add' | t }}{%- else -%}{{ 'products.sold_out' | t }}{%- endif -%}</button>
+              </div>
+            {%- endif -%}
+          {%- endform -%}
+          {%- unless is_service -%}{% render 'delivery-estimate', product: product, variant: v, section: section %}{%- endunless -%}
+          <div class="pay-icons" aria-label="{{ 'general.payments' | t }}">{%- for t in shop.enabled_payment_types -%}{{ t | payment_type_svg_tag }}{%- endfor -%}</div>
+          {%- if is_service -%}
+            <div>
+              <p class="t-h4">{{ 'products.after_pay' | t }}</p>
+              <ol class="buy__steps"><li>{{ 'products.after_1' | t }}</li><li>{{ 'products.after_2' | t }}</li><li>{{ 'products.after_3' | t }}</li></ol>
+            </div>
+            <p class="hint">{{ 'products.service_fine' | t }}</p>
+            <p><a class="btn btn--text" href="{{ routes.root_url }}#compare">{{ 'packages.compare' | t }} {% render 'icon', i: 'arrow' %}</a></p>
+          {%- else -%}
+            <div class="prose small">{{ product.description }}</div>
+          {%- endif -%}
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{%- if is_service -%}
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "Service", "name": {{ product.title | json }}, "provider": { "@type": "Organization", "name": {{ settings.brand_name | default: 'CHARGIX' | json }} }, "areaServed": ["US", "MX"], "description": {{ product.description | strip_html | truncate: 300 | json }},
+  "offers": { "@type": "Offer", "price": {{ v.price | divided_by: 100.0 | json }}, "priceCurrency": {{ cart.currency.iso_code | json }}, "url": {{ shop.url | append: product.url | json }} } }
+</script>
+{%- else -%}
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "Product", "name": {{ product.title | json }}, "description": {{ product.description | strip_html | truncate: 300 | json }}{% if product.featured_image %}, "image": {{ product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }}{% endif %},
+  "offers": { "@type": "Offer", "price": {{ v.price | divided_by: 100.0 | json }}, "priceCurrency": {{ cart.currency.iso_code | json }}, "availability": "https://schema.org/{% if v.available %}InStock{% else %}OutOfStock{% endif %}", "url": {{ shop.url | append: product.url | json }} } }
+</script>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "header", "content": "Delivery estimate (physical products)" },
+    { "type": "number", "id": "eta_us_min", "label": "US warehouse: min business days", "default": 4 },
+    { "type": "number", "id": "eta_us_max", "label": "US warehouse: max business days", "default": 8 },
+    { "type": "number", "id": "eta_intl_min", "label": "Overseas: min business days", "default": 7 },
+    { "type": "number", "id": "eta_intl_max", "label": "Overseas: max business days", "default": 14 },
+    { "type": "text", "id": "eta_holiday_date", "label": "Holiday cutoff (YYYY-MM-DD)" },
+    { "type": "text", "id": "eta_holiday_label", "label": "Holiday badge" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,102 @@
+{%- comment -%}
+  Scroll film. A pre-rendered frame sequence ({prefix}-000.webp … 1920×1200) scrubbed by scroll;
+  film.js cross-dissolves neighbouring frames on a canvas and, when {prefix}-track.json exists,
+  frames the action like a virtual camera (tighter on phones). The picture tells the story: each
+  chapter is one short line plus a tiny label. Default markup is the static version (poster plus
+  the chapter list), so without JS or with reduced motion everything is still readable; film.js
+  adds .is-live to turn it into the sticky player.
+{%- endcomment -%}
+{%- liquid
+  assign prefix = section.settings.prefix
+  assign first = prefix | append: '-000.webp'
+  assign base = first | asset_url | split: first | first
+  assign poster_name = prefix | append: '-' | append: section.settings.poster | append: '.webp'
+  assign track_name = prefix | append: '-track.json'
+  assign anchor = section.settings.anchor | default: section.id
+-%}
+<section class="film" id="{{ anchor }}" data-film data-anchor="{{ anchor }}" data-base="{{ base }}" data-prefix="{{ prefix }}" data-frames="{{ section.settings.frames }}" data-intro="{{ section.settings.intro_end }}"{% if section.settings.clock != blank %} data-clock="{{ section.settings.clock | escape }}"{% endif %}{% if section.settings.track %} data-track="{{ track_name | asset_url }}"{% endif %} aria-label="{{ section.settings.label | escape }}">
+  <div class="film__track" data-film-track style="--len: {{ section.settings.length }}svh">
+    <div class="film__stage">
+      <div class="film__frame">
+        <img class="film__poster" src="{{ poster_name | asset_url }}" alt="{{ section.settings.poster_alt | escape }}" width="1920" height="1200"{% if section.settings.eager %} fetchpriority="high"{% else %} loading="lazy"{% endif %}>
+        <canvas class="film__canvas" data-film-canvas aria-hidden="true"></canvas>
+        <div class="film__shade" aria-hidden="true"></div>
+
+        <div class="film__intro">
+          {%- if section.settings.eyebrow != blank -%}<p class="label-mono"><i class="dot" aria-hidden="true"></i>{{ section.settings.eyebrow }}</p>{%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            {%- if section.settings.h1 -%}<h1 class="t-hero">{{ section.settings.heading }}</h1>{%- else -%}<h2 class="t-hero">{{ section.settings.heading }}</h2>{%- endif -%}
+          {%- endif -%}
+          {%- if section.settings.text != blank -%}<p class="film__lead">{{ section.settings.text }}</p>{%- endif -%}
+          {%- if section.settings.cue != blank -%}<span class="film__cue" aria-hidden="true"><i></i>{{ section.settings.cue }}</span>{%- endif -%}
+        </div>
+
+        <div class="film__clock" aria-hidden="true"><span class="film__time" data-film-time>{{ section.blocks.first.settings.time }}</span><span class="film__day" data-film-day>{{ section.blocks.first.settings.day }}</span></div>
+
+        <nav class="film__rail" aria-label="{{ 'film.chapters' | t }}">
+          {%- for block in section.blocks -%}
+            {%- if block.settings.rail != blank -%}
+              <a href="#{{ anchor }}" data-rail="{{ block.settings.chapter }}"><span>{{ block.settings.rail }}</span><i></i></a>
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+
+        <ol class="film__caps">
+          {%- for block in section.blocks -%}
+            <li class="cap" data-cap data-chapter="{{ block.settings.chapter }}" data-a="{{ block.settings.a }}" data-b="{{ block.settings.b }}" data-time="{{ block.settings.time }}" data-day="{{ block.settings.day }}" {{ block.shopify_attributes }}>
+              <span class="cap__n">{{ block.settings.chapter | prepend: '0' | slice: -2, 2 }}{%- if block.settings.rail != blank %} · {{ block.settings.rail }}{% endif %}</span>
+              <p class="cap__line">{{ block.settings.line }}</p>
+              {%- if block.settings.label != blank -%}<a class="btn btn--lamp btn--sm cap__btn" href="{{ block.settings.link }}">{{ block.settings.label }} {% render 'icon', i: 'arrow' %}</a>{%- endif -%}
+              {%- if block.settings.demo -%}<span class="cap__demo">{{ 'film.demo' | t }}</span>{%- endif -%}
+            </li>
+          {%- endfor -%}
+        </ol>
+      </div>
+      <div class="film__foot">
+        <span class="film__bar" aria-hidden="true"><i data-film-bar></i></span>
+        {%- if section.settings.note != blank -%}<p class="film__note">{{ section.settings.note }}</p>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+<script type="module" src="{{ 'film.js' | asset_url }}"></script>
+
+{% schema %}
+{
+  "name": "Scroll film",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "story" },
+    { "type": "text", "id": "label", "label": "Accessible name", "default": "A scroll film inside one miniature room" },
+    { "type": "text", "id": "prefix", "label": "Frame file prefix", "info": "Frames are theme assets named prefix-000.webp, prefix-001.webp … (1920×1200).", "default": "cookie" },
+    { "type": "number", "id": "frames", "label": "Frame count", "default": 480 },
+    { "type": "text", "id": "poster", "label": "Poster frame number (3 digits)", "default": "000" },
+    { "type": "text", "id": "poster_alt", "label": "Poster description", "default": "A miniature room on a dark plinth." },
+    { "type": "text", "id": "clock", "label": "Film clock", "info": "Progress %:hour pairs taken from the render (hours past midnight of day one, e.g. 4:18.9,37:31). The clock then follows the film's own light. Blank: each chapter's time is shown." },
+    { "type": "checkbox", "id": "track", "label": "Use camera track (prefix-track.json)", "info": "Frames the action like a virtual camera, tighter on phones. Leave on; without the file the film falls back to the full frame.", "default": true },
+    { "type": "checkbox", "id": "eager", "label": "First thing on the page (load poster eagerly)", "default": false },
+    { "type": "checkbox", "id": "h1", "label": "Heading is the page title (h1)", "default": false },
+    { "type": "range", "id": "length", "label": "Scroll length (screens × 100)", "min": 400, "max": 3000, "step": 100, "unit": "vh", "default": 1800 },
+    { "type": "range", "id": "intro_end", "label": "Opening title leaves at (%)", "min": 1, "max": 15, "step": 1, "unit": "%", "default": 4 },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading (<em> allowed)" },
+    { "type": "text", "id": "text", "label": "Intro line (keep it to one line)" },
+    { "type": "text", "id": "cue", "label": "Scroll cue", "default": "Scroll to play" },
+    { "type": "text", "id": "note", "label": "Small print (under the stage)", "default": "Pre-rendered animation played by your scroll. Brands and orders are made-up demo data." }
+  ],
+  "blocks": [
+    { "type": "chapter", "name": "Chapter", "settings": [
+      { "type": "number", "id": "chapter", "label": "Chapter number", "default": 1 },
+      { "type": "text", "id": "rail", "label": "Chapter label (also shown in the side rail)" },
+      { "type": "text", "id": "a", "label": "Appears at (%)", "default": "0" },
+      { "type": "text", "id": "b", "label": "Leaves at (%)", "default": "10" },
+      { "type": "text", "id": "time", "label": "Scene time", "default": "7:00 AM" },
+      { "type": "text", "id": "day", "label": "Day label", "default": "Day one" },
+      { "type": "text", "id": "line", "label": "Caption (one short line, 8 words or fewer)" },
+      { "type": "text", "id": "label", "label": "Button (optional)" },
+      { "type": "text", "id": "link", "label": "Button link" },
+      { "type": "checkbox", "id": "demo", "label": "Shows demo data", "default": false }
+    ] }
+  ],
+  "presets": [ { "name": "Scroll film" } ]
+}
+{% endschema %}

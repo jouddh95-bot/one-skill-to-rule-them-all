@@ -1,0 +1,26 @@
+name: chargix-scan
+on:
+  push:
+    branches: [claude/project-thread-extkzj]
+    paths: [chargix/jobs/scan.json]
+permissions:
+  contents: write
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Scan
+        run: |
+          cd chargix/tools && npm init -y >/dev/null && npm i playwright@1.48.2 >/dev/null && npx playwright install --with-deps chromium >/dev/null
+          J=../jobs/scan.json
+          node scan.mjs ../out/scan/$(jq -r .label $J) $(jq -r .theme $J) $(jq -r .label $J) "$(jq -r .sel $J)" $(jq -r .max $J)
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name "chargix-pipeline"; git config user.email "pipeline@users.noreply.github.com"
+          git add chargix/out/scan && git commit -qm "chargix: scan $(jq -r .label chargix/jobs/scan.json) [skip ci]" || exit 0
+          for t in 1 2 3 4 5 6 7 8; do git pull -q --rebase && git push -q && exit 0; sleep $((RANDOM % 20 + 5)); done

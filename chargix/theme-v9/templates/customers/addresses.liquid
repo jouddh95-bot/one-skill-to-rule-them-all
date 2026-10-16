@@ -1,0 +1,15 @@
+<section class="sec sec--page"><div class="wrap narrow">
+  <header class="head"><p><a class="btn btn--text" href="{{ routes.account_url }}">{{ 'customer.back' | t }}</a></p><h1 class="t-h2">{{ 'customer.addresses' | t }}</h1></header>
+  {%- for a in customer.addresses -%}
+    <div class="addr glass">
+      {%- if a == customer.default_address -%}<p class="label-mono">{{ 'customer.default' | t }}</p>{%- endif -%}
+      <p>{{ a | format_address }}</p>
+      <details><summary class="btn btn--text">{{ 'customer.edit' | t }}</summary>
+        {%- form 'customer_address', a, class: 'form mt-4' -%}{% render 'address-fields', f: form, id: a.id %}<div class="form__end"><button class="btn btn--lamp" type="submit">{{ 'customer.save' | t }}</button></div>{%- endform -%}
+      </details>
+      <form method="post" action="/account/addresses/{{ a.id }}" class="mt-3"><input type="hidden" name="_method" value="delete"><button class="btn btn--glass btn--sm" type="submit">{{ 'customer.delete' | t }}</button></form>
+    </div>
+  {%- endfor -%}
+  <h2 class="t-h3 mt-7 mb-4">{{ 'customer.add_address' | t }}</h2>
+  {%- form 'customer_address', customer.new_address, class: 'form glass' -%}{% render 'address-fields', f: form, id: 'new' %}<div class="form__end"><button class="btn btn--lamp" type="submit">{{ 'customer.save' | t }}</button></div>{%- endform -%}
+</div></section>

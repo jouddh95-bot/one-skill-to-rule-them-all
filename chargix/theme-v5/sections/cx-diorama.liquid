@@ -1,0 +1,130 @@
+{%- comment -%}
+  CHARGIX · The living miniature. One open-front apartment box, path-traced offline
+  (Blender Cycles, CC0 Poly Haven assets, CC0 MakeHuman figure) into one frame sequence
+  per story. Scrolling through the section scrubs the film: the sun crosses the window,
+  lamps come on, and the figure takes a business from an idea to its first (demo) orders.
+  Captions are blocks with a story and a window in % of the scroll. dio-film.js plays it;
+  without JS the poster still and every caption are shown as a plain list.
+{%- endcomment -%}
+{%- liquid
+  assign first = 'dio-cookie-000.webp' | asset_url
+  assign base = first | split: 'dio-cookie-000.webp' | first
+  assign poster = 'dio-cookie-120.webp' | asset_url
+-%}
+<section class="dio" id="{{ section.settings.anchor }}" data-dio data-base="{{ base }}" data-frames="{{ section.settings.frames }}" data-story="cookie" aria-label="{{ section.settings.label | escape }}">
+  <header class="dio__head page-width">
+    {%- if section.settings.eyebrow != blank -%}<p class="dio__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h2 class="dio__h">{{ section.settings.heading }}</h2>
+    {%- if section.settings.text != blank -%}<p class="dio__t">{{ section.settings.text }}</p>{%- endif -%}
+  </header>
+  <div class="dio__track" data-dio-track style="--len: {{ section.settings.length }}svh">
+    <div class="dio__stage">
+      <img class="dio__poster" src="{{ poster }}" alt="" width="1440" height="900" loading="lazy">
+      <canvas class="dio__canvas" data-dio-canvas aria-hidden="true"></canvas>
+      <div class="dio__tabs" role="group" aria-label="Choose a story">
+        <button type="button" class="dio__tab" data-dio-story="cookie" aria-pressed="true">{{ section.settings.tab_cookie }}</button>
+        <button type="button" class="dio__tab" data-dio-story="clothing" aria-pressed="false">{{ section.settings.tab_clothing }}</button>
+      </div>
+      <div class="dio__caps">
+        {%- for block in section.blocks -%}
+          <article class="dio__cap" data-dio-cap data-story="{{ block.settings.story }}" data-a="{{ block.settings.a }}" data-b="{{ block.settings.b }}" aria-hidden="true" {{ block.shopify_attributes }}>
+            {%- if block.settings.time != blank -%}<p class="dio__time">{{ block.settings.time }}</p>{%- endif -%}
+            <h3 class="dio__ch">{{ block.settings.heading }}</h3>
+            {%- if block.settings.text != blank -%}<p class="dio__ct">{{ block.settings.text }}</p>{%- endif -%}
+            {%- if block.settings.packages -%}
+              <ul class="dio__pk">
+                <li><b>$750</b> Essential Website <span>A professional website, no immersive 3D</span></li>
+                <li><b>$1,650</b> 3D Experience <span>Adds premium interactive 3D</span></li>
+                <li class="is-pick"><b>$2,750</b> Business Launch <span>Premium interactive 3D plus the full business launch</span></li>
+              </ul>
+            {%- endif -%}
+            {%- if block.settings.label != blank -%}<a class="btn btn--primary dio__cta" href="{{ block.settings.link }}">{{ block.settings.label }}</a>{%- endif -%}
+          </article>
+        {%- endfor -%}
+      </div>
+      <p class="dio__note">{{ section.settings.note }}</p>
+      <span class="dio__bar" aria-hidden="true"><i data-dio-bar></i></span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .dio { background: #06060a; color: #f3eee8; position: relative; }
+  .dio__head { padding: clamp(64px, 10vw, 128px) 16px 8px; max-width: 880px; margin: 0 auto; text-align: center; }
+  .dio__eyebrow { letter-spacing: .14em; text-transform: uppercase; font-size: 12px; opacity: .7; margin: 0 0 12px; }
+  .dio__h { font-size: clamp(30px, 4.4vw, 58px); line-height: 1.05; margin: 0; font-weight: 500; }
+  .dio__h em { font-style: italic; color: #e9c9a6; }
+  .dio__t { opacity: .78; max-width: 620px; margin: 16px auto 0; line-height: 1.55; }
+  .dio__track { position: relative; height: var(--len, 900svh); }
+  .dio__stage { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+  .dio__poster, .dio__canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+  .dio.is-live .dio__poster { display: none; }
+  .dio__tabs { position: absolute; top: max(16px, 3vh); left: 50%; transform: translateX(-50%); display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(20, 18, 26, .72); border: 1px solid rgba(255, 255, 255, .12); backdrop-filter: blur(10px); z-index: 2; }
+  .dio__tab { appearance: none; border: 0; background: transparent; color: inherit; font: inherit; font-size: 14px; padding: 9px 18px; border-radius: 999px; cursor: pointer; opacity: .72; white-space: nowrap; }
+  .dio__tab[aria-pressed="true"] { background: #f3eee8; color: #14121a; opacity: 1; }
+  .dio__tab:focus-visible { outline: 2px solid #e9c9a6; outline-offset: 2px; }
+  .dio__caps { position: absolute; left: clamp(16px, 4vw, 56px); bottom: clamp(56px, 9vh, 96px); width: min(400px, calc(100% - 32px)); z-index: 2; }
+  .dio__cap { position: absolute; left: 0; bottom: 0; width: 100%; padding: 20px 22px; border-radius: 16px; background: rgba(14, 13, 19, .78); border: 1px solid rgba(255, 255, 255, .1); backdrop-filter: blur(12px); opacity: 0; transform: translateY(14px); transition: opacity .45s ease, transform .45s ease; pointer-events: none; }
+  .dio__cap.is-on { opacity: 1; transform: none; pointer-events: auto; }
+  .dio__time { margin: 0 0 6px; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #e9c9a6; }
+  .dio__ch { margin: 0; font-size: clamp(20px, 2vw, 26px); line-height: 1.15; font-weight: 500; }
+  .dio__ct { margin: 8px 0 0; line-height: 1.5; opacity: .82; font-size: 15px; }
+  .dio__pk { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; font-size: 14px; }
+  .dio__pk li { padding: 8px 10px; border-radius: 10px; background: rgba(255, 255, 255, .05); }
+  .dio__pk li.is-pick { background: rgba(233, 201, 166, .14); outline: 1px solid rgba(233, 201, 166, .45); }
+  .dio__pk b { margin-right: 6px; }
+  .dio__pk span { display: block; opacity: .7; font-size: 13px; margin-top: 2px; }
+  .dio__cta { margin-top: 14px; display: inline-flex; }
+  .dio__note { position: absolute; right: 16px; bottom: 14px; margin: 0; font-size: 11px; opacity: .5; max-width: 60%; text-align: right; z-index: 2; }
+  .dio__bar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: rgba(255, 255, 255, .08); z-index: 2; }
+  .dio__bar i { display: block; height: 100%; background: #e9c9a6; transform-origin: 0 50%; transform: scaleX(0); }
+  @media (max-width: 749px) {
+    .dio__poster { object-fit: cover; object-position: 50% 0; height: 62vw; }
+    .dio__tabs { top: auto; bottom: calc(14px + env(safe-area-inset-bottom)); }
+    .dio__caps { left: 16px; right: 16px; width: auto; bottom: 76px; }
+    .dio__cap { padding: 16px 18px; }
+    .dio__note { left: 16px; right: 16px; bottom: auto; top: calc(76vw + 5svh + 12px); max-width: none; text-align: left; }
+  }
+  /* no JS: the poster and every caption as a plain list */
+  .dio:not(.is-live) .dio__track { height: auto; }
+  .dio:not(.is-live) .dio__stage { position: relative; height: auto; overflow: visible; }
+  .dio:not(.is-live) .dio__poster { position: relative; height: auto; }
+  .dio:not(.is-live) .dio__canvas, .dio:not(.is-live) .dio__tabs, .dio:not(.is-live) .dio__bar { display: none; }
+  .dio:not(.is-live) .dio__caps { position: relative; inset: auto; width: auto; max-width: 880px; margin: 24px auto; padding: 0 16px; display: grid; gap: 12px; }
+  .dio:not(.is-live) .dio__cap { position: relative; opacity: 1; transform: none; }
+  .dio:not(.is-live) .dio__note { position: relative; inset: auto; text-align: center; max-width: none; padding: 0 16px 32px; }
+  @media (prefers-reduced-motion: reduce) { .dio__cap { transition: none; } }
+</style>
+<script type="module" src="{{ 'dio-film.js' | asset_url }}"></script>
+
+{% schema %}
+{
+  "name": "Living miniature film",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "diorama" },
+    { "type": "text", "id": "label", "label": "Accessible name", "default": "A business grows inside one miniature apartment, a scroll film" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "One room · one day · one business" },
+    { "type": "text", "id": "heading", "label": "Heading (<em> allowed)", "default": "From an idea on the sofa <em>to the first orders.</em>" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Scroll through a day in one small apartment and watch a business take shape. Pick the cookie shop or the clothing label." },
+    { "type": "text", "id": "tab_cookie", "label": "Cookie story tab", "default": "Cookie shop" },
+    { "type": "text", "id": "tab_clothing", "label": "Clothing story tab", "default": "Clothing label" },
+    { "type": "text", "id": "note", "label": "Small print", "default": "An illustrative story. Brands, orders and sales shown are demo data." },
+    { "type": "range", "id": "length", "label": "Scroll length (screen heights × 100)", "min": 300, "max": 2000, "step": 100, "unit": "vh", "default": 1100 },
+    { "type": "number", "id": "frames", "label": "Frames per story", "default": 180 }
+  ],
+  "blocks": [
+    { "type": "caption", "name": "Caption", "settings": [
+      { "type": "select", "id": "story", "label": "Story", "options": [ { "value": "cookie", "label": "Cookie shop" }, { "value": "clothing", "label": "Clothing label" } ], "default": "cookie" },
+      { "type": "text", "id": "a", "label": "Appears at (%)", "default": "0" },
+      { "type": "text", "id": "b", "label": "Leaves at (%)", "default": "10" },
+      { "type": "text", "id": "time", "label": "Time of day" },
+      { "type": "text", "id": "heading", "label": "Heading" },
+      { "type": "textarea", "id": "text", "label": "Text" },
+      { "type": "checkbox", "id": "packages", "label": "Show the three packages", "default": false },
+      { "type": "text", "id": "label", "label": "Button" },
+      { "type": "text", "id": "link", "label": "Button link" }
+    ] }
+  ],
+  "presets": [ { "name": "Living miniature film" } ]
+}
+{% endschema %}

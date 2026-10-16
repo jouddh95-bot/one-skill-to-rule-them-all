@@ -1,0 +1,28 @@
+<section class="sec sec--page" aria-labelledby="col-h">
+  <div class="wrap">
+    <header class="head">
+      <p class="label-mono">{{ 'products.shop' | t }}</p>
+      <h1 class="t-h2" id="col-h">{{ collection.title | escape }}</h1>
+      {%- if collection.description != blank -%}<div class="prose">{{ collection.description }}</div>{%- endif -%}
+    </header>
+    {%- paginate collection.products by 24 -%}
+      <div class="toolbar">
+        <span class="small">{{ 'products.count' | t: count: collection.products_count }}</span>
+        <label class="small toolbar__sort">{{ 'products.sort' | t }}
+          <select class="select select--sm" onchange="var u=new URL(location.href);u.searchParams.set('sort_by',this.value);location.href=u">
+            {%- for o in collection.sort_options -%}<option value="{{ o.value }}"{% if o.value == collection.sort_by or o.value == collection.default_sort_by and collection.sort_by == blank %} selected{% endif %}>{{ o.name }}</option>{%- endfor -%}
+          </select>
+        </label>
+      </div>
+      {%- if collection.products.size > 0 -%}
+        <div class="grid">{%- for p in collection.products -%}{% render 'card', p: p %}{%- endfor -%}</div>
+      {%- else -%}<p class="empty">{{ 'products.none' | t }}</p>{%- endif -%}
+      {%- if paginate.pages > 1 -%}
+        <nav class="pager" aria-label="{{ 'general.pages' | t }}">
+          {%- for part in paginate.parts -%}{%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- elsif part.title == paginate.current_page -%}<span class="is-on" aria-current="page">{{ part.title }}</span>{%- else -%}<span>{{ part.title }}</span>{%- endif -%}{%- endfor -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+{% schema %}{ "name": "Collection" }{% endschema %}

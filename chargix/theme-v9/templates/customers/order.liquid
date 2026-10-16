@@ -1,0 +1,12 @@
+<section class="sec sec--page"><div class="wrap">
+  <header class="head"><p><a class="btn btn--text" href="{{ routes.account_url }}">{{ 'customer.back' | t }}</a></p><h1 class="t-h2">{{ 'customer.order' | t: name: order.name }}</h1><p class="small">{{ order.created_at | time_tag: format: 'date' }} · {{ order.financial_status_label }} · {{ order.fulfillment_status_label }}</p></header>
+  <div class="tbl-wrap"><table class="tbl tbl--stack"><thead><tr><th>{{ 'customer.product' | t }}</th><th>{{ 'customer.qty' | t }}</th><th>{{ 'customer.total' | t }}</th></tr></thead><tbody>
+    {%- for l in order.line_items -%}<tr><th scope="row">{{ l.title | escape }}</th><td data-label="{{ 'customer.qty' | t }}">{{ l.quantity }}</td><td data-label="{{ 'customer.total' | t }}">{{ l.final_line_price | money }}</td></tr>{%- endfor -%}
+    <tr><th>{{ 'customer.subtotal' | t }}</th><td class="tbl__gap"></td><td data-label="{{ 'customer.subtotal' | t }}">{{ order.line_items_subtotal_price | money }}</td></tr>
+    {%- if order.shipping_price > 0 -%}<tr><th>{{ 'customer.shipping' | t }}</th><td class="tbl__gap"></td><td data-label="{{ 'customer.shipping' | t }}">{{ order.shipping_price | money }}</td></tr>{%- endif -%}
+    {%- if order.tax_price > 0 -%}<tr><th>{{ 'customer.tax' | t }}</th><td class="tbl__gap"></td><td data-label="{{ 'customer.tax' | t }}">{{ order.tax_price | money }}</td></tr>{%- endif -%}
+    <tr><th>{{ 'customer.total' | t }}</th><td class="tbl__gap"></td><td data-label="{{ 'customer.total' | t }}"><strong>{{ order.total_price | money }}</strong></td></tr>
+  </tbody></table></div>
+  {%- assign svc = false -%}{%- for l in order.line_items -%}{%- if l.product.handle == 'essential-website' or l.product.handle == '3d-experience-website' or l.product.handle == 'business-launch' -%}{%- assign svc = true -%}{%- endif -%}{%- endfor -%}
+  {%- if svc -%}<p class="mt-6"><a class="btn btn--lamp" href="/pages/onboarding?order={{ order.name | url_encode }}">{{ 'customer.project_form' | t }} {% render 'icon', i: 'arrow' %}</a></p>{%- endif -%}
+</div></section>

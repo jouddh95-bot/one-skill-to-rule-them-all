@@ -1,0 +1,86 @@
+{%- comment -%}
+  The specification sheet: every package line by line, drawn like a construction document on
+  plaster, with a title block. The table opens from any link to #compare.
+{%- endcomment -%}
+<section class="section--tight cmp-sec" data-tone="plaster" data-scene="packages" aria-labelledby="{{ section.id }}-h">
+  <div class="wrap">
+    <details class="cmpx" id="{{ section.settings.anchor }}" data-compare-details>
+      <summary>
+        <span class="cmpx__sheet" aria-hidden="true">{{ section.settings.sheet }}</span>
+        <span class="cmpx__t">
+          <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+          <span class="h-2" id="{{ section.id }}-h">{{ section.settings.heading }}</span>
+        </span>
+        <span class="cmpx__cols" aria-hidden="true">
+          <span><b>{{ section.settings.col1 }}</b>{{ section.settings.price1 }}</span>
+          <span><b>{{ section.settings.col2 }}</b>{{ section.settings.price2 }}</span>
+          <span><b>{{ section.settings.col3 }}</b>{{ section.settings.price3 }}</span>
+        </span>
+        <span class="cmpx__btn" aria-hidden="true"><span class="cmpx__open">{{ section.settings.toggle }}</span><span class="cmpx__close">{{ section.settings.toggle_close }}</span>{% render 'cx-icon', icon: 'plus' %}</span>
+      </summary>
+      <div class="compare" tabindex="0" role="region" aria-labelledby="{{ section.id }}-h">
+        <table>
+          <caption class="visually-hidden">{{ section.settings.heading }}</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="compare__ref">{{ section.settings.ref_label }}</span></th>
+              <th scope="col"><span class="compare__pk">{{ section.settings.col1 }}</span><span class="compare__pr">{{ section.settings.price1 }}</span></th>
+              <th scope="col" class="is-feature"><span class="compare__pk">{{ section.settings.col2 }}</span><span class="compare__pr">{{ section.settings.price2 }}</span></th>
+              <th scope="col"><span class="compare__pk">{{ section.settings.col3 }}</span><span class="compare__pr">{{ section.settings.price3 }}</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for block in section.blocks -%}
+              <tr {{ block.shopify_attributes }}>
+                <th scope="row"><span class="compare__i" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>{{ block.settings.label }}</th>
+                {%- assign cells = block.settings.a | append: '||' | append: block.settings.b | append: '||' | append: block.settings.c | split: '||' -%}
+                {%- for c in cells -%}
+                  <td{% if forloop.index == 2 %} class="is-feature"{% endif %}>
+                    {%- if c == 'yes' -%}<span class="yes">{% render 'cx-icon', icon: 'check' %}<span class="visually-hidden">Included</span></span>
+                    {%- elsif c == 'no' -%}<span class="no" aria-hidden="true">—</span><span class="visually-hidden">Not included</span>
+                    {%- else -%}{{ c }}{%- endif -%}
+                  </td>
+                {%- endfor -%}
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+      <div class="cmpx__block" aria-hidden="true">
+        <span>{{ settings.brand_name | default: 'CHARGIX' }}</span><span>{{ section.settings.block_1 }}</span><span>{{ section.settings.block_2 }}</span><span>{{ section.settings.sheet }}</span>
+      </div>
+    </details>
+    {%- if section.settings.note != blank -%}<p class="note" data-compare-note>{{ section.settings.note }}</p>{%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Studio comparison",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "compare" },
+    { "type": "text", "id": "sheet", "label": "Sheet number", "default": "Sheet V.1" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Specification" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Every package, line by line" },
+    { "type": "text", "id": "toggle", "label": "Toggle label", "default": "Open sheet" },
+    { "type": "text", "id": "toggle_close", "label": "Toggle label (open)", "default": "Close sheet" },
+    { "type": "text", "id": "ref_label", "label": "First column label", "default": "Item" },
+    { "type": "text", "id": "col1", "label": "Column 1", "default": "Essential" },
+    { "type": "text", "id": "price1", "label": "Column 1 price", "default": "$750" },
+    { "type": "text", "id": "col2", "label": "Column 2", "default": "3D Experience" },
+    { "type": "text", "id": "price2", "label": "Column 2 price", "default": "$1,650" },
+    { "type": "text", "id": "col3", "label": "Column 3", "default": "Business Launch" },
+    { "type": "text", "id": "price3", "label": "Column 3 price", "default": "$2,750" },
+    { "type": "text", "id": "block_1", "label": "Title block line 1", "default": "Package specification" },
+    { "type": "text", "id": "block_2", "label": "Title block line 2", "default": "Fixed scope · Prices in USD" },
+    { "type": "textarea", "id": "note", "label": "Note under table" }
+  ],
+  "blocks": [ { "type": "row", "name": "Row", "settings": [
+    { "type": "text", "id": "label", "label": "Feature" },
+    { "type": "text", "id": "a", "label": "Column 1 (yes / no / text)" },
+    { "type": "text", "id": "b", "label": "Column 2 (yes / no / text)" },
+    { "type": "text", "id": "c", "label": "Column 3 (yes / no / text)" }
+  ] } ],
+  "presets": [ { "name": "Studio comparison" } ]
+}
+{% endschema %}
+

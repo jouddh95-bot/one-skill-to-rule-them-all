@@ -1,0 +1,43 @@
+{%- comment -%} After you buy: a glass timeline, one lit node per step. {%- endcomment -%}
+<section class="sec" id="{{ section.settings.anchor }}" aria-labelledby="{{ section.id }}-h">
+  <div class="wrap">
+    <header class="head head--split" data-reveal>
+      <div>
+        <p class="label-mono"><span class="idx">{{ section.settings.index }}</span>{{ section.settings.eyebrow }}</p>
+        <h2 class="t-h2" id="{{ section.id }}-h">{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.text != blank -%}<p class="lead">{{ section.settings.text }}</p>{%- endif -%}
+    </header>
+    <ol class="timeline">
+      {%- for block in section.blocks -%}
+        <li class="timeline__step" data-reveal {{ block.shopify_attributes }}>
+          <span class="timeline__node" aria-hidden="true">{{ forloop.index }}</span>
+          <div class="timeline__card glass">
+            <span class="label-mono">{{ block.settings.when }}</span>
+            <h3 class="t-h4">{{ block.settings.title }}</h3>
+            <p>{{ block.settings.text }}</p>
+          </div>
+        </li>
+      {%- endfor -%}
+    </ol>
+    {%- if section.settings.button != blank -%}<p class="timeline__cta" data-reveal><a class="btn btn--glass" href="{{ section.settings.link }}">{{ section.settings.button }} {% render 'icon', i: 'arrow' %}</a></p>{%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Process timeline",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "process" },
+    { "type": "text", "id": "index", "label": "Index number", "default": "04" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "After you buy" },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "text", "label": "Text" },
+    { "type": "text", "id": "button", "label": "Button" },
+    { "type": "url", "id": "link", "label": "Button link" }
+  ],
+  "blocks": [
+    { "type": "step", "name": "Step", "settings": [ { "type": "text", "id": "when", "label": "When", "default": "Day 1" }, { "type": "text", "id": "title", "label": "Title" }, { "type": "textarea", "id": "text", "label": "Text" } ] }
+  ],
+  "presets": [ { "name": "Process timeline" } ]
+}
+{% endschema %}

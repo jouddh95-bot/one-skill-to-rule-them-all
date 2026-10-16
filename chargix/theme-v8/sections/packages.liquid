@@ -1,0 +1,123 @@
+{%- comment -%}
+  Packages. Each card reads its product live (title, price, variant, availability), so the card,
+  the product page and checkout always agree. "Buy now" adds the package and goes straight to
+  checkout; "Full details" opens the product page. Lists and previews are block settings.
+{%- endcomment -%}
+<section class="sec tone-paper" id="{{ section.settings.anchor }}" aria-labelledby="{{ section.id }}-h">
+  <div class="wrap">
+    <header class="sec__head sec__head--split plinth" data-reveal>
+      <div>
+        <p class="eyebrow"><span class="idx">{{ section.settings.index }}</span>{{ section.settings.eyebrow }}</p>
+        <h2 class="d-2" id="{{ section.id }}-h">{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.text != blank -%}<p class="lede">{{ section.settings.text }}</p>{%- endif -%}
+    </header>
+    <div class="pk-grid">
+      {%- for block in section.blocks -%}
+        {%- assign p = block.settings.product -%}
+        {%- if p == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign v = p.selected_or_first_available_variant -%}
+        <article class="pk{% if block.settings.pick %} pk--pick{% endif %}" data-reveal {{ block.shopify_attributes }} aria-labelledby="pk-{{ block.id }}">
+          <a class="pk__view{% if block.settings.view == 'site' %} pk__view--site{% endif %}" href="{{ block.settings.view_link | default: p.url }}" aria-label="{{ block.settings.view_label | default: p.title | escape }}">
+            {%- if block.settings.tag != blank -%}<span class="pk__tag">{{ block.settings.tag }}</span>{%- endif -%}
+            {%- if block.settings.view == 'site' -%}
+              <span class="mini" aria-hidden="true">
+                <span class="mini__bar">{{ block.settings.mini_brand }}<i><b></b><b></b><b></b></i></span>
+                <span class="mini__body">
+                  <span><span class="mini__h">{{ block.settings.mini_heading }}</span><span class="mini__b" style="display:block"></span></span>
+                  <span class="mini__img"{% if block.settings.image != blank %} style="background-image:url({{ block.settings.image | image_url: width: 600 }})"{% elsif block.settings.asset != blank %} style="background-image:url({{ block.settings.asset | asset_url }})"{% endif %}></span>
+                </span>
+              </span>
+            {%- elsif block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '480,800,1200', sizes: '(min-width: 990px) 33vw, 100vw', alt: '' }}
+            {%- elsif block.settings.asset != blank -%}
+              <img src="{{ block.settings.asset | asset_url }}" alt="" loading="lazy" width="1440" height="900">
+            {%- endif -%}
+          </a>
+          <div class="pk__body">
+            <div class="pk__top">
+              <h3 class="pk__name" id="pk-{{ block.id }}">{{ p.title | escape }}</h3>
+              <p class="pk__price">{{ v.price | money_without_trailing_zeros }}<small>{{ block.settings.price_note }}</small></p>
+            </div>
+            {%- if block.settings.for != blank -%}<p class="pk__for">{{ block.settings.for }}</p>{%- endif -%}
+            <span class="pk__3d{% if block.settings.three_d != 'none' %} is-yes{% endif %}">{% render 'icon', i: 'box' %}
+              {%- case block.settings.three_d -%}
+                {%- when 'none' -%}{{ 'packages.no_3d' | t }}
+                {%- when 'premium' -%}{{ 'packages.yes_3d' | t }}
+                {%- when 'plus' -%}{{ 'packages.plus_3d' | t }}
+              {%- endcase -%}
+            </span>
+            <ul class="pk__list">
+              {%- assign lines = block.settings.list | newline_to_br | split: '<br />' -%}
+              {%- for l in lines -%}{%- assign t = l | strip -%}{%- if t == blank -%}{%- continue -%}{%- endif -%}
+                {%- assign c0 = t | slice: 0 -%}{%- if c0 == '*' -%}<li class="is-key">{{ t | remove_first: '*' | strip }}</li>{%- else -%}<li>{{ t }}</li>{%- endif -%}
+              {%- endfor -%}
+            </ul>
+            <div class="pk__foot">
+              {%- if block.settings.time != blank -%}<p class="pk__time">{{ block.settings.time }}</p>{%- endif -%}
+              {%- form 'product', p, class: 'pk__form' -%}
+                <input type="hidden" name="id" value="{{ v.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <input type="hidden" name="return_to" value="/checkout">
+                <button class="btn btn--block{% if block.settings.pick %} btn--brass{% else %} btn--solid{% endif %}" type="submit" name="add"{% unless v.available %} disabled{% endunless %}>
+                  {%- if v.available -%}{%- assign vp = v.price | money_without_trailing_zeros -%}{{ 'packages.buy' | t: price: vp }}{%- else -%}{{ 'products.unavailable' | t }}{%- endif -%}
+                </button>
+              {%- endform -%}
+              <div class="pk__links">
+                <a class="link" href="{{ p.url }}">{{ 'packages.details' | t }}</a>
+                {%- if block.settings.view_link != blank -%}<a class="link" href="{{ block.settings.view_link }}">{{ block.settings.view_label }}</a>{%- endif -%}
+              </div>
+            </div>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.note != blank -%}<p class="pk-note">{{ section.settings.note }}</p>{%- endif -%}
+  </div>
+</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "OfferCatalog",
+  "name": {{ section.settings.eyebrow | json }},
+  "itemListElement": [
+    {%- for block in section.blocks -%}{%- assign p = block.settings.product -%}{%- if p == blank -%}{%- continue -%}{%- endif -%}
+    {%- unless forloop.first %},{% endunless -%}
+    { "@type": "Offer", "price": {{ p.price | divided_by: 100.0 | json }}, "priceCurrency": {{ cart.currency.iso_code | json }}, "url": {{ shop.url | append: p.url | json }}, "itemOffered": { "@type": "Service", "name": {{ p.title | json }} } }
+    {%- endfor -%}
+  ]
+}
+</script>
+{% schema %}
+{
+  "name": "Packages",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "packages" },
+    { "type": "text", "id": "index", "label": "Index number", "default": "02" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Packages" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Three fixed prices. Pick how far you want to go." },
+    { "type": "textarea", "id": "text", "label": "Intro" },
+    { "type": "textarea", "id": "note", "label": "Small print" }
+  ],
+  "blocks": [
+    { "type": "package", "name": "Package", "settings": [
+      { "type": "product", "id": "product", "label": "Product" },
+      { "type": "checkbox", "id": "pick", "label": "Highlight this card", "default": false },
+      { "type": "text", "id": "tag", "label": "Preview tag" },
+      { "type": "text", "id": "price_note", "label": "Price note", "default": "one-time" },
+      { "type": "textarea", "id": "for", "label": "Who it is for" },
+      { "type": "select", "id": "three_d", "label": "3D", "default": "none", "options": [ { "value": "none", "label": "No 3D" }, { "value": "premium", "label": "Premium 3D" }, { "value": "plus", "label": "Premium 3D + launch" } ] },
+      { "type": "textarea", "id": "list", "label": "What is included (one per line; start with * to highlight)" },
+      { "type": "text", "id": "time", "label": "Timeline" },
+      { "type": "select", "id": "view", "label": "Preview style", "default": "image", "options": [ { "value": "image", "label": "Image" }, { "value": "site", "label": "Drawn storefront" } ] },
+      { "type": "image_picker", "id": "image", "label": "Preview image" },
+      { "type": "text", "id": "asset", "label": "Or preview image from theme assets (file name)" },
+      { "type": "text", "id": "mini_brand", "label": "Drawn storefront: brand", "default": "Sweet & Co." },
+      { "type": "text", "id": "mini_heading", "label": "Drawn storefront: heading", "default": "Baked this morning." },
+      { "type": "url", "id": "view_link", "label": "Preview link" },
+      { "type": "text", "id": "view_label", "label": "Preview link label", "default": "See a demo" }
+    ] }
+  ],
+  "presets": [ { "name": "Packages" } ]
+}
+{% endschema %}

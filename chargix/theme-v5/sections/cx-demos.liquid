@@ -1,0 +1,968 @@
+{%- comment -%}
+  CHARGIX v3 "MONUMENT" · Package demos ("the three rooms").
+  One room per real package. Each room = CHARGIX-styled intro (price, scope disclosure, buy link),
+  a light seam that draws down the intro into a wall gate, and a fictional concept website.
+  01 Essential  → Mercer & Vane (tailoring atelier), browser + phone tour    · assets/demos.js
+  02 3D         → Maison Solenne pavilion (walk-in three.js space, demos-pavilion.js), then the
+                   Ligne 39 product scene (three.js watch)                   · assets/demos-3d.js
+  03 Launch also carries the store-admin console (settings the package configures).
+  Room 01 has no gate or cinematic motion on purpose: the Essential package is a calm site.
+  03 Launch     → Casa Ocre (homeware, US/MX, EN/ES), full store + brand kit · assets/demos-shop.js
+  Everything is readable without JS, without WebGL and with reduced motion.
+{%- endcomment -%}
+{%- liquid
+  assign cl = section.settings.concept_label | default: 'Concept demo · fictional brand'
+-%}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Italiana&family=Manrope:wght@300..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Italiana&family=Manrope:wght@300..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap"></noscript>
+{{ 'demos.css' | asset_url | stylesheet_tag }}
+{{ 'demos-2.css' | asset_url | stylesheet_tag }}
+{{ 'demos-3.css' | asset_url | stylesheet_tag }}
+
+<section id="demos" class="dm" aria-labelledby="{{ section.id }}-h"
+  data-dm
+  data-mod-watch="{{ 'demos-3d.js' | asset_url }}"
+  data-sl-film="{{ 'sl-film.js' | asset_url }}"
+  data-sl-film-base="{{ 'sl-film.js' | asset_url | split: 'sl-film.js' | first }}"
+  data-sl-film-n="180"
+  data-sl-film-cws="steel"
+  data-mod-casa="{{ 'demos-casa.js' | asset_url }}"
+  data-cs-hdr="{{ 'casa-sky.hdr' | asset_url }}"
+  data-cs-sofa="{{ 'casa-sofa.glb' | asset_url }}"
+  data-cs-chair="{{ 'casa-chair.glb' | asset_url }}"
+  data-cs-pouf="{{ 'casa-pouf.glb' | asset_url }}"
+  data-cs-cup="{{ 'casa-cup.glb' | asset_url }}"
+  data-cs-lamp="{{ 'casa-lamp.glb' | asset_url }}"
+  data-mod-shop="{{ 'demos-shop.js' | asset_url }}"
+  data-still-steel="{{ 'demos-watch-steel.webp' | asset_url }}"
+  data-still-gold="{{ 'demos-watch-gold.webp' | asset_url }}"
+  data-still-titanium="{{ 'demos-watch-titanium.webp' | asset_url }}"
+  data-still-exploded="{{ 'demos-watch-exploded.webp' | asset_url }}">
+
+  <header class="dm-head">
+    <p class="dm-label"><span aria-hidden="true">Rooms 01–03</span>{{ section.settings.eyebrow }}</p>
+    <h2 class="dm-head__h" id="{{ section.id }}-h">{{ section.settings.heading }}{%- if section.settings.heading_em != blank -%} <em>{{ section.settings.heading_em }}</em>{%- endif -%}</h2>
+    {%- if section.settings.intro != blank -%}<p class="dm-head__p">{{ section.settings.intro }}</p>{%- endif -%}
+    <ol class="dm-head__toc" aria-label="Rooms">
+      <li><a href="#demo-essential"><span>Room 01</span>{{ section.settings.ch1_name }} <b>{{ section.settings.ch1_price }}</b>{%- if section.settings.ch1_kind != blank -%}<em>{{ section.settings.ch1_kind }}</em>{%- endif -%}</a></li>
+      <li><a href="#demo-3d"><span>Room 02</span>{{ section.settings.ch2_name }} <b>{{ section.settings.ch2_price }}</b>{%- if section.settings.ch2_kind != blank -%}<em>{{ section.settings.ch2_kind }}</em>{%- endif -%}</a></li>
+      <li><a href="#demo-launch"><span>Room 03</span>{{ section.settings.ch3_name }} <b>{{ section.settings.ch3_price }}</b>{%- if section.settings.ch3_kind != blank -%}<em>{{ section.settings.ch3_kind }}</em>{%- endif -%}</a></li>
+    </ol>
+  </header>
+
+  {%- for n in (1..3) -%}
+    {%- liquid
+      assign k = 'ch' | append: n
+      assign k_name = k | append: '_name'
+      assign k_head = k | append: '_heading'
+      assign k_em = k | append: '_heading_em'
+      assign k_intro = k | append: '_intro'
+      assign k_price = k | append: '_price'
+      assign k_meta = k | append: '_meta'
+      assign k_handle = k | append: '_handle'
+      assign k_button = k | append: '_button'
+      assign k_scope = k | append: '_scope'
+      assign k_not = k | append: '_not'
+      assign k_shows = k | append: '_shows'
+      assign k_skip = k | append: '_skip'
+      assign shows = section.settings[k_shows] | split: '|'
+      case n
+        when 1
+          assign cid = 'demo-essential'
+        when 2
+          assign cid = 'demo-3d'
+        else
+          assign cid = 'demo-launch'
+      endcase
+      assign scope_lines = section.settings[k_scope] | newline_to_br | split: '<br />'
+    -%}
+  <article class="dm-ch dm-ch--{{ n }}" id="{{ cid }}" aria-labelledby="{{ cid }}-h" data-dm-ch data-room="0{{ n }}">
+    <div class="dm-seam" aria-hidden="true" data-dm-seam></div>
+    <header class="dm-intro">
+      <div class="dm-intro__a">
+        <p class="dm-eyebrow"><span><svg viewBox="0 0 9 14" aria-hidden="true"><rect x=".5" y=".5" width="8" height="13" fill="none" stroke="currentColor"/><rect x="4" y="3" width="1" height="10.5" fill="#c8a26a"/></svg>Room 0{{ n }}</span><i aria-hidden="true"></i>{{ section.settings[k_name] }}</p>
+        <h3 class="dm-h" id="{{ cid }}-h">{{ section.settings[k_head] }}{%- if section.settings[k_em] != blank -%} <em>{{ section.settings[k_em] }}</em>{%- endif -%}</h3>
+      </div>
+      <div class="dm-intro__b">
+        <ol class="dm-ladder" aria-label="Where this package sits">
+          <li class="{% if n == 1 %}is-here{% else %}is-in{% endif %}"{% if n == 1 %} aria-current="true"{% endif %}><span>01</span>{{ section.settings.ladder_1 }}</li>
+          <li class="{% if n == 2 %}is-here{% elsif n == 3 %}is-in{% endif %}"{% if n == 2 %} aria-current="true"{% endif %}><span>02</span>{{ section.settings.ladder_2 }}</li>
+          <li class="{% if n == 3 %}is-here{% endif %}"{% if n == 3 %} aria-current="true"{% endif %}><span>03</span>{{ section.settings.ladder_3 }}</li>
+        </ol>
+        <p class="dm-lede">{{ section.settings[k_intro] }}</p>
+        {%- if section.settings[k_shows] != blank -%}
+        <div class="dm-shows">
+          <p class="dm-shows__l">{{ section.settings.shows_label }}</p>
+          <ul>{%- for t in shows -%}{%- assign t2 = t | strip -%}{%- if t2 != blank -%}<li>{{ t2 }}</li>{%- endif -%}{%- endfor -%}</ul>
+          {%- if section.settings[k_skip] != blank -%}<p class="dm-shows__skip">{{ section.settings[k_skip] }}</p>{%- endif -%}
+        </div>
+        {%- endif -%}
+        <div class="dm-price">
+          <span class="dm-price__l">Package price</span>
+          <span class="dm-price__v">{{ section.settings[k_price] }}</span>
+          <span class="dm-price__m">{{ section.settings[k_meta] }}</span>
+        </div>
+        <div class="dm-cta">
+          <a class="dm-btn dm-btn--solid" href="/products/{{ section.settings[k_handle] }}"><span>{{ section.settings[k_button] }}</span></a>
+          <button type="button" class="dm-btn dm-btn--line" aria-expanded="false" aria-controls="{{ cid }}-scope" data-dm-scope>
+            <span>See what’s included</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+          </button>
+        </div>
+        <div class="dm-scope" id="{{ cid }}-scope" hidden>
+          <ul class="dm-scope__list">
+            {%- for line in scope_lines -%}{%- assign l = line | strip -%}{%- if l != blank -%}<li>{{ l }}</li>{%- endif -%}{%- endfor -%}
+          </ul>
+          {%- if section.settings[k_not] != blank -%}<p class="dm-scope__not">{{ section.settings[k_not] }}</p>{%- endif -%}
+        </div>
+      </div>
+    </header>
+    {%- unless n == 1 -%}
+    <div class="dm-gatepos" aria-hidden="true"><div class="dm-gate" data-dm-gate><i class="dm-gate__l"></i><i class="dm-gate__r"></i><i class="dm-gate__glow"></i><span class="dm-gate__plate">Room 0{{ n }} · {{ section.settings[k_name] }}</span></div></div>
+    {%- endunless -%}
+
+    {%- case n -%}
+    {%- when 1 -%}
+    {%- comment -%} ═════════════ ROOM 01 · MERCER & VANE (Essential) ═════════════ {%- endcomment -%}
+    <div class="ess" data-ess>
+      <div class="ess-track" data-ess-track>
+        <div class="ess-stage" data-ess-stage>
+          <div class="ess-room" aria-hidden="true"><i class="ess-room__win"></i><i class="ess-room__rail"></i></div>
+
+          <aside class="ess-tour" aria-label="Tour of the demo homepage">
+            <p class="ess-tour__tag"><span class="dm-dot" aria-hidden="true"></span>{{ cl }}</p>
+            <p class="ess-tour__brand">Mercer <i>&amp;</i> Vane</p>
+            <p class="ess-tour__what">A two-person tailoring atelier. Five-page site on a premium theme, customised to the brand.</p>
+            <ol class="ess-steps" data-ess-steps>
+              <li><button type="button" data-ess-go="0"><span>01</span>Hero &amp; navigation</button></li>
+              <li><button type="button" data-ess-go="1"><span>02</span>Services, in tabs</button></li>
+              <li><button type="button" data-ess-go="2"><span>03</span>About the workroom</button></li>
+              <li><button type="button" data-ess-go="3"><span>04</span>Contact form</button></li>
+            </ol>
+            <div class="ess-meter" aria-hidden="true"><i data-ess-meter></i></div>
+          </aside>
+
+          <div class="ess-devices">
+            <figure class="ess-browser">
+              <div class="ess-browser__bar" aria-hidden="true">
+                <span class="ess-dots"><i></i><i></i><i></i></span>
+                <span class="ess-url"><svg viewBox="0 0 12 12"><path d="M3.5 5.5V4a2.5 2.5 0 015 0v1.5M3 5.5h6v4.5H3z" fill="none" stroke="currentColor" stroke-width="1.1"/></svg>mercer-and-vane.demo</span>
+                <span class="ess-bar-r"></span>
+              </div>
+              <div class="ess-view" data-ess-view tabindex="0" role="region" aria-label="Mercer &amp; Vane demo homepage">
+                <div class="mv" data-mv>
+                  <p class="mv-ann">Fittings by appointment · Tuesday to Saturday · Alterations ready in about a week</p>
+                  <header class="mv-hdr">
+                    <a class="mv-logo" href="#demo-essential" data-mv-top aria-label="Mercer and Vane, top of demo page">
+                      <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M7 5h9l4 13 4-13h9L28 35H12z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M16 5l4 13-6-3-2 3zM24 5l-4 13 6-3 2 3z" fill="currentColor"/><circle cx="20" cy="25" r="1.6" fill="#a93a2a"/><circle cx="20" cy="30.5" r="1.6" fill="#a93a2a"/></svg>
+                      <span>Mercer <i>&amp;</i> Vane</span>
+                    </a>
+                    <nav class="mv-nav" aria-label="Mercer and Vane demo">
+                      <button type="button" data-mv-link="1" data-mv-tab="shop">Shop</button>
+                      <button type="button" data-mv-link="1" data-mv-tab="measure">Made to measure</button>
+                      <button type="button" data-mv-link="1" data-mv-tab="alter">Alterations</button>
+                      <button type="button" data-mv-link="2">About</button>
+                      <button type="button" data-mv-link="3">Contact</button>
+                    </nav>
+                    <button type="button" class="mv-bag" data-mv-bag>Bag <span data-mv-count>0</span></button>
+                    <button type="button" class="mv-burger" aria-expanded="false" data-mv-burger aria-label="Menu"><i></i><i></i></button>
+                  </header>
+
+                  <section class="mv-hero" data-mv-sec="0" aria-label="Hero">
+                    <div class="mv-hero__copy">
+                      <p class="mv-kicker">Tailoring atelier · est. 2016</p>
+                      <h4 class="mv-hero__h">Clothes cut for one person, <em>finished by hand.</em></h4>
+                      <p class="mv-hero__p">Made-to-measure suits, shirts and careful alterations from a two-person workroom. Every piece is cut on our table and fitted at least twice.</p>
+                      <div class="mv-hero__cta">
+                        <button type="button" class="mv-btn" data-mv-link="1" data-mv-tab="measure">Book a fitting</button>
+                        <button type="button" class="mv-btn mv-btn--line" data-mv-link="1" data-mv-tab="shop">Shop the accessories</button>
+                      </div>
+                      <p class="mv-hero__note"><span>Now booking</span> November fittings · four to six weeks from first measure</p>
+                    </div>
+                    <div class="mv-hero__art">
+                      <div class="mv-arch" data-mv-art="hero" role="img" aria-label="Illustration: a half-made navy jacket on a dress form, with chalk marks, basting stitches and a tape measure"></div>
+                      <span class="mv-stamp" aria-hidden="true">
+                        <svg viewBox="0 0 100 100"><defs><path id="mvc" d="M50 50m-38 0a38 38 0 1076 0a38 38 0 10-76 0"/></defs><text><textPath href="#mvc" textLength="232" lengthAdjust="spacing">Cut by hand · Fitted twice ·</textPath></text></svg>
+                        <b>M&amp;V</b>
+                      </span>
+                    </div>
+                  </section>
+
+                  <ul class="mv-facts" aria-label="Atelier promises">
+                    <li><b>Cut by hand</b> on our own table, from your paper pattern</li>
+                    <li><b>Two fittings</b> included with every commission</li>
+                    <li><b>Free pressing</b> for anything we have made</li>
+                  </ul>
+
+                  <section class="mv-svc" data-mv-sec="1" aria-labelledby="mv-svc-h">
+                    <div class="mv-svc__top">
+                      <p class="mv-kicker">What we make</p>
+                      <h4 class="mv-h" id="mv-svc-h">Tailoring for ordinary days <em>and very good ones.</em></h4>
+                    </div>
+                    <div class="mv-tabs" role="tablist" aria-label="Services">
+                      <button type="button" role="tab" id="mv-t-shop" aria-controls="mv-p-shop" aria-selected="true" data-mv-tabbtn="shop">Shop</button>
+                      <button type="button" role="tab" id="mv-t-measure" aria-controls="mv-p-measure" aria-selected="false" tabindex="-1" data-mv-tabbtn="measure">Made to measure</button>
+                      <button type="button" role="tab" id="mv-t-alter" aria-controls="mv-p-alter" aria-selected="false" tabindex="-1" data-mv-tabbtn="alter">Alterations</button>
+                    </div>
+                    <div class="mv-panel" role="tabpanel" id="mv-p-shop" aria-labelledby="mv-t-shop">
+                      <ul class="mv-cards">
+                        <li class="mv-card"><div class="mv-card__art" data-mv-art="square" role="img" aria-label="Illustration: a folded silk pocket square in a jacket pocket"></div><p class="mv-card__t">Silk Pocket Square</p><p class="mv-card__m">Hand-rolled edges</p><p class="mv-card__p">$45</p><button type="button" class="mv-add" data-mv-add>Add to bag</button></li>
+                        <li class="mv-card"><div class="mv-card__art" data-mv-art="shirt" role="img" aria-label="Illustration: a folded white shirt in a box"></div><p class="mv-card__t">The Oxford Shirt</p><p class="mv-card__m">Made to measure, one fitting</p><p class="mv-card__p">$185</p><button type="button" class="mv-add" data-mv-add>Add to bag</button></li>
+                        <li class="mv-card"><div class="mv-card__art" data-mv-art="gift" role="img" aria-label="Illustration: a gift card and envelope tied with thread"></div><p class="mv-card__t">Gift Card</p><p class="mv-card__m">Any amount, for any service</p><p class="mv-card__p">from $100</p><button type="button" class="mv-add" data-mv-add>Add to bag</button></li>
+                      </ul>
+                    </div>
+                    <div class="mv-panel" role="tabpanel" id="mv-p-measure" aria-labelledby="mv-t-measure" hidden>
+                      <div class="mv-list">
+                        <div><p class="mv-list__t">Two-piece suit</p><p>Cut from your own pattern, two fittings, finished in about six weeks.</p><p class="mv-list__p">from $1,450</p></div>
+                        <div><p class="mv-list__t">Tailored jacket</p><p>Soft-shouldered or fully canvassed, in any cloth from our books.</p><p class="mv-list__p">from $980</p></div>
+                        <div><p class="mv-list__t">Trousers</p><p>Pleated or flat front, with a waistband you can let out later.</p><p class="mv-list__p">from $340</p></div>
+                      </div>
+                    </div>
+                    <div class="mv-panel" role="tabpanel" id="mv-p-alter" aria-labelledby="mv-t-alter" hidden>
+                      <ul class="mv-turn">
+                        <li><span class="mv-turn__d">Ready<b>05</b>days</span><span><b>Hems and cuffs</b> Trousers, sleeves and skirts</span><span class="mv-list__p">$25</span></li>
+                        <li><span class="mv-turn__d">Ready<b>07</b>days</span><span><b>Take in or let out</b> Jackets, waists and seats</span><span class="mv-list__p">$60</span></li>
+                        <li><span class="mv-turn__d">Ready<b>10</b>days</span><span><b>Re-line a coat</b> New lining, finished by hand</span><span class="mv-list__p">$180</span></li>
+                      </ul>
+                    </div>
+                  </section>
+
+                  <section class="mv-about" data-mv-sec="2" aria-labelledby="mv-about-h">
+                    <div class="mv-about__art" data-mv-art="bench" role="img" aria-label="Illustration: the cutting table from above, with shears, thread spools, chalk and a tape measure"></div>
+                    <div class="mv-about__copy">
+                      <p class="mv-kicker">The workroom</p>
+                      <h4 class="mv-h" id="mv-about-h">Two tailors, one long cutting table and <em>no shortcuts.</em></h4>
+                      <p>We draft a paper pattern for every client and keep it on file, so your second suit is quicker than your first. Buttonholes are sewn by hand, and every piece is pressed before you collect it.</p>
+                      <dl class="mv-about__facts"><div><dt>Open</dt><dd>Tue–Sat, 10–6</dd></div><div><dt>Fittings</dt><dd>By appointment</dd></div><div><dt>Collection</dt><dd>At the workroom</dd></div></dl>
+                    </div>
+                  </section>
+
+                  <section class="mv-contact" data-mv-sec="3" aria-labelledby="mv-ct-h">
+                    <div class="mv-contact__copy">
+                      <p class="mv-kicker">Book a fitting</p>
+                      <h4 class="mv-h" id="mv-ct-h">Tell us what you <em>have in mind.</em></h4>
+                      <p>We reply within one working day. A first fitting takes about an hour.</p>
+                      <p class="mv-contact__addr">Unit 3, Foundry Yard<br>Mercer Street</p>
+                    </div>
+                    <form class="mv-form" data-mv-form novalidate>
+                      <div class="mv-f"><label for="mv-name">Your name</label><input id="mv-name" name="name" autocomplete="off" required></div>
+                      <div class="mv-f"><label for="mv-mail">Email</label><input id="mv-mail" name="email" type="email" autocomplete="off" required></div>
+                      <div class="mv-f"><label for="mv-kind">Interested in</label><select id="mv-kind" name="kind"><option>A suit</option><option>A jacket</option><option>Shirts</option><option>Alterations</option></select></div>
+                      <div class="mv-f"><label for="mv-date">Preferred date</label><input id="mv-date" name="date" type="date"></div>
+                      <div class="mv-f mv-f--w"><label for="mv-msg">Message</label><textarea id="mv-msg" name="message" rows="3"></textarea></div>
+                      <button type="submit" class="mv-btn">Send enquiry</button>
+                      <p class="mv-form__note" role="status" aria-live="polite" data-mv-note></p>
+                    </form>
+                  </section>
+
+                  <footer class="mv-ftr">
+                    <span class="mv-ftr__logo">Mercer <i>&amp;</i> Vane</span>
+                    <span>Shop · Made to measure · Alterations · About · Contact</span>
+                    <span>@mercerandvane.demo</span>
+                  </footer>
+                </div>
+              </div>
+            </figure>
+
+            <figure class="ess-phone" aria-hidden="true">
+              <span class="ess-phone__notch"></span>
+              <div class="ess-phone__screen" data-ess-phone></div>
+            </figure>
+          </div>
+
+          <p class="ess-caption"><span class="dm-dot" aria-hidden="true"></span>{{ cl }} · Mercer &amp; Vane is not a real business. Shown at desktop and phone width.</p>
+        </div>
+      </div>
+    </div>
+
+    {%- when 2 -%}
+    {%- comment -%} ═════════════ ROOM 02 · SOLENNE (3D Experience) ═════════════ {%- endcomment -%}
+    {%- comment -%} The pavilion: a walk-in real-time 3D space (demos-pavilion.js). Without WebGL or with
+      reduced motion it is hidden and the product scene below carries the room. {%- endcomment -%}
+    <div class="pv" data-pv>
+      <div class="pv-track" data-pv-track>
+        <div class="pv-stage" data-pv-stage>
+          <canvas class="pv-canvas" data-pv-canvas role="img" aria-label="Real-time 3D walk through the Maison Solenne pavilion: a lacquered facade with pivot doors, a gallery of three vitrines and a round salon. Scroll to move through it, click a vitrine to open it."></canvas>
+          <nav class="pv-nav" aria-label="Maison Solenne demo navigation">
+            <span class="pv-logo">SOLENNE</span>
+            <span class="pv-nav__l"><span>Maison</span><span>Gallery</span><span>Salon</span></span>
+            <span class="pv-tag"><span class="dm-dot" aria-hidden="true"></span>{{ cl }}</span>
+          </nav>
+          <div class="pv-cap pv-cap--a" data-pv-cap data-a="0" data-b="13">
+            <p class="pv-k">Maison Solenne · Geneva</p>
+            <p class="pv-h">A house <em>for one watch.</em></p>
+            <p class="pv-p">Scroll to walk in. The doors open as you reach them.</p>
+          </div>
+          <div class="pv-cap pv-cap--b" data-pv-cap data-a="27" data-b="56">
+            <p class="pv-k">The gallery</p>
+            <p class="pv-h">Three finishes, <em>under glass.</em></p>
+            <div class="pv-picks" role="group" aria-label="Open a vitrine">
+              <button type="button" data-pv-pick="steel">Steel · Ink</button><button type="button" data-pv-pick="gold">Gold · Malachite</button><button type="button" data-pv-pick="titanium">Titanium · Blush</button>
+            </div>
+          </div>
+          <div class="pv-cap pv-cap--c" data-pv-cap data-a="70" data-b="100">
+            <p class="pv-k">The salon</p>
+            <p class="pv-h">Time, <em>held still.</em></p>
+            <p class="pv-p">The finish you opened in the gallery waits here. Keep scrolling to configure it.</p>
+          </div>
+          <div class="pv-hud">
+            <span class="pv-hud__bar" aria-hidden="true"><i data-pv-meter></i></span>
+            <span class="pv-hud__hint" data-pv-hint aria-hidden="true">Scroll to walk · drag to look · click a vitrine</span>
+            <button type="button" class="pv-door" data-pv-door aria-pressed="false">Open the doors</button>
+          </div>
+        </div>
+      </div>
+      <aside class="pv-note" aria-label="What this room shows">
+        <p class="pv-note__k">What you just walked through</p>
+        <p>A real-time 3D space rendered in your browser with three.js, not a video: the camera follows your scroll along one continuous path, the doors and vitrines are clickable objects, and the floor reflections, shadows and lights are computed live. On phones it renders at a lower resolution; with reduced motion or no WebGL it is skipped.</p>
+      </aside>
+    </div>
+
+    <div class="sl" data-sl data-cw="steel">
+      <div class="sl-track" data-sl-track>
+        <div class="sl-stage" data-sl-stage>
+          <div class="sl-bg" aria-hidden="true"><i class="sl-bg__glow"></i><i class="sl-bg__ring"></i><i class="sl-bg__ring sl-bg__ring--2"></i></div>
+          <p class="sl-kin" aria-hidden="true" data-sl-kin><span>S</span><span>O</span><span>L</span><span>E</span><span>N</span><span>N</span><span>E</span></p>
+          <figure class="sl-still" data-sl-still>
+            <img data-sl-img alt="Studio render of the Solenne Ligne 39 watch, steel case with ink-blue radial-brushed dial" width="1200" height="1200" loading="lazy" decoding="async">
+            <img data-sl-img-x alt="" aria-hidden="true" class="sl-still__x" width="1200" height="1200" loading="lazy" decoding="async">
+          </figure>
+          <canvas class="sl-canvas" data-sl-canvas role="img" aria-label="Ray-traced film of the Solenne Ligne 39 watch that moves with your scroll."></canvas>
+          <nav class="sl-nav" aria-label="Solenne demo navigation">
+            <span class="sl-logo">SOLENNE</span>
+            <span class="sl-nav__l"><a href="#sl-b1">Materials</a><a href="#sl-b2">Dial</a><a href="#sl-b3">Colourways</a><a href="#sl-b4">Buy</a></span>
+            <span class="sl-bagc">Bag <b data-sl-count>0</b></span>
+          </nav>
+          <div class="sl-hot" data-sl-hot>
+            <button type="button" class="sl-hp" data-hp="crystal" aria-expanded="false" aria-describedby="sl-hp-crystal"><i aria-hidden="true"></i><span>Crystal</span></button>
+            <button type="button" class="sl-hp" data-hp="dial" aria-expanded="false" aria-describedby="sl-hp-dial"><i aria-hidden="true"></i><span>Dial</span></button>
+            <button type="button" class="sl-hp" data-hp="calibre" aria-expanded="false" aria-describedby="sl-hp-calibre"><i aria-hidden="true"></i><span>Calibre</span></button>
+            <button type="button" class="sl-hp" data-hp="crown" aria-expanded="false" aria-describedby="sl-hp-crown"><i aria-hidden="true"></i><span>Crown</span></button>
+            <button type="button" class="sl-hp" data-hp="back" aria-expanded="false" aria-describedby="sl-hp-back"><i aria-hidden="true"></i><span>Caseback</span></button>
+            <p class="sl-tip" role="tooltip" id="sl-hp-crystal">Domed sapphire, anti-reflective on the inside.</p>
+            <p class="sl-tip" role="tooltip" id="sl-hp-dial">Radial-brushed dial, twelve applied indices polished by hand.</p>
+            <p class="sl-tip" role="tooltip" id="sl-hp-calibre">S-01 automatic, 28,800 vph, 70-hour reserve.</p>
+            <p class="sl-tip" role="tooltip" id="sl-hp-crown">Screw-down crown with a fluted grip.</p>
+            <p class="sl-tip" role="tooltip" id="sl-hp-back">Sapphire caseback to watch the rotor turn.</p>
+          </div>
+          <div class="sl-hud" aria-hidden="true">
+            <span class="sl-hud__n"><b data-sl-n>01</b> / 05</span>
+            <span class="sl-hud__bar"><i data-sl-bar></i></span>
+            <span class="sl-hud__drag" data-sl-drag><svg viewBox="0 0 24 12"><path d="M1 6h22M5 2L1 6l4 4M19 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>Drag to turn</span>
+          </div>
+          <p class="sl-tag"><span class="dm-dot" aria-hidden="true"></span>{{ cl }}</p>
+        </div>
+
+        <div class="sl-beats">
+          <section class="sl-beat sl-beat--0" id="sl-b0" data-beat="0" aria-label="Solenne Ligne 39">
+            <div class="sl-copy">
+              <p class="sl-k">Ligne 39 · Calibre S-01</p>
+              <h4 class="sl-h"><span class="sl-line"><span>Time,</span></span> <span class="sl-line"><em>held still.</em></span></h4>
+              <p class="sl-p">A 39 mm automatic watch, drawn with a ruler and finished by hand. Scroll to move around it, then choose its colour.</p>
+            </div>
+          </section>
+          <section class="sl-beat sl-beat--1" id="sl-b1" data-beat="1" aria-label="Materials">
+            <div class="sl-copy">
+              <p class="sl-k">01 · Materials</p>
+              <h4 class="sl-h">Brushed where you touch it, <em>polished where light lands.</em></h4>
+              <dl class="sl-spec">
+                <div><dt>Case</dt><dd>904L steel, 39 × 11.2 mm</dd></div>
+                <div><dt>Bezel</dt><dd>Coin-edge, mirror polished</dd></div>
+                <div><dt>Crystal</dt><dd>Domed sapphire</dd></div>
+                <div><dt>Water</dt><dd>100 m, screw-down crown</dd></div>
+              </dl>
+            </div>
+          </section>
+          <section class="sl-beat sl-beat--2" id="sl-b2" data-beat="2" aria-label="The dial">
+            <div class="sl-copy">
+              <p class="sl-k">02 · Dial</p>
+              <h4 class="sl-h">Light travels <em>across the sunburst.</em></h4>
+              <p class="sl-p">Faceted dauphine hands, twelve applied indices with lume and a date at three, under a domed sapphire crystal.</p>
+              <ol class="sl-parts">
+                <li><b>Dial</b> sunburst-brushed</li><li><b>Hands</b> faceted dauphine</li><li><b>Indices</b> applied, lumed</li>
+                <li><b>Date</b> framed at three</li><li><b>Crystal</b> domed sapphire</li><li><b>Calibre</b> S-01, 70 h reserve</li>
+              </ol>
+            </div>
+          </section>
+          <section class="sl-beat sl-beat--3" id="sl-b3" data-beat="3" aria-label="Colourways">
+            <div class="sl-copy">
+              <p class="sl-k">03 · Colourways</p>
+              <h4 class="sl-h">Three finishes, <em>one shape.</em></h4>
+              <div class="sl-cw" role="radiogroup" aria-label="Colourway" data-sl-cw>
+                <button type="button" role="radio" aria-checked="true" data-cw="steel"><i style="--a:#c9ccd1;--b:#1b2a4a"></i><span>Steel · Ink<small>Midnight radial dial</small></span></button>
+                <button type="button" role="radio" aria-checked="false" data-cw="gold"><i style="--a:#d9b36c;--b:#1f3b2c"></i><span>Gold · Malachite<small>18k-tone case</small></span></button>
+                <button type="button" role="radio" aria-checked="false" data-cw="titanium"><i style="--a:#8d9095;--b:#e7a68c"></i><span>Titanium · Blush<small>Grade 5, matte</small></span></button>
+              </div>
+            </div>
+          </section>
+          <section class="sl-beat sl-beat--4" id="sl-b4" data-beat="4" aria-label="Buy the Ligne 39">
+            <div class="sl-buy">
+              <p class="sl-k">Ligne 39 · <span data-sl-cwname>Steel · Ink</span></p>
+              <p class="sl-buy__t">Solenne Ligne 39</p>
+              <p class="sl-buy__p" data-sl-price>$4,200</p>
+              <fieldset class="sl-opt"><legend>Colourway</legend>
+                <div class="sl-opt__row" data-sl-cw2>
+                  <label><input type="radio" name="sl-cw" value="steel" checked><span>Steel · Ink</span></label>
+                  <label><input type="radio" name="sl-cw" value="gold"><span>Gold · Malachite</span></label>
+                  <label><input type="radio" name="sl-cw" value="titanium"><span>Titanium · Blush</span></label>
+                </div>
+              </fieldset>
+              <fieldset class="sl-opt"><legend>Strap</legend>
+                <div class="sl-opt__row" data-sl-strap>
+                  <label><input type="radio" name="sl-strap" value="leather" checked><span>Leather</span></label>
+                  <label><input type="radio" name="sl-strap" value="rubber"><span>Rubber</span></label>
+                </div>
+              </fieldset>
+              <button type="button" class="sl-add" data-sl-add>Add to bag</button>
+              <p class="sl-note" role="status" aria-live="polite" data-sl-note></p>
+              <ul class="sl-buy__fine"><li>Two-year warranty</li><li>Free engraving</li><li>Ships in a lacquered case</li></ul>
+            </div>
+          </section>
+        </div>
+      </div>
+      <p class="sl-foot">This room plays a ray-traced 3D film of the watch that moves with your scroll, the kind of scene included in the {{ section.settings.ch2_name }} package. With reduced motion you see rendered stills instead.</p>
+    </div>
+
+    {%- else -%}
+    {%- comment -%} ═════════════ ROOM 03 · CASA OCRE (Business Launch) ═════════════ {%- endcomment -%}
+    <div class="co" data-co data-lang="en">
+      <nav class="co-index" aria-label="What this launch includes">
+        <span class="co-index__tag"><span class="dm-dot" aria-hidden="true"></span>{{ cl }}</span>
+        <a href="#co-house">3D showroom</a><a href="#co-brand">Brand guide</a><a href="#co-store">Storefront</a><a href="#co-admin">Store admin</a><a href="#co-social">Social</a><a href="#co-real">Real vs demo</a>
+      </nav>
+
+      {%- comment -%} ── The house: real-time 3D showroom (part of Business Launch, same 3D craft as the 3D Experience room) ── {%- endcomment -%}
+      <div class="cs" id="co-house" data-cs>
+        <div class="cs-track" data-cs-track>
+          <div class="cs-stage" data-cs-stage>
+            <canvas class="cs-canvas" data-cs-canvas role="img" aria-label="Ray-traced walk into the Casa Ocre house: an ochre entry court with a cobalt door, then a furnished living room with the Cántaro jars on a console. Scroll to move through it."></canvas>
+            <div class="cs-cap" data-cs-cap data-a="0" data-b="16">
+              <p class="cs-k">Casa Ocre · the house</p>
+              <p class="cs-h">Walk into <em>the shop.</em></p>
+              <p class="cs-p">Scroll through the cobalt door. Every jar on the console is for sale in the storefront below.</p>
+            </div>
+            <div class="cs-cap" data-cs-cap data-a="32" data-b="64">
+              <p class="cs-k">La sala</p>
+              <p class="cs-h">Real furniture, <em>real light.</em></p>
+              <div class="cs-chips" role="group" aria-label="Change the upholstery">
+                <span>Sofa</span><button type="button" data-cs-fabric="sofa:Navy" aria-pressed="true">Navy</button><button type="button" data-cs-fabric="sofa:Champagne" aria-pressed="false">Champagne</button><button type="button" data-cs-fabric="sofa:Gray" aria-pressed="false">Grey</button>
+              </div>
+              <div class="cs-chips" role="group" aria-label="Change the chair fabric">
+                <span>Chairs</span><button type="button" data-cs-fabric="chair:Mango Velvet" aria-pressed="true">Mango</button><button type="button" data-cs-fabric="chair:Peacock Velvet" aria-pressed="false">Peacock</button>
+              </div>
+            </div>
+            <div class="cs-cap" data-cs-cap data-a="76" data-b="100">
+              <p class="cs-k">The Cántaro range</p>
+              <p class="cs-h">Pick one <em>up.</em></p>
+              <p class="cs-p cs-live">Click a jar to lift it, then open it in the shop.</p>
+              <p class="cs-p cs-filmonly">Every piece on the console is in the storefront below. <a href="#co-store">Open the shop</a></p>
+            </div>
+            <div class="cs-card" data-cs-card hidden role="dialog" aria-label="Selected piece">
+              <p class="cs-k">In the shop</p>
+              <p class="cs-card__n" data-cs-card-name></p>
+              <div class="cs-card__a"><button type="button" class="cs-card__go" data-cs-card-go>View in the shop</button><button type="button" class="cs-card__x" data-cs-card-close aria-label="Close">Close</button></div>
+            </div>
+            <div class="cs-hud">
+              <span class="cs-hud__bar" aria-hidden="true"><i data-cs-meter></i></span>
+              <span class="cs-hud__hint" data-cs-hint aria-hidden="true">Scroll to walk · drag to look · click a jar</span>
+            </div>
+          </div>
+        </div>
+        <aside class="cs-note" aria-label="What this room shows">
+          <p class="cs-note__k">What you just walked through</p>
+          <p class="cs-filmonly">A path-traced film of a modelled 3D house, rendered in Blender Cycles and scrubbed by your scroll, so it looks the same on every phone and laptop. Business Launch includes a 3D experience built to this standard around the client's own products, inside the agreed scope. With reduced motion it is skipped and the shop below carries the room.</p>
+          <p class="cs-live">A real-time 3D space rendered in your browser with three.js, not a video: the camera follows your scroll along one path, the jars and the lamp are clickable and lead into the storefront, and the upholstery switches between real fabric variants. Business Launch includes a 3D experience built to this standard around the client's own products, inside the agreed scope. On phones it renders at a lower resolution; with reduced motion or no WebGL it is skipped and the shop below carries the room.</p>
+          <p class="cs-note__c">Furniture: Khronos glTF Sample Assets by Wayfair LLC (GlamVelvetSofa, SpecularSilkPouf, AnisotropyBarnLamp, CC BY 4.0; SheenChair and DiffuseTransmissionTeacup, CC0). Sky light: Venice Sunset by Poly Haven, CC0. Walls, ceramics and the house are built for this demo.</p>
+        </aside>
+      </div>
+
+      {%- comment -%} ── Brand mini guide ── {%- endcomment -%}
+      <section class="co-brand" id="co-brand" aria-labelledby="co-brand-h">
+        <div class="co-brand__intro">
+          <p class="co-k">Mini brand guide · v1.0</p>
+          <h4 class="co-brand__h" id="co-brand-h">Casa Ocre</h4>
+          <p class="co-brand__p">Homeware made in small runs, sold in the United States and Mexico. Warm, direct and bilingual: <i>objetos para usarse.</i></p>
+        </div>
+        <div class="co-logo">
+          <div class="co-logo__main">
+            <svg class="co-mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 58V30a24 24 0 0148 0v28" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="32" cy="34" r="9" fill="currentColor"/><path d="M8 58h48" stroke="currentColor" stroke-width="5"/></svg>
+            <span class="co-word">CASA OCRE</span>
+          </div>
+          <div class="co-logo__alt co-logo__alt--o"><svg class="co-mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 58V30a24 24 0 0148 0v28" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="32" cy="34" r="9" fill="currentColor"/><path d="M8 58h48" stroke="currentColor" stroke-width="5"/></svg></div>
+          <div class="co-logo__alt co-logo__alt--i"><span class="co-word co-word--s">CASA<br>OCRE</span></div>
+          <p class="co-cap">Logo refresh: wordmark, arch mark and stacked lockup. Clear space = the height of the disc.</p>
+        </div>
+        <ul class="co-pal" aria-label="Palette">
+          <li style="--c:#d9962b"><b>Ocre</b><span>#D9962B</span></li>
+          <li style="--c:#1f3a93"><b>Cobalto</b><span>#1F3A93</span></li>
+          <li style="--c:#a5492c"><b>Barro</b><span>#A5492C</span></li>
+          <li style="--c:#7c8a6a"><b>Cantera</b><span>#7C8A6A</span></li>
+          <li style="--c:#f3ede2" class="is-light"><b>Hueso</b><span>#F3EDE2</span></li>
+          <li style="--c:#1b1814"><b>Tinta</b><span>#1B1814</span></li>
+        </ul>
+        <div class="co-type">
+          <div class="co-type__a"><span class="co-type__aa">Aa</span><p><b>Archivo Expanded</b> Headlines, buttons, the wordmark.</p></div>
+          <div class="co-type__b"><span class="co-type__aa"><i>Aa</i></span><p><b>Newsreader Italic</b> Editorial notes, Spanish accents, quotes.</p></div>
+          <p class="co-type__v"><b>Voice</b> Short sentences. Name the material. Say where it was made. Write each key page in English and Spanish.</p>
+        </div>
+      </section>
+
+      {%- comment -%} ── Storefront ── {%- endcomment -%}
+      <section class="co-store-wrap" id="co-store" aria-labelledby="co-store-h">
+        <div class="co-store-head">
+          <p class="co-k">Storefront · desktop and mobile</p>
+          <h4 class="co-store-head__h" id="co-store-h">A complete shop, <i>working end to end.</i></h4>
+          <p class="co-store-head__p">Browse, filter, choose a size and colour, open the cart, step through checkout. Try the EN / ES switch in the store header.</p>
+        </div>
+        <div class="co-win">
+          <div class="co-win__bar" aria-hidden="true"><span class="ess-dots"><i></i><i></i><i></i></span><span class="co-url">casa-ocre.demo<span data-co-path>/</span></span></div>
+          <div class="co-store" data-co-store>
+            <p class="co-ann" data-i18n="ann">Free shipping in the US and Mexico on orders over $80</p>
+            <header class="co-hdr">
+              <button type="button" class="co-hdr__logo" data-co-go="home" aria-label="Casa Ocre home">
+                <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 58V30a24 24 0 0148 0v28" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="32" cy="34" r="9" fill="currentColor"/><path d="M8 58h48" stroke="currentColor" stroke-width="6"/></svg><span>CASA OCRE</span>
+              </button>
+              <nav class="co-hdr__nav" aria-label="Casa Ocre demo store">
+                <button type="button" data-co-go="shop" data-i18n="nav_shop">Shop</button>
+                <button type="button" data-co-go="shop" data-co-cat="table" data-i18n="nav_table">Table</button>
+                <button type="button" data-co-go="shop" data-co-cat="light" data-i18n="nav_light">Light</button>
+                <button type="button" data-co-go="home" data-co-anchor="story" data-i18n="nav_about">About</button>
+              </nav>
+              <div class="co-hdr__r">
+                <div class="co-lang" role="group" aria-label="Language">
+                  <button type="button" aria-pressed="true" data-co-lang="en">EN</button><button type="button" aria-pressed="false" data-co-lang="es" lang="es">ES</button>
+                </div>
+                <label class="co-mkt"><span class="co-sr">Market</span><select data-co-mkt><option value="us">US · USD</option><option value="mx">MX · MXN</option></select></label>
+                <button type="button" class="co-cartbtn" data-co-cart aria-haspopup="dialog"><span data-i18n="cart">Cart</span> <b data-co-count>0</b></button>
+              </div>
+            </header>
+
+            <div class="co-view" data-co-view="home">
+              <section class="co-hero" aria-labelledby="co-hero-h">
+                <div class="co-hero__copy">
+                  <p class="co-hero__k" data-i18n="hero_k">New season · Collection 01</p>
+                  <h5 class="co-hero__h" id="co-hero-h" data-i18n="hero_h">Objects with warmth, <i>made to be used.</i></h5>
+                  <p class="co-hero__p" data-i18n="hero_p">Stoneware, linen and light for the table and the home. Made in small runs and shipped across the US and Mexico.</p>
+                  <div class="co-hero__cta"><button type="button" class="co-btn" data-co-go="shop" data-i18n="hero_cta">Shop the collection</button><button type="button" class="co-btn co-btn--line" data-co-go="product" data-co-pid="cantaro" data-i18n="hero_cta2">Meet the Cántaro</button></div>
+                </div>
+                <div class="co-hero__art" data-co-art="hero" role="img" aria-label="Illustration: three Cántaro jars in ochre, cobalt and bone glazes under an arch"></div>
+              </section>
+              <ul class="co-tiles" aria-label="Collections">
+                <li><button type="button" data-co-go="shop" data-co-cat="table"><span class="co-tiles__art" data-co-art="tile-table"></span><b data-i18n="c_table">Table</b><span data-i18n="c_table_s">Plates, bowls, mugs</span></button></li>
+                <li><button type="button" data-co-go="shop" data-co-cat="light"><span class="co-tiles__art" data-co-art="tile-light"></span><b data-i18n="c_light">Light</b><span data-i18n="c_light_s">Lamps and candles</span></button></li>
+                <li><button type="button" data-co-go="shop" data-co-cat="textile"><span class="co-tiles__art" data-co-art="tile-textile"></span><b data-i18n="c_textile">Textiles</b><span data-i18n="c_textile_s">Throws, linen, napkins</span></button></li>
+              </ul>
+              <section class="co-feat" aria-labelledby="co-feat-h">
+                <div class="co-sec-h"><h5 id="co-feat-h" data-i18n="feat_h">Most loved this month</h5><button type="button" class="co-link" data-co-go="shop" data-i18n="view_all">View all</button></div>
+                <ul class="co-grid co-grid--4" data-co-featured></ul>
+              </section>
+              <section class="co-story" id="co-story" aria-labelledby="co-story-h">
+                <div class="co-story__art" data-co-art="story" role="img" aria-label="Illustration: a potter's wheel with an unglazed vessel"></div>
+                <div class="co-story__copy">
+                  <p class="co-hero__k" data-i18n="story_k">Our story</p>
+                  <h5 class="co-story__h" id="co-story-h" data-i18n="story_h">Clay, cotton and patience.</h5>
+                  <p data-i18n="story_p">Casa Ocre works with small workshops that throw, glaze and weave by hand. We make fewer things and make them well, then send them to homes on both sides of the border.</p>
+                </div>
+              </section>
+            </div>
+
+            <div class="co-view" data-co-view="shop" hidden>
+              <div class="co-shop">
+                <div class="co-shop__head">
+                  <h5 class="co-shop__h" data-co-shop-title>All objects</h5>
+                  <p class="co-shop__n" role="status" aria-live="polite" data-co-results>12 products</p>
+                </div>
+                <div class="co-filters">
+                  <div class="co-chips" role="group" aria-label="Category" data-co-chips>
+                    <button type="button" aria-pressed="true" data-cat="all" data-i18n="f_all">All</button>
+                    <button type="button" aria-pressed="false" data-cat="table" data-i18n="c_table">Table</button>
+                    <button type="button" aria-pressed="false" data-cat="vessels" data-i18n="f_vessels">Vessels</button>
+                    <button type="button" aria-pressed="false" data-cat="light" data-i18n="c_light">Light</button>
+                    <button type="button" aria-pressed="false" data-cat="textile" data-i18n="c_textile">Textiles</button>
+                  </div>
+                  <div class="co-colf" role="group" aria-label="Colour" data-co-colf>
+                    <button type="button" aria-pressed="false" data-col="ocre" style="--c:#d9962b"><span class="co-sr">Ochre</span></button>
+                    <button type="button" aria-pressed="false" data-col="cobalto" style="--c:#1f3a93"><span class="co-sr">Cobalt</span></button>
+                    <button type="button" aria-pressed="false" data-col="barro" style="--c:#a5492c"><span class="co-sr">Clay</span></button>
+                    <button type="button" aria-pressed="false" data-col="hueso" style="--c:#efe6d6"><span class="co-sr">Bone</span></button>
+                    <button type="button" aria-pressed="false" data-col="cantera" style="--c:#7c8a6a"><span class="co-sr">Quarry green</span></button>
+                  </div>
+                  <label class="co-sort"><span data-i18n="sort">Sort</span>
+                    <select data-co-sort>
+                      <option value="featured" data-i18n="s_feat">Featured</option>
+                      <option value="asc" data-i18n="s_asc">Price, low to high</option>
+                      <option value="desc" data-i18n="s_desc">Price, high to low</option>
+                      <option value="az" data-i18n="s_az">Name, A–Z</option>
+                    </select>
+                  </label>
+                </div>
+                <ul class="co-grid co-grid--shop" data-co-grid></ul>
+                <p class="co-empty" data-co-empty hidden data-i18n="empty">Nothing matches those filters yet.</p>
+              </div>
+            </div>
+
+            <div class="co-view" data-co-view="product" hidden><div class="co-pdp" data-co-pdp></div></div>
+            <div class="co-view" data-co-view="checkout" hidden><div class="co-ck" data-co-ck></div></div>
+            <div class="co-view" data-co-view="policies" hidden>
+              <div class="co-pol">
+                <h5 class="co-shop__h" data-i18n="pol_h">Policies</h5>
+                <p class="co-pol__note" data-i18n="pol_note">Filled in from the owner’s approved information. Policy text is not legal advice.</p>
+                <div class="co-pol__grid">
+                  <section><h6 data-i18n="pol_ship">Shipping</h6><p data-i18n="pol_ship_p">Orders ship from our workshop within 2 business days. Standard delivery in the US takes 3–6 days; in Mexico 4–8 days.</p></section>
+                  <section><h6 data-i18n="pol_ret">Returns</h6><p data-i18n="pol_ret_p">Unused pieces can be returned within 30 days. Handmade variation in glaze and weave is not a fault.</p></section>
+                  <section><h6 data-i18n="pol_priv">Privacy</h6><p data-i18n="pol_priv_p">We only use your details to fulfil orders and, if you opt in, to send our newsletter.</p></section>
+                  <section><h6 data-i18n="pol_terms">Terms</h6><p data-i18n="pol_terms_p">Prices include duties for US and Mexico orders. Colours vary slightly between batches.</p></section>
+                </div>
+              </div>
+            </div>
+
+            <footer class="co-ftr">
+              <div class="co-ftr__brand"><span class="co-word co-word--s">CASA<br>OCRE</span><p data-i18n="ftr_p">Objects for the home, made in small runs.</p></div>
+              <div class="co-ftr__col"><p class="co-ftr__h" data-i18n="ftr_help">Help</p>
+                <button type="button" data-co-go="policies" data-i18n="pol_ship">Shipping</button>
+                <button type="button" data-co-go="policies" data-i18n="pol_ret">Returns</button>
+                <button type="button" data-co-go="policies" data-i18n="pol_priv">Privacy</button>
+                <button type="button" data-co-go="policies" data-i18n="pol_terms">Terms</button>
+              </div>
+              <div class="co-ftr__col"><p class="co-ftr__h" data-i18n="ftr_follow">Follow</p><span>Instagram</span><span>TikTok</span><span>Facebook</span></div>
+              <form class="co-news" data-co-news novalidate><label for="co-news-e" data-i18n="news">Letters from the workshop</label><div><input id="co-news-e" type="email" placeholder="you@example.com" autocomplete="off"><button type="submit" class="co-btn" data-i18n="join">Join</button></div><p role="status" aria-live="polite" data-co-news-note></p></form>
+            </footer>
+          </div>
+        </div>
+        <dialog class="co-drawer" data-co-drawer aria-labelledby="co-drawer-h">
+          <div class="co-drawer__in">
+            <div class="co-drawer__top"><h5 id="co-drawer-h" data-i18n="cart_h">Your cart</h5><button type="button" class="co-x" data-co-close aria-label="Close cart">×</button></div>
+            <ul class="co-lines" data-co-lines></ul>
+            <p class="co-drawer__empty" data-co-cempty data-i18n="cart_empty">Your cart is empty.</p>
+            <div class="co-drawer__sum">
+              <p class="co-ship-meter" data-co-meter></p>
+              <p class="co-row"><span data-i18n="subtotal">Subtotal</span><b data-co-sub>$0</b></p>
+              <button type="button" class="co-btn co-btn--full" data-co-checkout data-i18n="checkout">Checkout</button>
+              <p class="co-fine" data-i18n="cart_fine">Concept demo · the cart lives only in this page.</p>
+            </div>
+          </div>
+        </dialog>
+        <noscript><p class="co-noscript">The Casa Ocre store demo needs JavaScript to filter products and run the cart.</p></noscript>
+      </section>
+
+      {%- comment -%} ── Store admin: what the package configures behind the storefront (assets/demos.js · initConsole) ── {%- endcomment -%}
+      <section class="co-adm-wrap" id="co-admin" aria-labelledby="co-admin-h">
+        <div class="co-store-head">
+          <p class="co-k">Store admin · configured for launch</p>
+          <h4 class="co-store-head__h" id="co-admin-h">Behind the shop, <i>everything set.</i></h4>
+          <p class="co-store-head__p">The part customers never see: catalogue, collections, pages, markets, payments, shipping, policies, languages, channels and pixels. Click through it the way you would after handover.</p>
+        </div>
+        <div class="co-adm" data-co-adm>
+          <div class="co-adm__top" aria-hidden="true"><span class="co-adm__logo"><svg viewBox="0 0 64 64"><path d="M8 58V30a24 24 0 0148 0v28" fill="none" stroke="currentColor" stroke-width="7"/><circle cx="32" cy="34" r="9" fill="currentColor"/></svg>Casa Ocre</span><span class="co-adm__search">Search</span><span class="co-adm__who">CO</span></div>
+          <div class="co-adm__body">
+            <div class="co-adm__side" role="tablist" aria-label="Store admin sections" aria-orientation="vertical">
+              <button type="button" role="tab" id="adm-t-products" aria-controls="adm-p-products" aria-selected="true" data-adm-tab>Products <b>40</b></button>
+              <button type="button" role="tab" id="adm-t-collections" aria-controls="adm-p-collections" aria-selected="false" tabindex="-1" data-adm-tab>Collections <b>4</b></button>
+              <button type="button" role="tab" id="adm-t-pages" aria-controls="adm-p-pages" aria-selected="false" tabindex="-1" data-adm-tab>Pages <b>10</b></button>
+              <button type="button" role="tab" id="adm-t-brand" aria-controls="adm-p-brand" aria-selected="false" tabindex="-1" data-adm-tab>Brand &amp; theme</button>
+              <button type="button" role="tab" id="adm-t-markets" aria-controls="adm-p-markets" aria-selected="false" tabindex="-1" data-adm-tab>Markets <b>2</b></button>
+              <button type="button" role="tab" id="adm-t-pay" aria-controls="adm-p-pay" aria-selected="false" tabindex="-1" data-adm-tab>Payments</button>
+              <button type="button" role="tab" id="adm-t-ship" aria-controls="adm-p-ship" aria-selected="false" tabindex="-1" data-adm-tab>Shipping &amp; taxes</button>
+              <button type="button" role="tab" id="adm-t-policies" aria-controls="adm-p-policies" aria-selected="false" tabindex="-1" data-adm-tab>Policies</button>
+              <button type="button" role="tab" id="adm-t-lang" aria-controls="adm-p-lang" aria-selected="false" tabindex="-1" data-adm-tab>Languages</button>
+              <button type="button" role="tab" id="adm-t-channels" aria-controls="adm-p-channels" aria-selected="false" tabindex="-1" data-adm-tab>Channels &amp; pixels</button>
+              <button type="button" role="tab" id="adm-t-launch" aria-controls="adm-p-launch" aria-selected="false" tabindex="-1" data-adm-tab>Launch checklist <b data-adm-left>2</b></button>
+            </div>
+
+            <div class="co-adm__main">
+              <div class="co-adm__p" role="tabpanel" id="adm-p-products" aria-labelledby="adm-t-products" tabindex="0">
+                <div class="co-adm__h"><h5>Products</h5><span class="co-adm__pill">40 of 40 in this package</span></div>
+                <label class="co-adm__filter"><span class="co-sr">Filter products</span><input type="search" placeholder="Filter products" data-adm-filter autocomplete="off"></label>
+                <table class="co-adm__tbl">
+                  <thead><tr><th scope="col">Product</th><th scope="col">Status</th><th scope="col">Collection</th><th scope="col">Copy</th><th scope="col">ES</th></tr></thead>
+                  <tbody data-adm-rows>
+                    <tr><td><i class="sw sw--o"></i>Cántaro jar · ochre</td><td><span class="st st--ok">Active</span></td><td>Table</td><td>Written</td><td>✓</td></tr>
+                    <tr><td><i class="sw sw--c"></i>Cántaro jar · cobalt</td><td><span class="st st--ok">Active</span></td><td>Table</td><td>Written</td><td>✓</td></tr>
+                    <tr><td><i class="sw sw--b"></i>Cántaro jar · bone</td><td><span class="st st--ok">Active</span></td><td>Table</td><td>Written</td><td>✓</td></tr>
+                    <tr><td><i class="sw sw--r"></i>Farol lamp · clay</td><td><span class="st st--ok">Active</span></td><td>Light</td><td>Written</td><td>✓</td></tr>
+                    <tr><td><i class="sw sw--o"></i>Plato llano · set of 4</td><td><span class="st st--ok">Active</span></td><td>Table</td><td>Written</td><td>✓</td></tr>
+                    <tr><td><i class="sw sw--c"></i>Taza mug · cobalt</td><td><span class="st st--ok">Active</span></td><td>Table</td><td>Written</td><td>✓</td></tr>
+                    <tr><td><i class="sw sw--g"></i>Vela candle · cantera</td><td><span class="st st--ok">Active</span></td><td>Light</td><td>Written</td><td>✓</td></tr>
+                    <tr><td><i class="sw sw--b"></i>Lino napkins · set of 6</td><td><span class="st st--ok">Active</span></td><td>Textiles</td><td>Written</td><td>✓</td></tr>
+                    <tr><td><i class="sw sw--r"></i>Manta throw · barro</td><td><span class="st st--ok">Active</span></td><td>Textiles</td><td>Written</td><td>✓</td></tr>
+                    <tr><td><i class="sw sw--o"></i>Gift card</td><td><span class="st st--ok">Active</span></td><td>New season</td><td>Written</td><td>✓</td></tr>
+                  </tbody>
+                </table>
+                <p class="co-adm__more" data-adm-more>+ 30 more products, each with a description written for you, sizes and colours as variants, images prepared.</p>
+              </div>
+
+              <div class="co-adm__p" role="tabpanel" id="adm-p-collections" aria-labelledby="adm-t-collections" tabindex="0" hidden>
+                <div class="co-adm__h"><h5>Collections</h5><span class="co-adm__pill">Automated rules</span></div>
+                <ul class="co-adm__cards">
+                  <li><b>Table</b><span>Product type is Tableware</span><em>18 products</em></li>
+                  <li><b>Light</b><span>Product type is Lighting</span><em>9 products</em></li>
+                  <li><b>Textiles</b><span>Product type is Textile</span><em>12 products</em></li>
+                  <li><b>New season</b><span>Tag is <code>collection-01</code></span><em>14 products</em></li>
+                </ul>
+                <p class="co-adm__note">Collections fill themselves from product type and tags, so new products land in the right place.</p>
+              </div>
+
+              <div class="co-adm__p" role="tabpanel" id="adm-p-pages" aria-labelledby="adm-t-pages" tabindex="0" hidden>
+                <div class="co-adm__h"><h5>Pages</h5><span class="co-adm__pill">10 of 10 · 2 custom landing pages</span></div>
+                <table class="co-adm__tbl">
+                  <thead><tr><th scope="col">Page</th><th scope="col">Template</th><th scope="col">ES</th></tr></thead>
+                  <tbody>
+                    <tr><td>Home</td><td>Custom · 3D</td><td>✓</td></tr>
+                    <tr><td>Collection 01 launch</td><td>Custom landing</td><td>✓</td></tr>
+                    <tr><td>The workshop</td><td>Custom landing</td><td>✓</td></tr>
+                    <tr><td>Shop</td><td>Collection</td><td>✓</td></tr>
+                    <tr><td>Product</td><td>Product</td><td>✓</td></tr>
+                    <tr><td>About</td><td>Page</td><td>✓</td></tr>
+                    <tr><td>Care guide</td><td>Page</td><td>✓</td></tr>
+                    <tr><td>FAQ</td><td>Page</td><td>✓</td></tr>
+                    <tr><td>Contact</td><td>Page + form</td><td>✓</td></tr>
+                    <tr><td>Wholesale enquiries</td><td>Page + form</td><td>—</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="co-adm__p" role="tabpanel" id="adm-p-brand" aria-labelledby="adm-t-brand" tabindex="0" hidden>
+                <div class="co-adm__h"><h5>Brand &amp; theme</h5><span class="co-adm__pill">Logo refresh · 1 concept, 2 rounds</span></div>
+                <div class="co-adm__brand">
+                  <div class="co-adm__ctl">
+                    <p class="co-adm__l" id="adm-acc-l">Accent colour</p>
+                    <div class="co-adm__sw" role="radiogroup" aria-labelledby="adm-acc-l">
+                      <button type="button" role="radio" aria-checked="true" data-adm-acc="#d9962b" style="--c:#d9962b"><span class="co-sr">Ocre</span></button>
+                      <button type="button" role="radio" aria-checked="false" data-adm-acc="#1f3a93" style="--c:#1f3a93"><span class="co-sr">Cobalt</span></button>
+                      <button type="button" role="radio" aria-checked="false" data-adm-acc="#a5492c" style="--c:#a5492c"><span class="co-sr">Barro</span></button>
+                      <button type="button" role="radio" aria-checked="false" data-adm-acc="#7c8a6a" style="--c:#7c8a6a"><span class="co-sr">Cantera</span></button>
+                    </div>
+                    <p class="co-adm__l" id="adm-type-l">Heading style</p>
+                    <div class="co-adm__seg" role="radiogroup" aria-labelledby="adm-type-l">
+                      <button type="button" role="radio" aria-checked="true" data-adm-type="wide">Expanded</button><button type="button" role="radio" aria-checked="false" data-adm-type="serif">Serif italic</button>
+                    </div>
+                    <p class="co-adm__l" id="adm-btn-l">Buttons</p>
+                    <div class="co-adm__seg" role="radiogroup" aria-labelledby="adm-btn-l">
+                      <button type="button" role="radio" aria-checked="true" data-adm-btn="pill">Rounded</button><button type="button" role="radio" aria-checked="false" data-adm-btn="sq">Square</button>
+                    </div>
+                  </div>
+                  <div class="co-adm__prev" data-adm-prev aria-label="Live preview of the theme settings" role="img">
+                    <span class="co-adm__prev-ann">Free shipping in the US and Mexico on orders over $80</span>
+                    <span class="co-adm__prev-h">Objects with warmth, <i>made to be used.</i></span>
+                    <span class="co-adm__prev-art"></span>
+                    <span class="co-adm__prev-btn">Shop the collection</span>
+                  </div>
+                </div>
+                <p class="co-adm__note">Theme settings are saved once and reused across every page, email notification and checkout.</p>
+              </div>
+
+              <div class="co-adm__p" role="tabpanel" id="adm-p-markets" aria-labelledby="adm-t-markets" tabindex="0" hidden>
+                <div class="co-adm__h"><h5>Markets</h5><span class="co-adm__pill">US and Mexico</span></div>
+                <ul class="co-adm__cards co-adm__cards--2">
+                  <li><b>United States <small>Primary</small></b><span>USD · English</span><span>casa-ocre.demo</span><em>Active</em></li>
+                  <li><b>Mexico</b><span>MXN · Spanish and English</span><span>casa-ocre.demo/es-mx</span><em>Active</em></li>
+                </ul>
+                <p class="co-adm__note">Prices in MXN are converted with rounding rules, and Mexican visitors land on Spanish pages by default.</p>
+              </div>
+
+              <div class="co-adm__p" role="tabpanel" id="adm-p-pay" aria-labelledby="adm-t-pay" tabindex="0" hidden>
+                <div class="co-adm__h"><h5>Payments</h5><span class="co-adm__pill">Set up on your own account</span></div>
+                <ul class="co-adm__list">
+                  <li><b>Shopify Payments</b><span>Cards, Apple Pay, Google Pay, Shop Pay</span><span class="st st--ok">On</span></li>
+                  <li><b>PayPal</b><span>Express checkout</span><span class="st st--ok">On</span></li>
+                  <li><b>Order notifications</b><span>Branded confirmation, shipping and refund emails</span><span class="st st--ok">Styled</span></li>
+                </ul>
+                <p class="co-adm__note">Payment providers are activated with your business details at handover. Fees are charged by the provider.</p>
+              </div>
+
+              <div class="co-adm__p" role="tabpanel" id="adm-p-ship" aria-labelledby="adm-t-ship" tabindex="0" hidden>
+                <div class="co-adm__h"><h5>Shipping &amp; taxes</h5><span class="co-adm__pill">2 zones</span></div>
+                <table class="co-adm__tbl">
+                  <thead><tr><th scope="col">Zone</th><th scope="col">Rate</th><th scope="col">Free over</th></tr></thead>
+                  <tbody>
+                    <tr><td>United States</td><td>Standard · Express</td><td>$80</td></tr>
+                    <tr><td>Mexico</td><td>Estándar · Express</td><td>$80 equivalent</td></tr>
+                  </tbody>
+                </table>
+                <ul class="co-adm__list">
+                  <li><b>Taxes</b><span>Collected where you are registered; prices shown with or without tax per market</span><span class="st">Basics</span></li>
+                </ul>
+                <p class="co-adm__note">Tax setup covers the basics. Your accountant confirms where you must register.</p>
+              </div>
+
+              <div class="co-adm__p" role="tabpanel" id="adm-p-policies" aria-labelledby="adm-t-policies" tabindex="0" hidden>
+                <div class="co-adm__h"><h5>Policies</h5><span class="co-adm__pill">Filled from your approved information</span></div>
+                <ul class="co-adm__list">
+                  <li><b>Refund policy</b><span>30-day returns, unused items</span><span class="st st--ok">Published</span></li>
+                  <li><b>Shipping policy</b><span>Zones, times, free-shipping threshold</span><span class="st st--ok">Published</span></li>
+                  <li><b>Privacy policy</b><span>Includes pixels and analytics</span><span class="st st--ok">Published</span></li>
+                  <li><b>Terms of service</b><span>Store terms</span><span class="st st--ok">Published</span></li>
+                  <li><b>Contact information</b><span>Business name, address, email</span><span class="st st--ok">Published</span></li>
+                </ul>
+                <p class="co-adm__note">Not legal advice. You approve the wording before launch.</p>
+              </div>
+
+              <div class="co-adm__p" role="tabpanel" id="adm-p-lang" aria-labelledby="adm-t-lang" tabindex="0" hidden>
+                <div class="co-adm__h"><h5>Languages</h5><span class="co-adm__pill">EN · ES</span></div>
+                <ul class="co-adm__list">
+                  <li><b>English</b><span>Default</span><span class="st st--ok">Published</span></li>
+                  <li><b>Español</b><span>Key pages, navigation, product pages, checkout</span><span class="st st--ok">Published</span></li>
+                </ul>
+                <div class="co-adm__bar"><span>Key pages translated</span><i style="--v:.9"></i><b>9 / 10</b></div>
+              </div>
+
+              <div class="co-adm__p" role="tabpanel" id="adm-p-channels" aria-labelledby="adm-t-channels" tabindex="0" hidden>
+                <div class="co-adm__h"><h5>Channels &amp; pixels</h5><span class="co-adm__pill">Connected</span></div>
+                <ul class="co-adm__list">
+                  <li><b>Online Store</b><span>casa-ocre.demo</span><span class="st st--ok">Live at launch</span></li>
+                  <li><b>Facebook &amp; Instagram</b><span>Business profiles, shop catalogue sync</span><span class="st st--ok">Connected</span></li>
+                  <li><b>TikTok</b><span>Business profile</span><span class="st st--ok">Connected</span></li>
+                  <li><b>Meta Pixel</b><span>View, add to cart, purchase events</span><span class="st st--ok">Firing</span></li>
+                  <li><b>TikTok Pixel</b><span>View, add to cart, purchase events</span><span class="st st--ok">Firing</span></li>
+                  <li><b>Ad campaign</b><span>“The Farol lamp, back in clay”</span><span class="st st--draft">Draft · not launched</span></li>
+                </ul>
+                <p class="co-adm__note">Ad spend and running ads are not part of the package.</p>
+              </div>
+
+              <div class="co-adm__p" role="tabpanel" id="adm-p-launch" aria-labelledby="adm-t-launch" tabindex="0" hidden>
+                <div class="co-adm__h"><h5>Launch checklist</h5><span class="co-adm__pill" data-adm-pct>8 of 10 done</span></div>
+                <ul class="co-adm__check" data-adm-check>
+                  <li><label><input type="checkbox" checked> 40 products live with copy and images</label></li>
+                  <li><label><input type="checkbox" checked> Collections and navigation</label></li>
+                  <li><label><input type="checkbox" checked> Payments and branded notifications</label></li>
+                  <li><label><input type="checkbox" checked> Shipping zones and tax basics</label></li>
+                  <li><label><input type="checkbox" checked> US and Mexico markets</label></li>
+                  <li><label><input type="checkbox" checked> Policies published</label></li>
+                  <li><label><input type="checkbox" checked> Pixels firing on test order</label></li>
+                  <li><label><input type="checkbox"> Spanish pages proofread by you</label></li>
+                  <li><label><input type="checkbox" checked> Test order placed and refunded</label></li>
+                  <li><label><input type="checkbox"> Training calls (2 × 45 min)</label></li>
+                </ul>
+                <a class="co-adm__go" href="#co-store">Open the storefront</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {%- comment -%} ── Social & marketing ── {%- endcomment -%}
+      <section class="co-social" id="co-social" aria-labelledby="co-social-h">
+        <div class="co-store-head">
+          <p class="co-k">Social profiles · set up for launch</p>
+          <h4 class="co-store-head__h" id="co-social-h">Ready on day one, <i>listo desde el primer día.</i></h4>
+        </div>
+        <div class="co-phones">
+          <figure class="co-ph co-ph--ig">
+            <div class="co-ph__scr">
+              <div class="ig-top"><b>casaocre.demo</b><span aria-hidden="true">☰</span></div>
+              <div class="ig-prof">
+                <span class="ig-av"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 58V30a24 24 0 0148 0v28" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="32" cy="34" r="9" fill="currentColor"/></svg></span>
+                <dl class="ig-stats"><div><dd>9</dd><dt>posts</dt></div><div><dd>—</dd><dt>followers</dt></div><div><dd>—</dd><dt>following</dt></div></dl>
+              </div>
+              <p class="ig-bio"><b>Casa Ocre</b> Objects for the home · Objetos para la casa<br>Ships US + MX ↓</p>
+              <div class="ig-hl"><span>Nuevo</span><span>Taller</span><span>Care</span><span>FAQ</span></div>
+              <ul class="ig-grid" data-co-ig></ul>
+            </div>
+            <figcaption>Instagram profile mock-up</figcaption>
+          </figure>
+          <figure class="co-ph co-ph--tt">
+            <div class="co-ph__scr">
+              <div class="tt-video" data-co-art="tt" role="img" aria-label="Illustration: vertical video still of a cobalt Cántaro jar being glazed"></div>
+              <div class="tt-rail" aria-hidden="true"><span>♥</span><span>✎</span><span>↗</span></div>
+              <div class="tt-cap"><b>@casaocre.demo</b><p>Glazing the Cántaro, one dip at a time · <i>esmaltando a mano</i></p><p class="tt-snd">♪ original sound</p></div>
+            </div>
+            <figcaption>TikTok post mock-up</figcaption>
+          </figure>
+          <figure class="co-ad">
+            <div class="co-ad__card">
+              <div class="co-ad__top"><span class="ig-av ig-av--s"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 58V30a24 24 0 0148 0v28" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="32" cy="34" r="9" fill="currentColor"/></svg></span><span><b>Casa Ocre</b><small>Sponsored · draft</small></span><span class="co-ad__badge">Draft · not launched</span></div>
+              <div class="co-ad__art" data-co-art="ad" role="img" aria-label="Illustration: ad creative with the Farol lamp"></div>
+              <div class="co-ad__foot"><span>casa-ocre.demo<b>The Farol lamp, back in clay</b></span><span class="co-ad__btn">Shop now</span></div>
+            </div>
+            <figcaption>One ad campaign, prepared as a draft. Ad spend and running ads are not included.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      {%- comment -%} ── Honesty note ── {%- endcomment -%}
+      <section class="co-real" id="co-real" aria-labelledby="co-real-h">
+        <h4 class="co-real__h" id="co-real-h">What is real, and what is demo</h4>
+        <div class="co-real__cols">
+          <div>
+            <p class="co-k">In a real Business Launch</p>
+            <ul><li>Your products, uploaded with descriptions we write (up to 40)</li><li>Shopify checkout with your payments, shipping, tax basics, US and Mexico markets</li><li>Policy pages filled from your approved information</li><li>Instagram, Facebook and TikTok business profiles, Meta and TikTok pixels connected</li><li>Spanish versions of key pages</li></ul>
+          </div>
+          <div>
+            <p class="co-k">In this concept demo</p>
+            <ul><li>Casa Ocre is a fictional brand</li><li>Product images are illustrations; real photography is not included in any package</li><li>The cart lives in this page and checkout charges nothing</li><li>Social profiles and the ad are mock-ups; nothing is posted or launched</li><li>Market prices use a fixed demo exchange rate</li></ul>
+          </div>
+        </div>
+      </section>
+    </div>
+    {%- endcase -%}
+  </article>
+  {%- endfor -%}
+</section>
+
+<script type="module" src="{{ 'demos.js' | asset_url }}"></script>
+
+{% schema %}
+{
+  "name": "Package demos",
+  "tag": "div",
+  "class": "cx-demos-section",
+  "settings": [
+    { "type": "header", "content": "Section heading" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Three packages, three working examples" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Every business needs" },
+    { "type": "text", "id": "heading_em", "label": "Heading, italic line", "default": "a room of its own." },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Each room holds a concept website for a fictional brand, built to the scope of one package. Walk in and use it the way a visitor would." },
+    { "type": "text", "id": "concept_label", "label": "Concept label", "default": "Concept demo · fictional brand" },
+    { "type": "text", "id": "ladder_1", "label": "Tier ladder step 1", "default": "Polished website" },
+    { "type": "text", "id": "ladder_2", "label": "Tier ladder step 2", "default": "+ Interactive 3D" },
+    { "type": "text", "id": "ladder_3", "label": "Tier ladder step 3", "default": "+ Full business launch" },
+    { "type": "text", "id": "shows_label", "label": "Room highlights label", "default": "What this room shows" },
+
+    { "type": "header", "content": "Room 01 · Essential Website" },
+    { "type": "text", "id": "ch1_name", "label": "Package name", "default": "Essential Website" },
+    { "type": "text", "id": "ch1_kind", "label": "In one line", "default": "A polished, premium website" },
+    { "type": "text", "id": "ch1_shows", "label": "Room highlights (separate with |)", "default": "Brand-styled pages|Clear navigation and service tabs|Contact form|Phone layout|Restrained motion" },
+    { "type": "text", "id": "ch1_skip", "label": "What this package leaves out (one line)", "default": "No 3D scene or custom motion design. Those start at 3D Experience." },
+    { "type": "text", "id": "ch1_heading", "label": "Heading", "default": "A first address" },
+    { "type": "text", "id": "ch1_heading_em", "label": "Heading, italic line", "default": "that already looks established." },
+    { "type": "textarea", "id": "ch1_intro", "label": "Who it suits", "default": "For service businesses, makers and first shops that need a polished, trustworthy site fast. A premium theme, shaped around your brand, up to five pages." },
+    { "type": "text", "id": "ch1_price", "label": "Price", "default": "$750" },
+    { "type": "text", "id": "ch1_meta", "label": "Price note", "default": "One-time · about 10 business days" },
+    { "type": "text", "id": "ch1_handle", "label": "Product handle", "default": "essential-website" },
+    { "type": "text", "id": "ch1_button", "label": "Button label", "default": "Choose Essential Website" },
+    { "type": "textarea", "id": "ch1_scope", "label": "What's included (one per line)", "default": "Up to 5 pages (Home + 4)\nPremium theme customised to your colours, fonts and logo\nUp to 10 products or services set up (you supply copy and photos)\nUp to 20 images prepared\nNavigation, contact form and essential Shopify setup (payments, 1 shipping zone)\nMobile optimisation and launch testing\n2 revision rounds\n30-min recorded handover video\n14 days of post-launch fixes" },
+    { "type": "textarea", "id": "ch1_not", "label": "Not included", "default": "Not included: Shopify plan, domain, paid apps, premium theme licence, photography, copywriting, ad spend. No guaranteed sales or rankings." },
+
+    { "type": "header", "content": "Room 02 · 3D Experience" },
+    { "type": "text", "id": "ch2_name", "label": "Package name", "default": "3D Experience" },
+    { "type": "text", "id": "ch2_kind", "label": "In one line", "default": "Website + a real interactive 3D scene" },
+    { "type": "text", "id": "ch2_shows", "label": "Room highlights (separate with |)", "default": "A walk-in 3D space, driven by scroll|Objects you can click and open|A product you can turn in 3D|Colourway switching|Light fallback on phones" },
+    { "type": "text", "id": "ch2_skip", "label": "What this package leaves out (one line)", "default": "Brand, catalogue copy, markets, social and pixels are added in Business Launch." },
+    { "type": "text", "id": "ch2_heading", "label": "Heading", "default": "A product on a plinth" },
+    { "type": "text", "id": "ch2_heading_em", "label": "Heading, italic line", "default": "that people can turn in their hands." },
+    { "type": "textarea", "id": "ch2_intro", "label": "Who it suits", "default": "For brands whose product deserves a stage: one real interactive 3D scene, custom sections and motion, with a light fallback for phones." },
+    { "type": "text", "id": "ch2_price", "label": "Price", "default": "$1,650" },
+    { "type": "text", "id": "ch2_meta", "label": "Price note", "default": "One-time · 3–4 weeks" },
+    { "type": "text", "id": "ch2_handle", "label": "Product handle", "default": "3d-experience-website" },
+    { "type": "text", "id": "ch2_button", "label": "Button label", "default": "Choose 3D Experience" },
+    { "type": "textarea", "id": "ch2_scope", "label": "What's included (one per line)", "default": "Up to 8 pages, including 1 custom-designed landing page\nCustom visual direction, custom sections and motion design\n1 real interactive 3D scene (WebGL) with a lightweight mobile fallback\nUp to 20 products or services set up\nUp to 40 images, background clean-up on 10\nFull Shopify setup: payments, shipping zones, tax basics, branded email notifications\nPerformance optimisation\n3 revision rounds\n45-min live handover plus video\n30 days of post-launch fixes" },
+    { "type": "textarea", "id": "ch2_not", "label": "Not included", "default": "Not included: Shopify plan, domain, paid apps, paid-library 3D models beyond one scene, photography, ad spend." },
+
+    { "type": "header", "content": "Room 03 · Business Launch" },
+    { "type": "text", "id": "ch3_name", "label": "Package name", "default": "Business Launch" },
+    { "type": "text", "id": "ch3_kind", "label": "In one line", "default": "3D site + the whole commercial setup" },
+    { "type": "text", "id": "ch3_shows", "label": "Room highlights (separate with |)", "default": "3D showroom, walk-in|Brand guide|Catalogue and product pages|Cart and checkout|Store admin, configured|US and Mexico markets|English and Spanish|Policies, social and pixels" },
+    { "type": "text", "id": "ch3_skip", "label": "What this package leaves out (one line)" },
+    { "type": "text", "id": "ch3_heading", "label": "Heading", "default": "A whole business" },
+    { "type": "text", "id": "ch3_heading_em", "label": "Heading, italic line", "default": "ready to open its doors." },
+    { "type": "textarea", "id": "ch3_intro", "label": "Who it suits", "default": "For founders who want it done end to end: brand, store, checkout, policies, social profiles and Spanish pages, handed over ready to sell." },
+    { "type": "text", "id": "ch3_price", "label": "Price", "default": "$2,750" },
+    { "type": "text", "id": "ch3_meta", "label": "Price note", "default": "One-time · 4–5 weeks" },
+    { "type": "text", "id": "ch3_handle", "label": "Product handle", "default": "business-launch" },
+    { "type": "text", "id": "ch3_button", "label": "Button label", "default": "Choose Business Launch" },
+    { "type": "textarea", "id": "ch3_scope", "label": "What's included (one per line)", "default": "Everything in 3D Experience\nUp to 10 pages, including 2 custom landing pages\nUp to 40 products uploaded, with descriptions written by us\nUp to 80 images, background clean-up on 40\nLogo refresh (1 concept, 2 rounds) and a mini brand guide\nPayments, shipping, tax basics, US and Mexico markets\nPolicy pages filled from your approved information (not legal advice)\nInstagram, Facebook and TikTok business profile setup\nMeta Business Suite, Meta Pixel and TikTok Pixel connected\n1 ad campaign prepared as a draft (not launched)\nSpanish versions of key pages\n3 revision rounds, 2 × 45-min training calls plus video\n30 days of post-launch fixes" },
+    { "type": "textarea", "id": "ch3_not", "label": "Not included", "default": "Not included: ongoing ad management, ad spend, Shopify plan, domain, paid apps, photography." }
+  ],
+  "presets": [{ "name": "Package demos" }]
+}
+{% endschema %}
+
