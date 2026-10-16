@@ -1,0 +1,23 @@
+{%- comment -%} A breath between two films: one line on a dark stage, the lamp switching scenes. {%- endcomment -%}
+<section class="interlude" id="{{ section.settings.anchor }}" aria-labelledby="{{ section.id }}-h">
+  <div class="wrap interlude__in" data-reveal>
+    {%- if section.settings.eyebrow != blank -%}<p class="label-mono"><i class="dot" aria-hidden="true"></i>{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h2 class="t-h1" id="{{ section.id }}-h">{{ section.settings.heading }}</h2>
+    {%- if section.settings.text != blank -%}<p class="lead">{{ section.settings.text }}</p>{%- endif -%}
+    {%- if section.settings.label != blank -%}<a class="btn btn--text" href="{{ section.settings.link }}">{{ section.settings.label }} {% render 'icon', i: 'down' %}</a>{%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Interlude",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "interlude" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Intermission" },
+    { "type": "text", "id": "heading", "label": "Heading (<em> allowed)", "default": "Same box. <em>A different business.</em>" },
+    { "type": "text", "id": "text", "label": "One-line lead" },
+    { "type": "text", "id": "label", "label": "Link" },
+    { "type": "text", "id": "link", "label": "Link target" }
+  ],
+  "presets": [ { "name": "Interlude" } ]
+}
+{% endschema %}
