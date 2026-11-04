@@ -1,0 +1,93 @@
+{
+ "sections": {
+  "s": {
+   "type": "story",
+   "settings": {
+    "prefix": "nv"
+   },
+   "blocks": {
+    "b15": {
+     "type": "card",
+     "settings": {
+      "kind": "picks",
+      "from": 4,
+      "to": 30,
+      "place": "right",
+      "mplace": "bottom",
+      "at": "0.47,0.42",
+      "k_from": 8,
+      "k_to": 26,
+      "title": "Pick the first print",
+      "sub": "3 prints \u00b7 2 colours \u00b7 1 drop",
+      "rows": "Orbit|nv-d1.webp|\nPebble|nv-d2.webp|hot\nLine|nv-d3.webp|"
+     }
+    },
+    "b16": {
+     "type": "card",
+     "settings": {
+      "kind": "brief",
+      "from": 32,
+      "to": 60,
+      "place": "right",
+      "mplace": "bottom",
+      "at": "0.47,0.42",
+      "k_from": 38,
+      "k_to": 56,
+      "url": "chargix.store/pages/onboarding",
+      "title": "Project brief \u00b7 NOVA",
+      "rows": "Package|Business Launch\nStore|Heavyweight tees, 1 drop\nBrand|Logo refresh + mini guide\nSocials|Instagram, Facebook, TikTok\nLanguages|English + Spanish pages",
+      "sub": "Order paid \u00b7 Project form sent \u00b7 Start date confirmed",
+      "label": "Demo brief \u00b7 made-up brand"
+     }
+    },
+    "b17": {
+     "type": "card",
+     "settings": {
+      "kind": "store",
+      "from": 185,
+      "to": 218,
+      "place": "right",
+      "mplace": "bottom",
+      "at": "0.5,0.52",
+      "k_from": 187,
+      "k_to": 208,
+      "brand": "NOVA",
+      "url": "nova.demo",
+      "title": "Drop 01.",
+      "sub": "Heavyweight tees, printed by hand. EN \u00b7 ES",
+      "image_asset": "nv-hero.webp",
+      "rows": "Pebble Tee, Bone|$38|nv-p1.webp\nLine Tee, Black|$38|nv-p2.webp\nThe Mailer Set|$70|nv-p3.webp",
+      "label": "Demo store \u00b7 made-up brand"
+     }
+    },
+    "b18": {
+     "type": "card",
+     "settings": {
+      "kind": "orders",
+      "from": 218,
+      "to": 236,
+      "place": "right",
+      "mplace": "bottom",
+      "hold": true,
+      "at": "0.22,0.43",
+      "k_from": 220,
+      "k_to": 234,
+      "brand": "NOVA",
+      "title": "New orders",
+      "rows": "Order #1001|Pebble Tee \u00b7 M|$38.00\nPedido #1002|Line Tee \u00b7 L \u00d7 2|$76.00\nOrder #1003|The Mailer Set|$70.00",
+      "label": "Illustrative orders, not real sales"
+     }
+    }
+   },
+   "block_order": [
+    "b15",
+    "b16",
+    "b17",
+    "b18"
+   ]
+  }
+ },
+ "order": [
+  "s"
+ ]
+}
