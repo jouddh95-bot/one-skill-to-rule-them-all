@@ -1,0 +1,31 @@
+{
+ "themeId": "189482991669",
+ "views": {
+  "desk": {
+   "stories": {},
+   "sections": {},
+   "domContentLoadedMs": 1046,
+   "loadMs": 2133,
+   "passwordPage": true
+  },
+  "mob": {
+   "stories": {},
+   "sections": {},
+   "domContentLoadedMs": 702,
+   "loadMs": 1415,
+   "passwordPage": true
+  }
+ },
+ "assets": {
+  "cdn": "https://chargix.store/cdn/shop/t/33/assets/",
+  "checked": 1035,
+  "missing": [],
+  "bytes": 128006600
+ },
+ "errors": [
+  "[desk] console: Refused to frame 'https://shop.app/' because an ancestor violates the following Content Security Policy directive: \"frame-ancestors 'self' https://shop.app https://admin.shopify.com\".\n",
+  "[desk] console: Failed to load resource: the server responded with a status of 403 ()",
+  "[mob] console: Refused to frame 'https://shop.app/' because an ancestor violates the following Content Security Policy directive: \"frame-ancestors 'self' https://shop.app https://admin.shopify.com\".\n",
+  "[mob] console: Failed to load resource: the server responded with a status of 403 ()"
+ ]
+}
