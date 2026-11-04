@@ -1,0 +1,10 @@
+[
+  { "name": "theme_info", "theme_name": "CHARGIX Box", "theme_version": "8.0.0", "theme_author": "CHARGIX", "theme_documentation_url": "https://chargix.store", "theme_support_url": "https://chargix.store/pages/contact" },
+  { "name": "Brand", "settings": [
+    { "type": "text", "id": "brand_name", "label": "Brand name", "default": "CHARGIX" },
+    { "type": "textarea", "id": "default_description", "label": "Default meta description" },
+    { "type": "text", "id": "contact_email", "label": "Contact email" },
+    { "type": "image_picker", "id": "favicon", "label": "Favicon" },
+    { "type": "image_picker", "id": "share_image", "label": "Social sharing image" }
+  ] }
+]

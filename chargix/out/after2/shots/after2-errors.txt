@@ -1,0 +1,24 @@
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/shopify_pay/accelerated_checkout net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] shot #demo-launch: page.screenshot: Timeout 60000ms exceeded.
+[desk] shot #packages: page.screenshot: Timeout 60000ms exceeded.
+[mob] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[mob] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/shopify_pay/accelerated_checkout net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] shot #demo-launch: page.screenshot: Timeout 60000ms exceeded.

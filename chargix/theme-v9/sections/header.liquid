@@ -1,0 +1,42 @@
+{%- comment -%}
+  Pill nav. Sits on the film at the top of the page; once the page scrolls it lifts into a floating
+  glass bar (cx.js toggles .is-float). Phones get a full-screen sheet menu.
+{%- endcomment -%}
+{%- liquid
+  assign menu = linklists[section.settings.menu]
+  assign brand = settings.brand_name | default: 'CHARGIX'
+-%}
+<header class="hdr" data-hdr>
+  <div class="hdr__bar">
+    <a class="hdr__logo" href="{{ routes.root_url }}" aria-label="{{ brand }}, {{ 'general.home' | t }}">{% render 'logo' %}<span>{{ brand }}</span></a>
+    <nav class="hdr__nav" aria-label="{{ 'general.menu' | t }}">
+      {%- for l in menu.links -%}<a href="{{ l.url }}"{% if l.current %} aria-current="page"{% endif %}>{{ l.title | escape }}</a>{%- endfor -%}
+    </nav>
+    <div class="hdr__end">
+      {%- if section.settings.cta_label != blank -%}<a class="btn btn--lamp btn--sm hdr__cta" href="{{ section.settings.cta_link }}">{{ section.settings.cta_label }}</a>{%- endif -%}
+      <a class="hdr__icon" href="{{ routes.cart_url }}" aria-label="{{ 'cart.title' | t }} ({{ cart.item_count }})">{% render 'icon', i: 'bag' %}{%- if cart.item_count > 0 -%}<span class="hdr__count" aria-hidden="true">{{ cart.item_count }}</span>{%- endif -%}</a>
+      <button class="hdr__icon hdr__menu" type="button" data-menu-open aria-expanded="false" aria-controls="Sheet"><span class="hdr__burger" aria-hidden="true"><i></i><i></i></span><span class="vh">{{ 'general.menu' | t }}</span></button>
+    </div>
+  </div>
+</header>
+<div class="sheet" id="Sheet" data-sheet hidden role="dialog" aria-modal="true" aria-label="{{ 'general.menu' | t }}">
+  <div class="sheet__top">
+    <a class="hdr__logo" href="{{ routes.root_url }}">{% render 'logo' %}<span>{{ brand }}</span></a>
+    <button class="hdr__icon sheet__close" type="button" data-menu-close aria-label="{{ 'general.close' | t }}"><span aria-hidden="true">×</span></button>
+  </div>
+  <nav class="sheet__nav" aria-label="{{ 'general.menu' | t }}">
+    {%- for l in menu.links -%}<a href="{{ l.url }}"><span class="sheet__n">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>{{ l.title | escape }}</a>{%- endfor -%}
+    <a href="{{ routes.cart_url }}"><span class="sheet__n">{% render 'icon', i: 'bag' %}</span>{{ 'cart.title' | t }} ({{ cart.item_count }})</a>
+  </nav>
+  {%- if section.settings.cta_label != blank -%}<a class="btn btn--lamp btn--block" href="{{ section.settings.cta_link }}">{{ section.settings.cta_label }} {% render 'icon', i: 'arrow' %}</a>{%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "text", "id": "cta_label", "label": "Button", "default": "Start a project" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ]
+}
+{% endschema %}

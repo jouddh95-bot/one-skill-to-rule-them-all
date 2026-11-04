@@ -1,0 +1,33 @@
+{%- liquid
+  assign menu = linklists[section.settings.menu]
+  assign brand = settings.brand_name | default: 'CHARGIX'
+-%}
+<header class="hdr" data-hdr>
+  <div class="wrap hdr__in">
+    <a class="hdr__logo" href="{{ routes.root_url }}" aria-label="{{ brand }}, {{ 'general.home' | t }}">{% render 'logo' %}<span>{{ brand }}</span></a>
+    <nav class="hdr__nav" aria-label="{{ 'general.menu' | t }}">
+      {%- for l in menu.links -%}<a href="{{ l.url }}"{% if l.current %} aria-current="page"{% endif %}>{{ l.title | escape }}</a>{%- endfor -%}
+    </nav>
+    <div class="hdr__end">
+      {%- if section.settings.cta_label != blank -%}<a class="btn btn--sm hdr__cta" href="{{ section.settings.cta_link }}">{{ section.settings.cta_label }}</a>{%- endif -%}
+      <a class="hdr__cart" href="{{ routes.cart_url }}" aria-label="{{ 'cart.title' | t }} ({{ cart.item_count }})">{% render 'icon', i: 'bag' %}{%- if cart.item_count > 0 -%}<span class="hdr__count" aria-hidden="true">{{ cart.item_count }}</span>{%- endif -%}</a>
+      <button class="hdr__menu" type="button" data-menu-open aria-expanded="false" aria-controls="Sheet"><span></span><span class="vh">{{ 'general.menu' | t }}</span></button>
+    </div>
+  </div>
+</header>
+<div class="sheet" id="Sheet" data-sheet hidden role="dialog" aria-modal="true" aria-label="{{ 'general.menu' | t }}">
+  <button class="sheet__close" type="button" data-menu-close aria-label="{{ 'general.close' | t }}">×</button>
+  {%- for l in menu.links -%}<a href="{{ l.url }}">{{ l.title | escape }}</a>{%- endfor -%}
+  <a href="{{ routes.cart_url }}">{{ 'cart.title' | t }} ({{ cart.item_count }})</a>
+  {%- if section.settings.cta_label != blank -%}<a class="btn btn--brass" href="{{ section.settings.cta_link }}">{{ section.settings.cta_label }}</a>{%- endif -%}
+</div>
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "text", "id": "cta_label", "label": "Button", "default": "Start a project" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ]
+}
+{% endschema %}

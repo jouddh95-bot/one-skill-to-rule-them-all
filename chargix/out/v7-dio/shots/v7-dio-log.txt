@@ -1,0 +1,68 @@
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] section class: dio is-live
+[desk] cookie: frame responses so far 80 (10s)
+[desk] cookie 0.02: caption "An idea over coffee"
+[desk] cookie 0.15: caption "Looking for a way to sell"
+[desk] cookie 0.27: caption "Choosing a package"
+[desk] cookie 0.45: caption "Out of the oven"
+[desk] cookie 0.6: caption "A brand takes shape"
+[desk] cookie 0.72: caption "The store opens"
+[desk] cookie 0.85: caption "Looking back at day one"
+[desk] cookie 0.97: caption "Your turn"
+[desk] clothing: frame responses so far 246 (32s)
+[desk] clothing 0.02: caption "An idea in a sketchbook"
+[desk] clothing 0.15: caption "Looking for a way to sell"
+[desk] clothing 0.27: caption "Choosing a package"
+[desk] clothing 0.45: caption "Folded and stacked"
+[desk] clothing 0.6: caption "NOVA gets its look"
+[desk] clothing 0.72: caption "The store opens"
+[desk] clothing 0.85: caption "Looking back at day one"
+[desk] clothing 0.97: caption "Your turn"
+[desk] sections:
+  shopify-section-template--27924107067445__story h=21600
+  shopify-section-template--27924107067445__diorama h=10258
+  shopify-section-template--27924107067445__worlds h=6884
+  shopify-section-template--27924107067445__demos h=22510
+  shopify-section-template--27924107067445__packages h=1937
+  shopify-section-template--27924107067445__compare h=479
+  shopify-section-template--27924107067445__services h=2112
+  shopify-section-template--27924107067445__process h=1490
+  shopify-section-template--27924107067445__care h=1405
+  shopify-section-template--27924107067445__trust h=322
+  shopify-section-template--27924107067445__faq h=1117
+  shopify-section-template--27924107067445__finale h=10800
+[mob] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[mob] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[mob] section class: dio is-live
+[mob] cookie: frame responses so far 91 (10s)
+[mob] cookie 0.02: caption "An idea over coffee"
+[mob] cookie 0.15: caption "Looking for a way to sell"
+[mob] cookie 0.27: caption "Choosing a package"
+[mob] cookie 0.45: caption "Out of the oven"
+[mob] cookie 0.6: caption "A brand takes shape"
+[mob] cookie 0.72: caption "The store opens"
+[mob] cookie 0.85: caption "Looking back at day one"
+[mob] cookie 0.97: caption "Your turn"
+[mob] clothing: frame responses so far 182 (31s)
+[mob] clothing 0.02: caption "An idea in a sketchbook"
+[mob] clothing 0.15: caption "Looking for a way to sell"
+[mob] clothing 0.27: caption "Choosing a package"
+[mob] clothing 0.45: caption "Folded and stacked"
+[mob] clothing 0.6: caption "NOVA gets its look"
+[mob] clothing 0.72: caption "The store opens"
+[mob] clothing 0.85: caption "Looking back at day one"
+[mob] clothing 0.97: caption "Your turn"
+[mob] sections:
+  shopify-section-template--27924107067445__story h=21944
+  shopify-section-template--27924107067445__diorama h=9546
+  shopify-section-template--27924107067445__worlds h=10369
+  shopify-section-template--27924107067445__demos h=23990
+  shopify-section-template--27924107067445__packages h=3713
+  shopify-section-template--27924107067445__compare h=528
+  shopify-section-template--27924107067445__services h=2297
+  shopify-section-template--27924107067445__process h=1627
+  shopify-section-template--27924107067445__care h=2552
+  shopify-section-template--27924107067445__trust h=696
+  shopify-section-template--27924107067445__faq h=1265
+  shopify-section-template--27924107067445__finale h=10972

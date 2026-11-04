@@ -1,0 +1,5 @@
+{"prefix": "ck", "clips": [
+ {"src": "out/hf/c01-phone.mp4"}, {"src": "out/hf/c02-desk.mp4"},
+ {"src": "out/hf/c03-dawn.mp4", "nightcut": [12, 102, 6]},
+ {"src": "out/hf/c04-pack.mp4"}, {"src": "out/hf/c05-sunset.mp4"}
+]}

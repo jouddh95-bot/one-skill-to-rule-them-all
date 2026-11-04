@@ -1,0 +1,11 @@
+<section class="sec sec--tight tone-paper" aria-labelledby="cols-h">
+  <div class="wrap">
+    <header class="sec__head plinth"><h1 class="d-2" id="cols-h">{{ 'products.collections' | t }}</h1></header>
+    <div class="grid">
+      {%- for c in collections -%}{%- if c.products_count == 0 -%}{%- continue -%}{%- endif -%}
+        <a class="card" href="{{ c.url }}"><div class="card__img">{%- if c.featured_image -%}{{ c.featured_image | image_url: width: 640 | image_tag: loading: 'lazy', alt: c.title }}{%- endif -%}</div><span class="card__t">{{ c.title | escape }}</span><span class="card__p">{{ 'products.count' | t: count: c.products_count }}</span></a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}{ "name": "Collections list" }{% endschema %}

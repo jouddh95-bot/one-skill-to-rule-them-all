@@ -1,0 +1,19 @@
+<section class="sec sec--tight tone-paper"><div class="wrap narrow">
+  <header class="sec__head plinth"><h1 class="d-2">{{ 'customer.login' | t }}</h1></header>
+  <div id="login">
+  {%- form 'customer_login', class: 'form' -%}
+    {%- if form.errors -%}<div class="alert alert--err" role="alert">{{ form.errors | default_errors }}</div>{%- endif -%}
+    <div class="field"><label for="l-email">{{ 'customer.email' | t }}</label><input class="input" id="l-email" type="email" name="customer[email]" autocomplete="email" required></div>
+    {%- if form.password_needed -%}<div class="field"><label for="l-pass">{{ 'customer.password' | t }}</label><input class="input" id="l-pass" type="password" name="customer[password]" autocomplete="current-password"></div>{%- endif -%}
+    <div class="form__end"><button class="btn btn--solid" type="submit">{{ 'customer.login' | t }}</button><a class="link" href="#recover">{{ 'customer.forgot' | t }}</a><a class="link" href="{{ routes.account_register_url }}">{{ 'customer.register' | t }}</a></div>
+  {%- endform -%}
+  </div>
+  <div id="recover" style="margin-top:64px">
+  {%- form 'recover_customer_password', class: 'form' -%}
+    {%- if form.posted_successfully? -%}<div class="alert alert--ok" role="status">{{ 'customer.sent' | t }}</div>{%- endif -%}
+    <h2 class="d-3">{{ 'customer.reset' | t }}</h2>
+    <div class="field"><label for="r-email">{{ 'customer.email' | t }}</label><input class="input" id="r-email" type="email" name="email" autocomplete="email" required></div>
+    <div class="form__end"><button class="btn" type="submit">{{ 'customer.send' | t }}</button></div>
+  {%- endform -%}
+  </div>
+</div></section>

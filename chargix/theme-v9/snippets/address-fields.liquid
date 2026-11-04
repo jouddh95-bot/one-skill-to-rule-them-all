@@ -1,0 +1,16 @@
+<div class="row row--2">
+  <div class="field"><label for="af-first-{{ id }}">{{ 'customer.first' | t }}</label><input class="input" id="af-first-{{ id }}" name="address[first_name]" value="{{ f.first_name }}" autocomplete="given-name"></div>
+  <div class="field"><label for="af-last-{{ id }}">{{ 'customer.last' | t }}</label><input class="input" id="af-last-{{ id }}" name="address[last_name]" value="{{ f.last_name }}" autocomplete="family-name"></div>
+</div>
+<div class="field"><label for="af-a1-{{ id }}">Address</label><input class="input" id="af-a1-{{ id }}" name="address[address1]" value="{{ f.address1 }}" autocomplete="address-line1"></div>
+<div class="field"><label for="af-a2-{{ id }}">Apartment, suite</label><input class="input" id="af-a2-{{ id }}" name="address[address2]" value="{{ f.address2 }}" autocomplete="address-line2"></div>
+<div class="row row--2">
+  <div class="field"><label for="af-city-{{ id }}">City</label><input class="input" id="af-city-{{ id }}" name="address[city]" value="{{ f.city }}" autocomplete="address-level2"></div>
+  <div class="field"><label for="af-zip-{{ id }}">ZIP / Postal code</label><input class="input" id="af-zip-{{ id }}" name="address[zip]" value="{{ f.zip }}" autocomplete="postal-code"></div>
+</div>
+<div class="row row--2">
+  <div class="field"><label for="af-country-{{ id }}">Country</label><select class="select" id="af-country-{{ id }}" name="address[country]">{{ all_country_option_tags }}</select></div>
+  <div class="field"><label for="af-prov-{{ id }}">State / Province</label><input class="input" id="af-prov-{{ id }}" name="address[province]" value="{{ f.province }}" autocomplete="address-level1"></div>
+</div>
+<div class="field"><label for="af-phone-{{ id }}">Phone</label><input class="input" id="af-phone-{{ id }}" type="tel" name="address[phone]" value="{{ f.phone }}" autocomplete="tel"></div>
+<label class="checks"><input type="checkbox" name="address[default]" value="1"{% if f.set_as_default_checkbox %} checked{% endif %}> {{ 'customer.default' | t }}</label>

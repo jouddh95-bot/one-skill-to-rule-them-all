@@ -1,0 +1,38 @@
+name: chargix-capture
+on:
+  push:
+    branches: [claude/project-thread-extkzj]
+    paths: [chargix/jobs/capture.json]
+permissions:
+  contents: write
+concurrency: { group: chargix-capture, cancel-in-progress: false }
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Download theme frame assets
+        run: |
+          set -e
+          J=chargix/jobs/capture.json
+          T=$(jq -r .download $J); L=$(jq -r .label $J)
+          if [ "$T" != "null" ] && [ -n "$T" ]; then
+            O=chargix/out/$L/assets; mkdir -p $O
+            for f in film-s-{000..100} film-s-m-{000..100} film-f-{00..40} film-f-m-{00..40} mono-still-{court,door,hall,light,mono,pivot,rot,struct}; do
+              curl -sfL -o $O/$f.webp "https://chargix.store/cdn/shop/$T/assets/$f.webp" || echo "miss $f"
+            done
+            ls $O | wc -l
+          fi
+      - name: Screenshots
+        run: |
+          cd chargix/tools && npm init -y >/dev/null && npm i playwright@1.48.2 >/dev/null && npx playwright install --with-deps chromium >/dev/null
+          J=../jobs/capture.json
+          node $(jq -r '.script // "capture.mjs"' $J) ../out/$(jq -r .label $J)/shots $(jq -r .theme $J) $(jq -r .label $J)
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name "chargix-pipeline"; git config user.email "pipeline@users.noreply.github.com"
+          git add chargix/out && git commit -m "chargix: capture $(jq -r .label chargix/jobs/capture.json) [skip ci]" && git pull --rebase -q && git push

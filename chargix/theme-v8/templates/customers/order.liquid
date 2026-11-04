@@ -1,0 +1,12 @@
+<section class="sec sec--tight tone-paper"><div class="wrap">
+  <header class="sec__head plinth"><p><a class="link" href="{{ routes.account_url }}">{{ 'customer.back' | t }}</a></p><h1 class="d-2">{{ 'customer.order' | t: name: order.name }}</h1><p class="small">{{ order.created_at | time_tag: format: 'date' }} · {{ order.financial_status_label }} · {{ order.fulfillment_status_label }}</p></header>
+  <div class="cmp-wrap"><table class="cmp"><thead><tr><th>{{ 'customer.product' | t }}</th><th>{{ 'customer.qty' | t }}</th><th>{{ 'customer.total' | t }}</th></tr></thead><tbody>
+    {%- for l in order.line_items -%}<tr><td>{{ l.title | escape }}</td><td>{{ l.quantity }}</td><td>{{ l.final_line_price | money }}</td></tr>{%- endfor -%}
+    <tr><th>{{ 'customer.subtotal' | t }}</th><td></td><td>{{ order.line_items_subtotal_price | money }}</td></tr>
+    {%- if order.shipping_price > 0 -%}<tr><th>{{ 'customer.shipping' | t }}</th><td></td><td>{{ order.shipping_price | money }}</td></tr>{%- endif -%}
+    {%- if order.tax_price > 0 -%}<tr><th>{{ 'customer.tax' | t }}</th><td></td><td>{{ order.tax_price | money }}</td></tr>{%- endif -%}
+    <tr><th>{{ 'customer.total' | t }}</th><td></td><td><strong>{{ order.total_price | money }}</strong></td></tr>
+  </tbody></table></div>
+  {%- assign svc = false -%}{%- for l in order.line_items -%}{%- if l.product.handle == 'essential-website' or l.product.handle == '3d-experience-website' or l.product.handle == 'business-launch' -%}{%- assign svc = true -%}{%- endif -%}{%- endfor -%}
+  {%- if svc -%}<p style="margin-top:32px"><a class="btn btn--brass" href="/pages/onboarding?order={{ order.name | url_encode }}">{{ 'customer.project_form' | t }} {% render 'icon', i: 'arrow' %}</a></p>{%- endif -%}
+</div></section>

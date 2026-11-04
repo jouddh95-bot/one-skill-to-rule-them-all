@@ -1,0 +1,12 @@
+<section class="sec sec--page"><div class="wrap">
+  <header class="head"><p class="label-mono">{{ customer.email }}</p><h1 class="t-h2">{{ 'customer.account' | t }}</h1><p><a class="btn btn--text" href="{{ routes.account_logout_url }}">{{ 'customer.logout' | t }}</a> &nbsp; <a class="btn btn--text" href="{{ routes.account_addresses_url }}">{{ 'customer.addresses' | t }} ({{ customer.addresses_count }})</a></p></header>
+  <h2 class="t-h3 mb-5">{{ 'customer.orders' | t }}</h2>
+  {%- paginate customer.orders by 20 -%}
+    {%- if customer.orders.size > 0 -%}
+      <div class="tbl-wrap"><table class="tbl tbl--stack"><thead><tr><th>#</th><th>{{ 'customer.date' | t }}</th><th>{{ 'customer.status' | t }}</th><th>{{ 'customer.total' | t }}</th></tr></thead><tbody>
+        {%- for o in customer.orders -%}<tr><th scope="row"><a href="{{ o.customer_url }}">{{ o.name }}</a></th><td data-label="{{ 'customer.date' | t }}">{{ o.created_at | time_tag: format: 'date' }}</td><td data-label="{{ 'customer.status' | t }}">{{ o.financial_status_label }} · {{ o.fulfillment_status_label }}</td><td data-label="{{ 'customer.total' | t }}">{{ o.total_price | money }}</td></tr>{%- endfor -%}
+      </tbody></table></div>
+    {%- else -%}<p>{{ 'customer.no_orders' | t }}</p>{%- endif -%}
+    {%- if paginate.pages > 1 -%}<nav class="pager">{{ paginate | default_pagination }}</nav>{%- endif -%}
+  {%- endpaginate -%}
+</div></section>

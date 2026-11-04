@@ -1,0 +1,121 @@
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: blob:https://chargix.store/9c76cd02-9ef7-4862-bb41-e5f82e813b53 net::ERR_ABORTED
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/shopify_pay/accelerated_checkout net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] shot cs-pick: page.screenshot: Timeout 60000ms exceeded.
+[desk] casa card -> shop: clicked
+[desk] state {"mono":true,"ready":true,"html":"js cx-cine cx-loaded","pv":"pv pv--on pv--ready","gates":2}
+[desk] package links ["Buy & start: Essential Website -> /cart/67653568921653:1","Full details: Essential Website -> /products/essential-website","Buy & start: 3D Experience -> /cart/67653569118261:1","Full details: 3D Experience -> /products/3d-experience-website","Buy & start: Business Launch -> /cart/67653569675317:1","Full details: Business Launch -> /products/business-launch"]
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] product essential-website: 200
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] essential-website add: clicked add
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': Unrecognized type: "prefetchCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': Unrecognized type: "prerenderCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': No recognized types specified.
+[desk] console: An import map is added after module script load was triggered.
+[desk] reqfail: https://error-analytics-sessions-production.shopifysvc.com/observeonly net::ERR_ABORTED
+[desk] http 401: https://chargix.store/private_access_tokens?id=cc78a21525edf008953a59aac1dd5d3b&checkout_type=c1
+[desk] console: Failed to load resource: the server responded with a status of 401 ()
+[desk] reqfail: https://chargix.store/private_access_tokens?id=cc78a21525edf008953a59aac1dd5d3b&checkout_type=c1 net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/web-pixels@b5acf91awd18c8882p8c792781mb6692deb/custom/web-pixel-shopify-custom-pixel@0520/sandbox/modern/checkouts/cn/hWNHyMEqzpoZvexnZsoIEs36/en-us?_r=AQABjnpfTumnJSZQuZQ114zOWEWS9Z2Jh_fAcBkKSOddZKMVFDYL&preview_theme_id=188979347509 net::ERR_ABORTED
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] product 3d-experience-website: 200
+[desk] reqfail: blob:https://chargix.store/a6abfe8b-4980-4e21-977f-12f9410d2486 net::ERR_ABORTED
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] 3d-experience-website add: clicked add
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': Unrecognized type: "prefetchCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': Unrecognized type: "prerenderCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': No recognized types specified.
+[desk] console: An import map is added after module script load was triggered.
+[desk] reqfail: https://error-analytics-sessions-production.shopifysvc.com/observeonly net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] http 401: https://chargix.store/private_access_tokens?id=cc78a21525edf008953a59aac1dd5d3b&checkout_type=c1
+[desk] console: Failed to load resource: the server responded with a status of 401 ()
+[desk] reqfail: https://chargix.store/private_access_tokens?id=cc78a21525edf008953a59aac1dd5d3b&checkout_type=c1 net::ERR_ABORTED
+[desk] console: [Report Only] Refused to load the script 'https://connect.facebook.net/en_US/fbevents.js' because it violates the following Content Security Policy directive: "script-src 'self' 'unsafe-inline' https://cdn.shopify.com https://checkout.pci.shopifyinc.com https://js.hcaptcha.com". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] console: [Report Only] Refused to load the script 'https://connect.facebook.net/signals/config/28515235821396318?v=2.9.419&r=stable&domain=chargix.store&hme=7459fa3e38c2784dbaf309537bed5fa7e8560fab51fb61e53e5ffafeb46a02a9&ex_m=118%2C241%2C171%2C27%2C82%2C83%2C162%2C78%2C77%2C11%2C181%2C102%2C20%2C153%2C141%2C46%2C85%2C90%2C149%2C176%2C183%2C8%2C4%2C5%2C7%2C6%2C3%2C103%2C115%2C32%2C17%2C31%2C18%2C33%2C34%2C35%2C37%2C55%2C163%2C87%2C126%2C22%2C24%2C51%2C47%2C49%2C48%2C95%2C104%2C108%2C124%2C160%2C164%2C53%2C125%2C29%2C26%2C133%2C79%2C43%2C166%2C165%2C167%2C1...C146%2C147%2C148%2C143%2C142%2C172%2C86%2C175%2C173%2C174%2C57%2C69%2C67%2C137%2C19%2C179%2C52%2C324%2C325%2C326%2C323%2C339%2C361%2C248%2C237%2C70%2C238%2C236%2C364%2C355%2C59%2C249%2C121%2C145%2C92%2C135%2C61%2C134%2C140%2C139%2C65%2C74%2C168%2C88%2C89%2C129%2C44%2C39%2C60%2C63%2C114%2C182%2C1%2C138%2C16%2C136%2C12%2C2%2C64%2C105%2C15%2C75%2C71%2C132%2C101%2C100%2C187%2C188%2C106%2C107%2C9%2C116%2C186%2C58%2C158%2C99%2C91%2C81%2C131%2C120%2C169%2C50%2C159%2C0%2C94%2C152%2C156%2C170%2C45%2C122%2C13%2C189' because it violates the following Content Security Policy directive: "script-src 'self' 'unsafe-inline' https://cdn.shopify.com https://checkout.pci.shopifyinc.com https://js.hcaptcha.com". Note that 'script-src-elem' was not explicitly set, so 'script-src' is used as a fallback.
+
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/services/login_with_shop/authorize?analytics_context=loginWithShopCheckoutModal&analytics_trace_id=b3fd7adb-feb7-4831-92cb-4c1d3c841c6a&avoid_sdk_session=true&checkout_redirect_url=NHN5Qis0WjJJb0txR2FCUEdONTlxVFA3elQ4TUtoamJtU1RxNWdjb3Vrc2lnWG9BQTVQelVKYVRXQ0RxMzBPa2d5NjVXUEJVbW5MQ2g2WlppcWRnelpXdHZPSWF4c0JMelp5d0pkTS9ZQUJWZTVVQ2dSMzdsU0t0cWE0Z2hqd1VWRjhxbWg5d2Z5QW5WYURBOUtnMTZ5MHl5VlBEbjVwbDAwVFhYekJCbGRZZVhXYm9ZcHJJYURKcngrMkFVaGZCdDQ1djhQMmNnS0lCVjMzemlUYUZ0QXYxbFozL3oyeUlvdTErTlRCZlA4WnVYYzN5T0U0NVNSMGtSL0owcEd6aWdBc3JucEtDNTJjU3pjdU1TTXc3YmlDNGpYMG8xZ0R0c3RpMmdWaEd4ZitxT0IrV0luM1U4cWZKREhxZkRBUlIxclB1bFNCemhabSsrbWRYSmlqUysrem94L1JDNVVDTUhXOHZnT29mQXhic2hxRXM1Y3FTaGtUbFdvbEs5NXc3K29kNW5CbjEwdG85K21hVFVxVjE1V2ZHSlpjZlZYZW1ucUNnTElIckFoSTBjeTZCU0RtY080V3RiM1IvSmNrcTNGcFFSYTNwNkwzWUpDZENOT0pnQ2VIazQ3bE5weWJtMU1IWStsaVdIaUFuY1hWenpVWFJPbDJqaTdaV0V2SUxxSk1mdVVZRVhhMVRESUVzS0lPY0wvOUxmRGVLRmhLQVFXcmxMV0hmb3V5TUc5QVBaZ1NqUVJmdWdtbzNSc3ZNRFk5K2JXQXBzV0hhcis3VkQ0Sm43eEVzTmhyUTNncjhnbE0vSkxGeDg1c00wMVk1OUhQUG4rSUJRMjg5QXZpQmlYa1d6dXhua1F5bmpYKzlMUWRBa2cxays2K2FhMlllRW1RYmdxeUgrQWVCNkFFcWJBWDE3S0ZJcEtPZ040QVNvRzdLQXp5UDBVaytZMmtEL25vdjEwcUs0TkFJVCtQZ21yRFhJTExGREhyeU1xZWlNRjZEbDlPTzMvUEo4cGJKWFV5VHV6Nlp6cklWVDJRK29ONHlDaWFGWjBsQ2NYRUxuREh2WjBIRmlDSVBycEkyZU1ySG9iZFcrRUtLSVJXNkVVZDZvSm4xeHNsVXgvZ2FERklMUWRtcDRFOXY4T3pacWxPZVp5RUI4cmtPTE9BWHd1U2U1T2NOeTlLL2R6Zm9XcHJBbmVaakNFL1JuMVFTc2pSak5wdHlxZVorWTE1ZG1tWm03MGZrcXZyVEtoMmFiL1NlaUNBZ1hTYlJQZmlhYjNMOFZ3blpSQk5tNUJZYitPVWVTRGZDcEpSWVduRndVanFYenJ6bkhiMkREZ1ZFY2pBVTNqY3kyQUFWQkp4dkVGWHMra2t5Vm82NUtsL2dBdnhqQzVEZHF0NklxSklrRkhvaVh4VVNEUlpqZ3hLMytrbWJyeG5oQi9WUFp0VWpiN3lJSkxxN2luZFhNUGFQK096cEdybkg3VEhCaDRnNzFua2F0QVpKVFFqZVJNc3dMeCtSSW9XLzZNSU5rMkpjQzNUZm9zeldYR0NYWGpYcDdsNWhDNnBhWnh5SE1IVVl0WHhqNnM3NE5nRT0tLTh4NFpjQ0ZYMnI0OTRERlhoNWtNWXc9PQ%3D%3D--2095cb1036db5816f1ff5db923646a589230742c&checkout_token=cc78a21525edf008953a59aac1dd5d3b&checkout_version=checkout_one&client_id=&compact_layout=true&flow=checkout_modal&flow_version=unspecified&locale=en&preact=true&prompt=login&redirect_type=iframe&redirect_uri=https%3A%2F%2Fchargix.store&response_mode=web_message&response_type=code&scope=openid+email+profile&sign_up_enabled=false&storefront_domain=https%3A%2F%2Fchargix.store&target_origin=https%3A%2F%2Fchargix.store&transaction_params=encrypted_params%3DVWp5WXlPMVVJTFUvWkVQcEFVOW9LbmluQk42ZVlYSThTVk4xYkhuUWdBVStlaHRNYW44NTNXT3FuTzRCZXoxb0pRSGJUL2lackp4Unp0ZURlSUovTkJicUt3cSs4cFVob05wNjVMMWg5OUV4U2h4b1VxZzhVdEgzcThjazdqa0E0WmJWTUJXN0QrRklZZklwYTlvWkJhVW5wZ3hFcGt6UHNsT3dnald5aTB4aFV4SnQxSzZvOGFHOC9PaWpvS0YwellCSFk3KzA5OGNxQUxaNFRqSzFJQT09LS1tWWtsbytCQ3gzQktQQlM5SVJYQnRnPT0%253D--94e532a66e97144fe9c4fc976f89a435b5565991&ux_mode=iframe net::ERR_ABORTED
+[desk] reqfail: https://shop.app/accounts/login/embedded?analytics_context=loginWithShopCheckoutModal&analytics_trace_id=b3fd7adb-feb7-4831-92cb-4c1d3c841c6a&auth_state=i85bZdyXvamfplyQo2ohhg&authentication_level=phone&avoid_sdk_session=true&checkout_redirect_url=NHN5Qis0WjJJb0txR2FCUEdONTlxVFA3elQ4TUtoamJtU1RxNWdjb3Vrc2lnWG9BQTVQelVKYVRXQ0RxMzBPa2d5NjVXUEJVbW5MQ2g2WlppcWRnelpXdHZPSWF4c0JMelp5d0pkTS9ZQUJWZTVVQ2dSMzdsU0t0cWE0Z2hqd1VWRjhxbWg5d2Z5QW5WYURBOUtnMTZ5MHl5VlBEbjVwbDAwVFhYekJCbGRZZVhXYm9ZcHJJYURKcngrMkFVaGZCdDQ1djhQMmNnS0lCVjMzemlUYUZ0QXYxbFozL3oyeUlvdTErTlRCZlA4WnVYYzN5T0U0NVNSMGtSL0owcEd6aWdBc3JucEtDNTJjU3pjdU1TTXc3YmlDNGpYMG8xZ0R0c3RpMmdWaEd4ZitxT0IrV0luM1U4cWZKREhxZkRBUlIxclB1bFNCemhabSsrbWRYSmlqUysrem94L1JDNVVDTUhXOHZnT29mQXhic2hxRXM1Y3FTaGtUbFdvbEs5NXc3K29kNW5CbjEwdG85K21hVFVxVjE1V2ZHSlpjZlZYZW1ucUNnTElIckFoSTBjeTZCU0RtY080V3RiM1IvSmNrcTNGcFFSYTNwNkwzWUpDZENOT0pnQ2VIazQ3bE5weWJtMU1IWStsaVdIaUFuY1hWenpVWFJPbDJqaTdaV0V2SUxxSk1mdVVZRVhhMVRESUVzS0lPY0wvOUxmRGVLRmhLQVFXcmxMV0hmb3V5TUc5QVBaZ1NqUVJmdWdtbzNSc3ZNRFk5K2JXQXBzV0hhcis3VkQ0Sm43eEVzTmhyUTNncjhnbE0vSkxGeDg1c00wMVk1OUhQUG4rSUJRMjg5QXZpQmlYa1d6dXhua1F5bmpYKzlMUWRBa2cxays2K2FhMlllRW1RYmdxeUgrQWVCNkFFcWJBWDE3S0ZJcEtPZ040QVNvRzdLQXp5UDBVaytZMmtEL25vdjEwcUs0TkFJVCtQZ21yRFhJTExGREhyeU1xZWlNRjZEbDlPTzMvUEo4cGJKWFV5VHV6Nlp6cklWVDJRK29ONHlDaWFGWjBsQ2NYRUxuREh2WjBIRmlDSVBycEkyZU1ySG9iZFcrRUtLSVJXNkVVZDZvSm4xeHNsVXgvZ2FERklMUWRtcDRFOXY4T3pacWxPZVp5RUI4cmtPTE9BWHd1U2U1T2NOeTlLL2R6Zm9XcHJBbmVaakNFL1JuMVFTc2pSak5wdHlxZVorWTE1ZG1tWm03MGZrcXZyVEtoMmFiL1NlaUNBZ1hTYlJQZmlhYjNMOFZ3blpSQk5tNUJZYitPVWVTRGZDcEpSWVduRndVanFYenJ6bkhiMkREZ1ZFY2pBVTNqY3kyQUFWQkp4dkVGWHMra2t5Vm82NUtsL2dBdnhqQzVEZHF0NklxSklrRkhvaVh4VVNEUlpqZ3hLMytrbWJyeG5oQi9WUFp0VWpiN3lJSkxxN2luZFhNUGFQK096cEdybkg3VEhCaDRnNzFua2F0QVpKVFFqZVJNc3dMeCtSSW9XLzZNSU5rMkpjQzNUZm9zeldYR0NYWGpYcDdsNWhDNnBhWnh5SE1IVVl0WHhqNnM3NE5nRT0tLTh4NFpjQ0ZYMnI0OTRERlhoNWtNWXc9PQ%3D%3D--2095cb1036db5816f1ff5db923646a589230742c&checkout_token=cc78a21525edf008953a59aac1dd5d3b&checkout_version=checkout_one&compact_layout=true&flow=checkout_modal&flow_version=unspecified&locale=en&next=OAuthContinue&preact=true&redirect_type=iframe&require_verification=false&sign_up_enabled=false&storefront_domain=https%3A%2F%2Fchargix.store&transaction_params=encrypted_params%3DVWp5WXlPMVVJTFUvWkVQcEFVOW9LbmluQk42ZVlYSThTVk4xYkhuUWdBVStlaHRNYW44NTNXT3FuTzRCZXoxb0pRSGJUL2lackp4Unp0ZURlSUovTkJicUt3cSs4cFVob05wNjVMMWg5OUV4U2h4b1VxZzhVdEgzcThjazdqa0E0WmJWTUJXN0QrRklZZklwYTlvWkJhVW5wZ3hFcGt6UHNsT3dnald5aTB4aFV4SnQxSzZvOGFHOC9PaWpvS0YwellCSFk3KzA5OGNxQUxaNFRqSzFJQT09LS1tWWtsbytCQ3gzQktQQlM5SVJYQnRnPT0%253D--94e532a66e97144fe9c4fc976f89a435b5565991&uniq_token=b36552eb-1d4a-42e0-ba1e-37b558b55c03&ux_mode=iframe&visit_token=ff5681c7-3088-49e4-a65f-b081118da3e9 net::ERR_ABORTED
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] product business-launch: 200
+[desk] reqfail: blob:https://chargix.store/95dd24a7-eba2-4d40-afd5-5cfbe2e94c8b net::ERR_ABORTED
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] business-launch add: clicked add
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': Unrecognized type: "prefetchCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': Unrecognized type: "prerenderCache".
+[desk] console: Clear-Site-Data header on 'https://chargix.store/cart/add': No recognized types specified.
+[desk] console: An import map is added after module script load was triggered.
+[desk] reqfail: https://error-analytics-sessions-production.shopifysvc.com/observeonly net::ERR_ABORTED
+[desk] http 401: https://chargix.store/private_access_tokens?id=cc78a21525edf008953a59aac1dd5d3b&checkout_type=c1
+[desk] console: Failed to load resource: the server responded with a status of 401 ()
+[desk] reqfail: https://chargix.store/private_access_tokens?id=cc78a21525edf008953a59aac1dd5d3b&checkout_type=c1 net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: blob:https://chargix.store/35f0d38e-98dc-41b2-8c78-ad63c15de830 net::ERR_ABORTED
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] cart {"items":["Business Launch $2750.00","3D Experience Website $1650.00","Essential Website $750.00"],"total":5150} checkout button: true
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: blob:https://chargix.store/2463f156-ee9b-4d0c-a484-ac82b787bf7c net::ERR_ABORTED
+[desk] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[desk] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[mob] console: Multiple import maps are not yet supported. https://crbug.com/927119
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/shopify_pay/accelerated_checkout net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/.well-known/shopify/monorail/unstable/produce_batch net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] reqfail: https://chargix.store/api/collect net::ERR_ABORTED
+[mob] casa card -> shop: clicked
+[mob] state {"mono":true,"ready":true,"html":"js cx-cine cx-loaded","pv":"pv pv--on pv--ready","gates":2}
+[mob] package links ["Buy & start: Essential Website -> /cart/67653568921653:1","Full details: Essential Website -> /products/essential-website","Buy & start: 3D Experience -> /cart/67653569118261:1","Full details: 3D Experience -> /products/3d-experience-website","Buy & start: Business Launch -> /cart/67653569675317:1","Full details: Business Launch -> /products/business-launch"]

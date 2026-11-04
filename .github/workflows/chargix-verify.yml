@@ -1,0 +1,26 @@
+name: chargix-verify
+on:
+  push:
+    branches: [claude/project-thread-extkzj]
+    paths: [chargix/jobs/verify.json]
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Verify preview theme
+        run: |
+          cd chargix/tools && npm init -y >/dev/null && npm i playwright@1.48.2 >/dev/null && npx playwright install --with-deps chromium >/dev/null
+          J=../jobs/verify.json
+          node verify10.mjs ../out/verify/$(jq -r .label $J) $(jq -r .theme $J)
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name "chargix-pipeline"; git config user.email "pipeline@users.noreply.github.com"
+          git add chargix/out/verify && git commit -qm "chargix: verify $(jq -r .label chargix/jobs/verify.json) [skip ci]" || exit 0
+          for t in 1 2 3 4 5 6 7 8; do git pull -q --rebase && git push -q && exit 0; sleep $((RANDOM % 20 + 5)); done

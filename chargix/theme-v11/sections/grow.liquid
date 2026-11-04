@@ -1,0 +1,250 @@
+{%- comment -%}
+  "From the ground up": a desert film (assets/cx-film.js, frames made with Higgsfield) or, with no film frames
+  set, a real-time WebGL desert (assets/cx-grow.js, Three.js). Scrolling plays one shot:
+  a seed opens in the sand, sprouts, grows into a palo verde, a pavilion store rises around it, the tree
+  blooms gold and a garden spreads while the day turns to night. Chapters, package cards and the care
+  card are blocks keyed to the scroll (from/to are 0-1 of the section), so they run backwards with it.
+  Without JavaScript the poster and every chapter show in order; without WebGL the stills crossfade.
+  Package and care prices come from the products, never from text.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign anchor = s.anchor | default: section.id
+  assign film = false
+  if s.film_frames > 0
+    assign film = true
+  endif
+-%}
+<section class="grow{% if film %} grow--film{% endif %}" id="{{ anchor }}" data-grow style="--len: {{ s.length }}svh" aria-label="{{ s.label | escape }}">
+  <div class="grow__stick" data-grow-stick>
+    <div class="grow__stage" aria-hidden="true">
+      <picture class="grow__poster" data-grow-poster>
+        <source media="(max-aspect-ratio: 4/5)" srcset="{{ s.poster_m | asset_url }}">
+        <img src="{{ s.poster_d | asset_url }}" alt="" width="1600" height="1000" fetchpriority="high" decoding="async">
+      </picture>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'still' -%}
+          <picture class="grow__still" data-still data-from="{{ block.settings.from }}" data-to="{{ block.settings.to }}">
+            <source media="(max-width: 699px)" srcset="{{ block.settings.mobile | asset_url }}" width="780" height="1688">
+            <img src="{{ block.settings.desktop | asset_url }}" alt="" width="1600" height="1000" loading="lazy" decoding="async">
+          </picture>
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if film -%}
+        <canvas class="grow__gl grow__film" data-grow-film></canvas>
+        {%- assign first = s.film_prefix | append: '-d-000.webp' -%}
+        {%- assign base = first | asset_url | split: first | first -%}
+        <script type="application/json" data-film-config>{"n": {{ s.film_frames }}, "base": {{ base | json }}, "prefix": {{ s.film_prefix | json }}, "map": {{ s.film_map }}, "size": {"d": [{{ s.film_size_d | replace: 'x', ', ' }}], "m": [{{ s.film_size_m | replace: 'x', ', ' }}]}, "mobileH": 0.76, "zoom": 0.07, "shift": 0.035, "introMs": 3200}</script>
+      {%- else -%}
+        <canvas class="grow__gl" data-grow-gl></canvas>
+      {%- endif -%}
+      <div class="grow__scrim" data-grow-scrim></div>
+    </div>
+
+    <div class="grow__hero" data-grow-hero>
+      {%- if s.eyebrow != blank -%}<p class="kicker">{{ s.eyebrow }}</p>{%- endif -%}
+      <h1 class="grow__h">{{ s.heading }}</h1>
+      {%- if s.text != blank -%}<p class="grow__lead">{{ s.text }}</p>{%- endif -%}
+      <div class="actions">
+        {%- if s.btn_label != blank -%}<a class="btn btn--solid" href="{{ s.btn_link }}">{{ s.btn_label }}</a>{%- endif -%}
+        {%- if s.btn2_label != blank -%}<a class="btn btn--glass" href="#{{ anchor }}-play">{{ s.btn2_label }} {% render 'icon', i: 'down' %}</a>{%- endif -%}
+      </div>
+    </div>
+    {%- if s.cue != blank -%}<div class="grow__cue" data-grow-cue aria-hidden="true"><span>{{ s.cue }}</span><i></i></div>{%- endif -%}
+    {%- if s.note != blank -%}<p class="grow__note">{{ s.note }}</p>{%- endif -%}
+
+    <div class="grow__chs">
+      {%- for block in section.blocks -%}
+        {%- assign b = block.settings -%}
+        {%- case block.type -%}
+          {%- when 'chapter' -%}
+            <article class="gch{% if b.wide %} gch--wide{% endif %}" data-ch data-from="{{ b.from }}" data-to="{{ b.to }}"{% if b.hold %} data-hold{% endif %} {{ block.shopify_attributes }}>
+              {%- if b.kicker != blank -%}<p class="gch__k">{{ b.kicker }}</p>{%- endif -%}
+              <h2 class="gch__h">{{ b.heading }}</h2>
+              {%- if b.text != blank -%}<p class="gch__t">{{ b.text }}</p>{%- endif -%}
+              {%- if b.list != blank -%}
+                {%- assign rows = b.list | newline_to_br | split: '<br />' -%}
+                <ul class="gch__l{% if b.list_style == 'steps' %} gch__l--steps{% endif %}">
+                  {%- for r in rows -%}
+                    {%- assign r = r | strip -%}
+                    {%- if r == blank -%}{%- continue -%}{%- endif -%}
+                    {%- if r contains '|' -%}
+                      {%- assign parts = r | split: '|' -%}
+                      <li><small>{{ parts[0] | strip }}</small><span>{{ parts[1] | strip }}</span></li>
+                    {%- else -%}
+                      <li><span>{{ r }}</span></li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+              {%- if b.btn_label != blank or b.btn2_label != blank -%}
+                <div class="actions">
+                  {%- if b.btn_label != blank -%}<a class="btn btn--lamp" href="{{ b.btn_link }}">{{ b.btn_label }} {% render 'icon', i: 'arrow' %}</a>{%- endif -%}
+                  {%- if b.btn2_label != blank -%}<a class="btn btn--glass" href="{{ b.btn2_link }}">{{ b.btn2_label }}</a>{%- endif -%}
+                </div>
+              {%- endif -%}
+            </article>
+
+          {%- when 'package' -%}
+            {%- assign p = b.product -%}
+            <article class="gch gch--card" data-ch data-from="{{ b.from }}" data-to="{{ b.to }}" {{ block.shopify_attributes }}>
+              <div class="gcard gpk{% if b.pick %} gpk--pick{% endif %}">
+              <p class="gch__k">{{ b.kicker }}{% if b.pick and b.pick_label != blank %}<span class="gpk__pick">{{ b.pick_label }}</span>{% endif %}</p>
+              {%- if p != blank -%}
+                {%- assign v = p.selected_or_first_available_variant -%}
+                <div class="gpk__top">
+                  <h2 class="gpk__name">{{ b.name | default: p.title }}</h2>
+                  <p class="gpk__price"><b>{{ v.price | money_without_trailing_zeros }}</b><small>{{ b.price_note }}</small></p>
+                </div>
+                {%- if b.tagline != blank -%}<p class="gpk__tag">{{ b.tagline }}</p>{%- endif -%}
+                {%- if b.for != blank -%}<p class="gch__t">{{ b.for }}</p>{%- endif -%}
+                {%- assign rows = b.list | newline_to_br | split: '<br />' -%}
+                <ul class="gpk__l">
+                  {%- for r in rows -%}
+                    {%- assign r = r | strip -%}
+                    {%- if r == blank -%}{%- continue -%}{%- endif -%}
+                    <li>{{ r }}</li>
+                  {%- endfor -%}
+                </ul>
+                {%- if b.time != blank -%}<p class="gpk__time">{% render 'icon', i: 'clock' %}{{ b.time }}</p>{%- endif -%}
+                <div class="gpk__buy">
+                  {%- form 'product', p, class: 'gpk__form' -%}
+                    <input type="hidden" name="id" value="{{ v.id }}">
+                    <input type="hidden" name="quantity" value="1">
+                    <input type="hidden" name="return_to" value="/checkout">
+                    <button class="btn{% if b.pick %} btn--lamp{% else %} btn--solid{% endif %}" type="submit" name="add"{% unless v.available %} disabled{% endunless %}>{{ b.buy_label | default: 'Buy now' }} · {{ v.price | money_without_trailing_zeros }}</button>
+                  {%- endform -%}
+                  <a class="btn btn--text btn--sm" href="{{ b.more_link | default: '/#packages' }}">{{ b.more_label | default: 'Everything included' }} {% render 'icon', i: 'arrow' %}</a>
+                </div>
+              {%- else -%}
+                <h2 class="gpk__name">{{ b.name }}</h2>
+              {%- endif -%}
+              </div>
+            </article>
+
+          {%- when 'care' -%}
+            {%- assign p = b.product -%}
+            <article class="gch gch--card" data-ch data-from="{{ b.from }}" data-to="{{ b.to }}" {{ block.shopify_attributes }}>
+              <div class="gcard gcare">
+              {%- if b.kicker != blank -%}<p class="gch__k">{{ b.kicker }}</p>{%- endif -%}
+              <h2 class="gch__h">{{ b.heading }}</h2>
+              {%- if b.text != blank -%}<p class="gch__t">{{ b.text }}</p>{%- endif -%}
+              {%- if p != blank -%}
+                <ul class="gcare__l">
+                  {%- for v in p.variants limit: 3 -%}
+                    {%- assign nk = 'name_' | append: forloop.index -%}
+                    {%- assign dk = 'desc_' | append: forloop.index -%}
+                    <li><span class="gcare__n">{{ b[nk] | default: v.title }}</span><span class="gcare__d">{{ b[dk] }}</span><b class="gcare__p">{{ v.price | money_without_trailing_zeros }}<small>{{ 'packages.per_month' | t }}</small></b></li>
+                  {%- endfor -%}
+                </ul>
+              {%- endif -%}
+              {%- if b.btn_label != blank -%}<div class="actions"><a class="btn btn--glass btn--sm" href="{{ b.btn_link }}">{{ b.btn_label }} {% render 'icon', i: 'arrow' %}</a></div>{%- endif -%}
+              </div>
+            </article>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="grow__bar" aria-hidden="true">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'bar' -%}<span data-bar data-from="{{ block.settings.from }}" data-to="{{ block.settings.to }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</span>{%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  <span id="{{ anchor }}-play" class="grow__play" aria-hidden="true"></span>
+</section>
+{%- if film -%}
+<script src="{{ 'cx-film.js' | asset_url }}" defer></script>
+{%- else -%}
+<script type="module" src="{{ 'cx-grow.js' | asset_url }}"></script>
+{%- endif -%}
+<script>setTimeout(function () { var g = document.getElementById({{ anchor | json }}); if (g && !g.classList.contains('is-on')) g.classList.add('is-off'); }, 8000);</script>
+
+{% schema %}
+{
+  "name": "3D growth story",
+  "class": "sx-grow",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "grow" },
+    { "type": "text", "id": "label", "label": "Accessible label" },
+    { "type": "number", "id": "length", "label": "Scroll length (screen heights × 100)", "default": 1400 },
+    { "type": "header", "content": "Film (leave frames at 0 for the live 3D desert)" },
+    { "type": "number", "id": "film_frames", "label": "Film frames", "default": 0 },
+    { "type": "text", "id": "film_prefix", "label": "Film frame prefix (theme assets PREFIX-d-000.webp)", "default": "gf" },
+    { "type": "text", "id": "film_map", "label": "Scroll to frame map, [[position, frame], ...]", "default": "[[0, 0], [1, 0]]" },
+    { "type": "text", "id": "film_size_d", "label": "Desktop frame size", "default": "1280x720" },
+    { "type": "text", "id": "film_size_m", "label": "Phone frame size", "default": "640x720" },
+    { "type": "text", "id": "poster_d", "label": "Poster, desktop (theme asset)", "default": "grow-d-0.webp" },
+    { "type": "text", "id": "poster_m", "label": "Poster, phones (theme asset)", "default": "grow-m-0.webp" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading (page H1)" },
+    { "type": "text", "id": "text", "label": "Intro text" },
+    { "type": "text", "id": "btn_label", "label": "Button" },
+    { "type": "url", "id": "btn_link", "label": "Button link" },
+    { "type": "text", "id": "btn2_label", "label": "Second button (starts the story)" },
+    { "type": "text", "id": "cue", "label": "Scroll cue" },
+    { "type": "text", "id": "note", "label": "Small note" }
+  ],
+  "blocks": [
+    { "type": "chapter", "name": "Chapter", "settings": [
+      { "type": "text", "id": "from", "label": "From (0-1 of the scroll)", "default": "0.1" },
+      { "type": "text", "id": "to", "label": "To (0-1 of the scroll)", "default": "0.2" },
+      { "type": "checkbox", "id": "hold", "label": "Stay to the end", "default": false },
+      { "type": "checkbox", "id": "wide", "label": "Wide", "default": false },
+      { "type": "text", "id": "kicker", "label": "Small label" },
+      { "type": "inline_richtext", "id": "heading", "label": "Heading" },
+      { "type": "textarea", "id": "text", "label": "Text" },
+      { "type": "textarea", "id": "list", "label": "List (one per line; 'label | text' for two parts)" },
+      { "type": "select", "id": "list_style", "label": "List style", "default": "ticks", "options": [ { "value": "ticks", "label": "Ticks" }, { "value": "steps", "label": "Steps" } ] },
+      { "type": "text", "id": "btn_label", "label": "Button" },
+      { "type": "url", "id": "btn_link", "label": "Button link" },
+      { "type": "text", "id": "btn2_label", "label": "Second button" },
+      { "type": "url", "id": "btn2_link", "label": "Second button link" }
+    ]},
+    { "type": "package", "name": "Package card", "settings": [
+      { "type": "text", "id": "from", "label": "From (0-1 of the scroll)", "default": "0.1" },
+      { "type": "text", "id": "to", "label": "To (0-1 of the scroll)", "default": "0.2" },
+      { "type": "product", "id": "product", "label": "Package product" },
+      { "type": "text", "id": "kicker", "label": "Small label" },
+      { "type": "text", "id": "name", "label": "Name (defaults to the product title)" },
+      { "type": "checkbox", "id": "pick", "label": "Highlight", "default": false },
+      { "type": "text", "id": "pick_label", "label": "Highlight label" },
+      { "type": "text", "id": "price_note", "label": "Price note", "default": "one-time" },
+      { "type": "text", "id": "tagline", "label": "Tagline" },
+      { "type": "text", "id": "for", "label": "Who it is for" },
+      { "type": "textarea", "id": "list", "label": "What is included (one per line)" },
+      { "type": "text", "id": "time", "label": "Timeline" },
+      { "type": "text", "id": "buy_label", "label": "Buy button", "default": "Buy now" },
+      { "type": "text", "id": "more_label", "label": "Details link", "default": "Everything included" },
+      { "type": "text", "id": "more_link", "label": "Details link target", "default": "/#packages" }
+    ]},
+    { "type": "care", "name": "Care plans card", "settings": [
+      { "type": "text", "id": "from", "label": "From (0-1 of the scroll)", "default": "0.8" },
+      { "type": "text", "id": "to", "label": "To (0-1 of the scroll)", "default": "0.9" },
+      { "type": "product", "id": "product", "label": "Care plan product" },
+      { "type": "text", "id": "kicker", "label": "Small label" },
+      { "type": "inline_richtext", "id": "heading", "label": "Heading" },
+      { "type": "textarea", "id": "text", "label": "Text" },
+      { "type": "text", "id": "name_1", "label": "Plan 1 name" },
+      { "type": "text", "id": "name_2", "label": "Plan 2 name" },
+      { "type": "text", "id": "name_3", "label": "Plan 3 name" },
+      { "type": "text", "id": "desc_1", "label": "Plan 1 summary" },
+      { "type": "text", "id": "desc_2", "label": "Plan 2 summary" },
+      { "type": "text", "id": "desc_3", "label": "Plan 3 summary" },
+      { "type": "text", "id": "btn_label", "label": "Button" },
+      { "type": "url", "id": "btn_link", "label": "Button link" }
+    ]},
+    { "type": "bar", "name": "Progress segment", "settings": [
+      { "type": "text", "id": "from", "label": "From (0-1)", "default": "0" },
+      { "type": "text", "id": "to", "label": "To (0-1)", "default": "0.1" },
+      { "type": "text", "id": "label", "label": "Label" }
+    ]},
+    { "type": "still", "name": "Still (no-WebGL fallback)", "settings": [
+      { "type": "text", "id": "from", "label": "From (0-1)", "default": "0" },
+      { "type": "text", "id": "to", "label": "To (0-1)", "default": "0.2" },
+      { "type": "text", "id": "desktop", "label": "Desktop image (theme asset)" },
+      { "type": "text", "id": "mobile", "label": "Phone image (theme asset)" }
+    ]}
+  ]
+}
+{% endschema %}

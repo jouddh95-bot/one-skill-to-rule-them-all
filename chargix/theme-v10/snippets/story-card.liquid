@@ -1,0 +1,79 @@
+{%- comment -%}
+  Interface cards that appear beside the box during a story. Usage: render 'story-card', b: block.settings
+  Rows are one per line, parts split by "|". Package prices come from the live products, not from text.
+  Every card that shows a made-up brand or made-up orders carries its demo label.
+{%- endcomment -%}
+{%- liquid
+  assign rows = b.rows | newline_to_br | split: '<br />'
+  if b.image != blank
+    assign img = b.image | image_url: width: 900
+  elsif b.image_asset != blank
+    assign img = b.image_asset | asset_url
+  else
+    assign img = blank
+  endif
+-%}
+{%- case b.kind -%}
+  {%- when 'phone' -%}
+    <div class="dev dev--phone">
+      <div class="dev__screen">
+        <div class="dev__top"><div class="dev__bar"><span>{{ b.sub | default: '7:16' }}</span><i></i><span class="dev__sig"><b></b><b></b><b></b></span></div>
+          <div class="dev__url">{% render 'icon', i: 'lock' %}{{ b.url | default: 'chargix.store' }}</div></div>
+        <div class="dev__page">
+          <div class="mini__hero"><div class="mini__logo">CHARGIX</div><p class="mini__h">{{ b.title }}</p></div>
+          <div class="mini__lbl">{{ 'packages.title' | t | default: 'Packages' }}</div>
+          {%- for r in rows -%}
+            {%- assign parts = r | strip | split: '|' -%}
+            {%- if parts.size > 1 -%}
+              {%- assign prod = all_products[parts[0]] -%}
+              <div class="mini__pk{% if parts[3] == 'hot' %}" data-hot{% else %}"{% endif %}><b>{{ parts[1] }}</b><span>{% if prod.id %}{{ prod.price | money_without_trailing_zeros }}{% endif %}</span><small>{{ parts[2] }}</small></div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+        <div class="dev__tap"></div>
+      </div>
+    </div>
+  {%- when 'brief' -%}
+    <div class="dev dev--win">
+      <div class="dev__chrome"><i></i><i></i><i></i><span>{{ b.url }}</span></div>
+      <div class="win">
+        <p class="win__k">{{ b.title }}</p>
+        <dl class="win__rows">
+          {%- for r in rows -%}{%- assign parts = r | strip | split: '|' -%}{%- if parts.size > 1 -%}<div><dt>{{ parts[0] }}</dt><dd>{{ parts[1] }}</dd></div>{%- endif -%}{%- endfor -%}
+        </dl>
+        <ol class="win__steps">{%- assign steps = b.sub | split: '·' -%}{%- for st in steps -%}<li style="--i: {{ forloop.index0 }}">{{ st | strip }}</li>{%- endfor -%}</ol>
+        {%- if b.label != blank -%}<p class="demo-tag">{{ b.label }}</p>{%- endif -%}
+      </div>
+    </div>
+  {%- when 'store' -%}
+    <div class="dev dev--win dev--store">
+      <div class="dev__chrome"><i></i><i></i><i></i><span>{{ b.url }}</span></div>
+      <div class="shop">
+        <div class="shop__nav"><b>{{ b.brand }}</b><span>Shop · About · Cart (0)</span></div>
+        <div class="shop__hero">{%- if img != blank -%}<img src="{{ img }}" alt="" loading="lazy" width="900" height="560">{%- endif -%}
+          <div class="shop__copy"><p class="shop__h">{{ b.title }}</p><p class="shop__s">{{ b.sub }}</p><span class="shop__btn">Shop now</span></div></div>
+        <div class="shop__grid">
+          {%- for r in rows -%}{%- assign parts = r | strip | split: '|' -%}{%- if parts.size > 1 -%}<div class="shop__p" style="--i: {{ forloop.index0 }}">{%- if parts[2] != blank -%}<img src="{{ parts[2] | asset_url }}" alt="" loading="lazy" width="300" height="300">{%- endif -%}<span>{{ parts[0] }}</span><b>{{ parts[1] }}</b></div>{%- endif -%}{%- endfor -%}
+        </div>
+        {%- if b.label != blank -%}<p class="demo-tag">{{ b.label }}</p>{%- endif -%}
+      </div>
+    </div>
+  {%- when 'orders' -%}
+    <div class="ords">
+      <p class="ords__h"><span>{{ b.brand }}</span>{{ b.title }}</p>
+      {%- for r in rows -%}{%- assign parts = r | strip | split: '|' -%}{%- if parts.size > 1 -%}
+        <div class="ord" style="--i: {{ forloop.index0 }}; --n: {{ rows.size }}"><i>{% render 'icon', i: 'bag' %}</i><div><b>{{ parts[0] }}</b><span>{{ parts[1] }}</span></div><em>{{ parts[2] }}</em></div>
+      {%- endif -%}{%- endfor -%}
+      {%- if b.label != blank -%}<p class="demo-tag">{{ b.label }}</p>{%- endif -%}
+    </div>
+  {%- when 'picks' -%}
+    <div class="dev dev--tab">
+      <p class="win__k">{{ b.title }}</p>
+      <div class="picks">
+        {%- for r in rows -%}{%- assign parts = r | strip | split: '|' -%}{%- if parts.size > 1 -%}
+          <div class="pick{% if parts[2] == 'hot' %} pick--hot{% endif %}" style="--i: {{ forloop.index0 }}"><img src="{{ parts[1] | asset_url }}" alt="" loading="lazy" width="240" height="300"><span>{{ parts[0] }}</span></div>
+        {%- endif -%}{%- endfor -%}
+      </div>
+      <p class="picks__s">{{ b.sub }}</p>
+    </div>
+{%- endcase -%}

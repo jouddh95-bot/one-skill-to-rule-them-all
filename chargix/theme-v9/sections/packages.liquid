@@ -1,0 +1,228 @@
+{%- comment -%}
+  Packages. Three tier cards that read their product live (title, price, variant, availability),
+  so the card, the product page and checkout always agree. "Buy now" adds the package and goes
+  straight to checkout. Previews make the difference visible: Essential is a flat website mockup
+  ("No 3D"); 3D Experience and Business Launch embed a real interactive <model-viewer> scene,
+  loaded only when the section nears the viewport (cx.js), over a poster still that stays if the
+  model or JS is missing. Below the cards a comparison matrix (rows from a setting) collapses to
+  stacked cards on phones.
+{%- endcomment -%}
+{%- assign col_names = '' -%}
+<section class="sec sec--packages" id="{{ section.settings.anchor }}" aria-labelledby="{{ section.id }}-h" data-mv-zone>
+  <div class="wrap">
+    <header class="head head--split" data-reveal>
+      <div>
+        <p class="label-mono"><span class="idx">{{ section.settings.index }}</span>{{ section.settings.eyebrow }}</p>
+        <h2 class="t-h2" id="{{ section.id }}-h">{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.text != blank -%}<p class="lead">{{ section.settings.text }}</p>{%- endif -%}
+    </header>
+
+    <div class="pk-grid">
+      {%- for block in section.blocks -%}
+        {%- assign p = block.settings.product -%}
+        {%- if p == blank -%}{%- continue -%}{%- endif -%}
+        {%- assign v = p.selected_or_first_available_variant -%}
+        {%- assign col_names = col_names | append: p.title | append: '|' -%}
+        {%- assign mode = block.settings.preview -%}
+        {%- assign poster = block.settings.asset -%}
+        {%- assign poster_url = '' -%}
+        <article class="pk glass pk--{{ block.settings.three_d }}{% if block.settings.pick %} pk--pick{% endif %}" data-reveal {{ block.shopify_attributes }} aria-labelledby="pk-{{ block.id }}">
+          <div class="pk__head">
+            {%- if block.settings.tier != blank -%}<span class="tier">{{ block.settings.tier }}</span>{%- endif -%}
+            {%- if block.settings.pick and block.settings.pick_label != blank -%}<span class="chip chip--lamp">{{ block.settings.pick_label }}</span>{%- endif -%}
+          </div>
+
+          <div class="pk__preview pk__preview--{{ mode }}">
+            {%- case mode -%}
+              {%- when 'model' -%}
+                <div class="pk__stage" data-mv>
+                  {%- if block.settings.image != blank -%}
+                    {{ block.settings.image | image_url: width: 1200 | image_tag: class: 'pk__poster', loading: 'lazy', widths: '480,800,1200', sizes: '(min-width: 1100px) 30vw, 100vw', alt: '' }}
+                    {%- assign poster_url = block.settings.image | image_url: width: 1200 -%}
+                  {%- elsif poster != blank -%}
+                    <img class="pk__poster" src="{{ poster | asset_url }}" alt="" loading="lazy" width="960" height="600">
+                    {%- assign poster_url = poster | asset_url -%}
+                  {%- endif -%}
+                  {%- if block.settings.glb != blank -%}
+                    <template data-mv-tpl><model-viewer class="pk__mv" src="{{ block.settings.glb | asset_url }}"{% if poster_url != blank %} poster="{{ poster_url }}"{% endif %} alt="{{ block.settings.model_alt | escape }}" camera-controls disable-zoom touch-action="pan-y" auto-rotate auto-rotate-delay="0" rotation-per-second="12deg" interaction-prompt="none" shadow-intensity="1" shadow-softness=".9" exposure="1.05" environment-image="neutral" camera-orbit="{{ block.settings.orbit | default: '30deg 72deg auto' }}"></model-viewer></template>
+                    <span class="pk__hint" aria-hidden="true">{% render 'icon', i: 'hand' %}{{ 'packages.drag' | t }}</span>
+                  {%- endif -%}
+                </div>
+              {%- when 'image' -%}
+                <div class="browser" aria-hidden="true">
+                  <span class="browser__bar"><i></i><i></i><i></i><span>{{ block.settings.mini_url }}</span></span>
+                  {%- if block.settings.image != blank -%}
+                    {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '480,800,1200', sizes: '(min-width: 1100px) 30vw, 100vw', alt: '' }}
+                  {%- elsif poster != blank -%}
+                    <img src="{{ poster | asset_url }}" alt="" loading="lazy" width="1200" height="800">
+                  {%- endif -%}
+                </div>
+              {%- else -%}
+                <div class="browser" aria-hidden="true">
+                  <span class="browser__bar"><i></i><i></i><i></i><span>{{ block.settings.mini_url }}</span></span>
+                  <span class="mk">
+                    <span class="mk__nav"><b>{{ block.settings.mini_brand }}</b><i></i><i></i><i></i></span>
+                    <span class="mk__hero">
+                      <span class="mk__copy"><span class="mk__h">{{ block.settings.mini_heading }}</span><i></i><i class="s"></i><span class="mk__btn"></span></span>
+                      <span class="mk__img"{% if poster != blank %} style="background-image:url({{ poster | asset_url }})"{% endif %}></span>
+                    </span>
+                    <span class="mk__grid">{%- for i in (1..4) -%}{%- assign tile = 'demo-p' | append: i | append: '.webp' -%}<span style="background-image:url({{ tile | asset_url }})"></span>{%- endfor -%}</span>
+                  </span>
+                </div>
+            {%- endcase -%}
+            <span class="pk__badges">
+              {%- if block.settings.three_d == 'none' -%}
+                <span class="badge badge--flat">{% render 'icon', i: 'flat' %}{{ 'packages.no_3d_badge' | t }}</span>
+              {%- else -%}
+                <span class="badge badge--3d">{% render 'icon', i: 'box' %}{{ 'packages.interactive_3d' | t }}</span>
+              {%- endif -%}
+              {%- assign chips = block.settings.chips | split: ',' -%}
+              {%- for c in chips -%}{%- assign ct = c | strip -%}{%- if ct != blank -%}<span class="chip chip--glass">{{ ct }}</span>{%- endif -%}{%- endfor -%}
+            </span>
+          </div>
+
+          <div class="pk__body">
+            <div class="pk__top">
+              <h3 class="pk__name" id="pk-{{ block.id }}">{{ p.title | escape }}</h3>
+              <p class="pk__price">{{ v.price | money_without_trailing_zeros }}{%- if block.settings.price_note != blank -%}<small>{{ block.settings.price_note }}</small>{%- endif -%}</p>
+            </div>
+            {%- if block.settings.for != blank -%}<p class="pk__for">{{ block.settings.for }}</p>{%- endif -%}
+
+            {%- if block.settings.scope != blank -%}
+              <ul class="scope" aria-label="{{ 'packages.scope' | t }}">
+                {%- assign sl = block.settings.scope | newline_to_br | split: '<br />' -%}
+                {%- for l in sl -%}{%- assign t = l | strip -%}{%- if t == blank -%}{%- continue -%}{%- endif -%}
+                  {%- assign parts = t | split: '|' -%}{%- assign ic = parts[0] | strip -%}
+                  <li>{% render 'icon', i: ic %}<span>{{ parts[1] | strip }}</span></li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+
+            <p class="label-mono pk__lbl">{{ 'packages.includes' | t }}</p>
+            <ul class="pk__list">
+              {%- assign lines = block.settings.list | newline_to_br | split: '<br />' -%}
+              {%- for l in lines -%}{%- assign t = l | strip -%}{%- if t == blank -%}{%- continue -%}{%- endif -%}
+                {%- assign c0 = t | slice: 0 -%}
+                {%- if c0 == '*' -%}<li class="is-key">{% render 'icon', i: 'check' %}<span>{{ t | remove_first: '*' | strip }}</span></li>{%- else -%}<li>{% render 'icon', i: 'check' %}<span>{{ t }}</span></li>{%- endif -%}
+              {%- endfor -%}
+            </ul>
+
+            <div class="pk__foot">
+              {%- if block.settings.time != blank -%}<p class="pk__time">{% render 'icon', i: 'clock' %}<span><span class="vh">{{ 'packages.timeline' | t }}: </span>{{ block.settings.time }}</span></p>{%- endif -%}
+              {%- form 'product', p, class: 'pk__form' -%}
+                <input type="hidden" name="id" value="{{ v.id }}">
+                <input type="hidden" name="quantity" value="1">
+                <input type="hidden" name="return_to" value="/checkout">
+                <button class="btn btn--block{% if block.settings.pick %} btn--lamp{% else %} btn--glass{% endif %}" type="submit" name="add"{% unless v.available %} disabled{% endunless %}>
+                  {%- if v.available -%}{%- assign vp = v.price | money_without_trailing_zeros -%}{{ 'packages.buy' | t: price: vp }}{%- else -%}{{ 'products.unavailable' | t }}{%- endif -%}
+                </button>
+              {%- endform -%}
+              <div class="pk__links">
+                <a class="btn btn--text btn--sm" href="{{ p.url }}">{{ 'packages.details' | t }} {% render 'icon', i: 'arrow' %}</a>
+                {%- if block.settings.demo_link != blank -%}<a class="btn btn--text btn--sm" href="{{ block.settings.demo_link }}">{%- assign dl = 'packages.demo' | t -%}{{ block.settings.demo_label | default: dl }} {% render 'icon', i: 'arrow' %}</a>{%- endif -%}
+              </div>
+            </div>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.note != blank -%}<p class="pk-note">{{ section.settings.note }}</p>{%- endif -%}
+
+    {%- if section.settings.matrix != blank -%}
+      {%- assign names = col_names | split: '|' -%}
+      <div class="matrix" id="{{ section.settings.compare_anchor }}" data-reveal>
+        <header class="head">
+          <p class="label-mono"><span class="idx">{{ section.settings.compare_index }}</span>{{ section.settings.compare_eyebrow }}</p>
+          <h3 class="t-h3" id="{{ section.id }}-cmp">{{ section.settings.compare_heading }}</h3>
+        </header>
+        <div class="tbl-wrap" role="region" aria-labelledby="{{ section.id }}-cmp" tabindex="0">
+          <table class="tbl tbl--stack tbl--matrix">
+            <thead><tr>
+              <td></td>
+              {%- for block in section.blocks -%}{%- assign p = block.settings.product -%}{%- if p == blank -%}{%- continue -%}{%- endif -%}
+                <th scope="col"{% if block.settings.pick %} class="is-pick"{% endif %}>{{ p.title | escape }}<small>{{ p.price | money_without_trailing_zeros }}</small></th>
+              {%- endfor -%}
+            </tr></thead>
+            <tbody>
+              {%- assign rows = section.settings.matrix | newline_to_br | split: '<br />' -%}
+              {%- for r in rows -%}{%- assign rt = r | strip -%}{%- if rt == blank -%}{%- continue -%}{%- endif -%}
+                {%- assign cells = rt | split: '|' -%}
+                <tr>
+                  <th scope="row">{{ cells[0] | strip }}</th>
+                  {%- for c in cells offset: 1 -%}{%- assign t = c | strip -%}
+                    <td data-label="{{ names[forloop.index0] | escape }}" class="{% if t == '-' %}n{% else %}y{% endif %}">
+                      {%- if t == '-' -%}{% render 'icon', i: 'dash' %}<span class="vh">{{ 'packages.not_included' | t }}</span>
+                      {%- elsif t == 'yes' -%}{% render 'icon', i: 'check' %}<span>{{ 'packages.included' | t }}</span>
+                      {%- else -%}<span>{{ t }}</span>{%- endif -%}
+                    </td>
+                  {%- endfor -%}
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "OfferCatalog",
+  "name": {{ section.settings.eyebrow | json }},
+  "itemListElement": [
+    {%- assign sep = false -%}
+    {%- for block in section.blocks -%}{%- assign p = block.settings.product -%}{%- if p == blank -%}{%- continue -%}{%- endif -%}
+    {%- if sep %},{% endif -%}{%- assign sep = true -%}
+    { "@type": "Offer", "price": {{ p.price | divided_by: 100.0 | json }}, "priceCurrency": {{ cart.currency.iso_code | json }}, "url": {{ shop.url | append: p.url | json }}, "itemOffered": { "@type": "Service", "name": {{ p.title | json }} } }
+    {%- endfor -%}
+  ]
+}
+</script>
+{% schema %}
+{
+  "name": "Packages",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "packages" },
+    { "type": "text", "id": "index", "label": "Index number", "default": "01" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Packages" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Three fixed prices. Pick how far you want to go." },
+    { "type": "textarea", "id": "text", "label": "Intro" },
+    { "type": "textarea", "id": "note", "label": "Small print" },
+    { "type": "header", "content": "Comparison matrix" },
+    { "type": "text", "id": "compare_anchor", "label": "Matrix anchor id", "default": "compare" },
+    { "type": "text", "id": "compare_index", "label": "Matrix index number", "default": "02" },
+    { "type": "text", "id": "compare_eyebrow", "label": "Matrix eyebrow", "default": "Side by side" },
+    { "type": "text", "id": "compare_heading", "label": "Matrix heading", "default": "What changes between the three" },
+    { "type": "textarea", "id": "matrix", "label": "Rows", "info": "One row per line: Label | cell | cell | cell (columns follow the package cards). Use - for not included, yes for included, or any short text." }
+  ],
+  "blocks": [
+    { "type": "package", "name": "Package", "limit": 4, "settings": [
+      { "type": "product", "id": "product", "label": "Product" },
+      { "type": "text", "id": "tier", "label": "Tier label", "default": "Tier 01" },
+      { "type": "checkbox", "id": "pick", "label": "Highlight this card", "default": false },
+      { "type": "text", "id": "pick_label", "label": "Highlight chip", "default": "Signature" },
+      { "type": "text", "id": "price_note", "label": "Price note", "default": "one-time" },
+      { "type": "textarea", "id": "for", "label": "Who it is for (one line)" },
+      { "type": "select", "id": "three_d", "label": "3D", "default": "none", "options": [ { "value": "none", "label": "No 3D" }, { "value": "premium", "label": "Interactive 3D" }, { "value": "plus", "label": "Interactive 3D + launch" } ] },
+      { "type": "text", "id": "chips", "label": "Extra chips on the preview (comma separated)" },
+      { "type": "select", "id": "preview", "label": "Preview", "default": "site", "options": [ { "value": "site", "label": "Drawn flat website mockup" }, { "value": "image", "label": "Website mockup image in a browser frame" }, { "value": "model", "label": "Interactive 3D model" } ] },
+      { "type": "image_picker", "id": "image", "label": "Preview / poster image" },
+      { "type": "text", "id": "asset", "label": "Or preview / poster from theme assets (file name)" },
+      { "type": "text", "id": "glb", "label": "3D model from theme assets (.glb file name)", "info": "Leave blank to show the poster only." },
+      { "type": "text", "id": "orbit", "label": "3D camera angle", "default": "30deg 72deg auto", "info": "model-viewer camera-orbit: turn, tilt, distance." },
+      { "type": "text", "id": "model_alt", "label": "3D model description", "default": "A 3D scene you can turn around" },
+      { "type": "text", "id": "mini_url", "label": "Mockup address bar", "default": "sweetandco.demo" },
+      { "type": "text", "id": "mini_brand", "label": "Drawn mockup: brand", "default": "Sweet & Co." },
+      { "type": "text", "id": "mini_heading", "label": "Drawn mockup: heading", "default": "Baked this morning." },
+      { "type": "textarea", "id": "scope", "label": "Scope icons (one per line: icon|label)", "info": "Icons: store, brand, social, pixel, lang, pages, box, mail" },
+      { "type": "textarea", "id": "list", "label": "What is included (one per line; start with * to highlight)" },
+      { "type": "text", "id": "time", "label": "Timeline" },
+      { "type": "url", "id": "demo_link", "label": "Demo link" },
+      { "type": "text", "id": "demo_label", "label": "Demo link label", "default": "See a demo" }
+    ] }
+  ],
+  "presets": [ { "name": "Packages" } ]
+}
+{% endschema %}

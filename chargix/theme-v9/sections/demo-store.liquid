@@ -1,0 +1,93 @@
+{%- comment -%}
+  Demo storefront for a made-up bakery, "Sweet & Co.", showing what each package delivers.
+  level: essential (clean site, no 3D) · 3d (adds a real interactive 3D product viewer, WebGL via
+  <model-viewer>) · launch (adds bilingual copy, social strip, wholesale page block).
+  Nothing here can be bought: the buttons are inert and the bar says so.
+{%- endcomment -%}
+{%- assign lv = section.settings.level -%}
+<div class="dm" data-level="{{ lv }}">
+  <div class="dm-bar" role="note">
+    <a class="dm-bar__brand" href="{{ routes.root_url }}" aria-label="{{ settings.brand_name | default: 'CHARGIX' }}">{% render 'logo' %}<span>{{ settings.brand_name | default: 'CHARGIX' }}</span></a>
+    <span class="dm-bar__msg"><span class="dm-bar__chip">{{ 'demo.chip' | t }}</span><b>{{ section.settings.bar_label }}</b> {{ section.settings.bar_text }}</span>
+    <a class="dm-bar__back" href="{{ routes.root_url }}#packages">{{ section.settings.back }} {% render 'icon', i: 'arrow' %}</a>
+  </div>
+  <header class="dm-hdr">
+    <span class="dm-logo">{{ section.settings.brand }}</span>
+    <nav aria-label="Demo menu"><span>Shop</span><span>Gift boxes</span><span>Our kitchen</span>{%- if lv == 'launch' -%}<span>Wholesale</span>{%- endif -%}</nav>
+    <span class="dm-end">{%- if lv == 'launch' -%}<span class="dm-lang">EN · ES</span>{%- endif -%}{% render 'icon', i: 'bag' %}</span>
+  </header>
+  <section class="dm-hero">
+    <div class="dm-hero__copy">
+      <p class="dm-k">{{ section.settings.kicker }}</p>
+      <h1>{{ section.settings.heading }}</h1>
+      {%- if lv == 'launch' -%}<p class="dm-es" lang="es">{{ section.settings.heading_es }}</p>{%- endif -%}
+      <p>{{ section.settings.text }}</p>
+      <span class="dm-btn" aria-disabled="true">Shop the boxes</span>
+    </div>
+    <div class="dm-hero__art">
+      {%- if lv != 'essential' and section.settings.model != blank -%}
+        <model-viewer src="{{ section.settings.model | asset_url }}" poster="{{ section.settings.hero | asset_url }}" alt="{{ section.settings.model_alt | escape }}" camera-controls touch-action="pan-y" auto-rotate auto-rotate-delay="0" rotation-per-second="14deg" interaction-prompt="none" shadow-intensity="1" shadow-softness=".8" exposure="1" environment-image="neutral" camera-orbit="30deg 72deg auto" style="width:100%;height:100%;background:transparent"></model-viewer>
+        <span class="dm-3d">{% render 'icon', i: 'box' %} {{ section.settings.model_hint }}</span>
+      {%- else -%}
+        <img src="{{ section.settings.hero | asset_url }}" alt="{{ section.settings.hero_alt | escape }}" width="1200" height="1200">
+      {%- endif -%}
+    </div>
+  </section>
+  <section class="dm-sec">
+    <h2>Gift boxes</h2>
+    <div class="dm-grid">
+      {%- for i in (1..4) -%}
+        {%- assign k = 'p' | append: i -%}{%- assign name = section.settings[k] | split: '|' -%}
+        <div class="dm-card">
+          <div class="dm-card__img"><img src="{{ 'demo-' | append: k | append: '.webp' | asset_url }}" alt="" loading="lazy" width="800" height="800"></div>
+          <span class="dm-card__t">{{ name[0] }}</span><span class="dm-card__p">{{ name[1] }}</span>
+          <span class="dm-btn dm-btn--sm" aria-disabled="true">Add to box</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </section>
+  <section class="dm-sec dm-split">
+    <img src="{{ section.settings.kitchen | asset_url }}" alt="" loading="lazy" width="1200" height="900">
+    <div><h2>Our kitchen</h2><p>{{ section.settings.about }}</p>
+      {%- if lv == 'launch' -%}<p class="dm-es" lang="es">{{ section.settings.about_es }}</p>{%- endif -%}</div>
+  </section>
+  {%- if lv == 'launch' -%}
+    <section class="dm-sec dm-launch">
+      <div><h2>Wholesale & events</h2><p>Cafés and planners can order trays of 48 with a week's notice.</p><span class="dm-btn" aria-disabled="true">Request a quote</span></div>
+      <div class="dm-social"><span>@sweetandco.demo</span><span>Instagram · Facebook · TikTok</span></div>
+    </section>
+  {%- endif -%}
+  <footer class="dm-ftr"><span class="dm-logo">{{ section.settings.brand }}</span><span>{{ section.settings.footer }}</span></footer>
+</div>
+{%- if lv != 'essential' and section.settings.model != blank -%}
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Demo storefront",
+  "settings": [
+    { "type": "select", "id": "level", "label": "Package shown", "default": "essential", "options": [ { "value": "essential", "label": "Essential ($750)" }, { "value": "3d", "label": "3D Experience ($1,650)" }, { "value": "launch", "label": "Business Launch ($2,750)" } ] },
+    { "type": "text", "id": "bar_label", "label": "Bar label", "default": "Demo storefront." },
+    { "type": "text", "id": "bar_text", "label": "Bar text", "default": "Sweet & Co. is a made-up bakery. Nothing here is for sale." },
+    { "type": "text", "id": "back", "label": "Back link", "default": "Back to CHARGIX packages" },
+    { "type": "text", "id": "brand", "label": "Demo brand", "default": "Sweet & Co." },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Small-batch cookies · baked daily" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Baked this morning. At your door tomorrow." },
+    { "type": "text", "id": "heading_es", "label": "Heading (Spanish)", "default": "Horneadas esta mañana. En tu puerta mañana." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Brown-butter chocolate chip, pistachio and sea-salt shortbread, packed by hand in a box worth keeping." },
+    { "type": "text", "id": "hero", "label": "Hero image (asset)", "default": "demo-hero.webp" },
+    { "type": "text", "id": "hero_alt", "label": "Hero alt", "default": "A gift box of cookies on a linen cloth" },
+    { "type": "text", "id": "model", "label": "3D model (asset .glb)" },
+    { "type": "text", "id": "model_alt", "label": "3D model alt", "default": "A 3D gift box of cookies you can turn around" },
+    { "type": "text", "id": "model_hint", "label": "3D hint", "default": "Drag to turn the box" },
+    { "type": "text", "id": "p1", "label": "Product 1 (name|price)", "default": "The Classic Dozen|$28" },
+    { "type": "text", "id": "p2", "label": "Product 2", "default": "Pistachio & Rose Six|$19" },
+    { "type": "text", "id": "p3", "label": "Product 3", "default": "Sea-Salt Shortbread Tin|$22" },
+    { "type": "text", "id": "p4", "label": "Product 4", "default": "The Celebration Box|$48" },
+    { "type": "text", "id": "kitchen", "label": "Kitchen image (asset)", "default": "demo-kitchen.webp" },
+    { "type": "textarea", "id": "about", "label": "About", "default": "One oven, one long table and a lot of brown butter. Every order is baked the day it ships." },
+    { "type": "textarea", "id": "about_es", "label": "About (Spanish)", "default": "Un horno, una mesa larga y mucha mantequilla dorada. Cada pedido se hornea el día que sale." },
+    { "type": "text", "id": "footer", "label": "Footer", "default": "A CHARGIX demo. Not a real business." }
+  ]
+}
+{% endschema %}

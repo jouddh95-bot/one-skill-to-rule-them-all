@@ -1,0 +1,52 @@
+{%- comment -%} What we do / who it is for: three glass pillars and a row of audience chips. {%- endcomment -%}
+<section class="sec" id="{{ section.settings.anchor }}" aria-labelledby="{{ section.id }}-h">
+  <div class="wrap">
+    <header class="head head--split" data-reveal>
+      <div>
+        <p class="label-mono"><span class="idx">{{ section.settings.index }}</span>{{ section.settings.eyebrow }}</p>
+        <h2 class="t-h2" id="{{ section.id }}-h">{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.text != blank -%}<p class="lead">{{ section.settings.text }}</p>{%- endif -%}
+    </header>
+    <div class="pillars">
+      {%- for block in section.blocks -%}{%- if block.type != 'pillar' -%}{%- continue -%}{%- endif -%}
+        <div class="pillar glass" data-reveal {{ block.shopify_attributes }}>
+          <span class="pillar__ic">{% render 'icon', i: block.settings.icon %}</span>
+          <span class="idx">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <h3 class="t-h4">{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- for block in section.blocks -%}{%- if block.type != 'serve' -%}{%- continue -%}{%- endif -%}
+      <div class="serve" data-reveal {{ block.shopify_attributes }}>
+        <h3 class="label-mono"><i class="dot" aria-hidden="true"></i>{{ block.settings.title }}</h3>
+        <ul class="chips">
+          {%- assign items = block.settings.items | split: ',' -%}
+          {%- for i in items -%}<li class="chip chip--glass chip--lg">{{ i | strip }}</li>{%- endfor -%}
+        </ul>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "What we do",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "studio" },
+    { "type": "text", "id": "index", "label": "Index number", "default": "03" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "What CHARGIX does" },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "textarea", "id": "text", "label": "Text" }
+  ],
+  "blocks": [
+    { "type": "pillar", "name": "Pillar", "settings": [
+      { "type": "select", "id": "icon", "label": "Icon", "default": "flat", "options": [ { "value": "flat", "label": "Website" }, { "value": "box", "label": "3D" }, { "value": "store", "label": "Store" }, { "value": "brand", "label": "Brand" }, { "value": "lang", "label": "Languages" } ] },
+      { "type": "text", "id": "title", "label": "Title" },
+      { "type": "textarea", "id": "text", "label": "Text" }
+    ] },
+    { "type": "serve", "name": "Who we serve", "limit": 1, "settings": [ { "type": "text", "id": "title", "label": "Title", "default": "Who it is for" }, { "type": "textarea", "id": "items", "label": "Items (comma separated)" } ] }
+  ],
+  "presets": [ { "name": "What we do" } ]
+}
+{% endschema %}

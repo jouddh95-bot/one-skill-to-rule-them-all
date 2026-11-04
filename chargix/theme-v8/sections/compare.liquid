@@ -1,0 +1,46 @@
+{%- comment -%} Compare table. Column heads read the products live so names and prices always match. {%- endcomment -%}
+<section class="sec sec--tight tone-paper" id="{{ section.settings.anchor }}" aria-labelledby="{{ section.id }}-h">
+  <div class="wrap">
+    <header class="sec__head" data-reveal>
+      <p class="eyebrow"><span class="idx">{{ section.settings.index }}</span>{{ section.settings.eyebrow }}</p>
+      <h2 class="d-3" id="{{ section.id }}-h">{{ section.settings.heading }}</h2>
+    </header>
+    <div class="cmp-wrap" data-reveal tabindex="0" role="region" aria-labelledby="{{ section.id }}-h">
+      <table class="cmp">
+        <thead><tr>
+          <td></td>
+          {%- for p in section.settings.products -%}<th scope="col">{{ p.title | escape }}<small>{{ p.price | money_without_trailing_zeros }}</small></th>{%- endfor -%}
+        </tr></thead>
+        <tbody>
+          {%- for block in section.blocks -%}
+            {%- assign cells = block.settings.cells | split: '|' -%}
+            <tr {{ block.shopify_attributes }}>
+              <th scope="row">{{ block.settings.label }}</th>
+              {%- for c in cells -%}{%- assign t = c | strip -%}
+                {%- if t == '-' -%}<td class="n">{{ 'packages.not_included' | t }}</td>
+                {%- elsif t == 'yes' -%}<td class="y">{{ 'packages.included' | t }}</td>
+                {%- else -%}<td class="y">{{ t }}</td>{%- endif -%}
+              {%- endfor -%}
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Compare packages",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "compare" },
+    { "type": "text", "id": "index", "label": "Index number", "default": "03" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Side by side" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What changes between the three" },
+    { "type": "product_list", "id": "products", "label": "Products (columns)", "limit": 4 }
+  ],
+  "blocks": [
+    { "type": "row", "name": "Row", "settings": [ { "type": "text", "id": "label", "label": "Label" }, { "type": "text", "id": "cells", "label": "Cells, separated by | (use - for not included, yes for included)" } ] }
+  ],
+  "presets": [ { "name": "Compare packages" } ]
+}
+{% endschema %}
