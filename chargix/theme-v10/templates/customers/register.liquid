@@ -1,0 +1,13 @@
+<section class="sec sec--page"><div class="wrap narrow">
+  <header class="head"><h1 class="t-h2">{{ 'customer.register' | t }}</h1></header>
+  {%- form 'create_customer', class: 'form glass' -%}
+    {%- if form.errors -%}<div class="alert alert--err" role="alert">{{ form.errors | default_errors }}</div>{%- endif -%}
+    <div class="row row--2">
+      <div class="field"><label for="g-first">{{ 'customer.first' | t }}</label><input class="input" id="g-first" name="customer[first_name]" autocomplete="given-name"></div>
+      <div class="field"><label for="g-last">{{ 'customer.last' | t }}</label><input class="input" id="g-last" name="customer[last_name]" autocomplete="family-name"></div>
+    </div>
+    <div class="field"><label for="g-email">{{ 'customer.email' | t }}</label><input class="input" id="g-email" type="email" name="customer[email]" autocomplete="email" required></div>
+    <div class="field"><label for="g-pass">{{ 'customer.password' | t }}</label><input class="input" id="g-pass" type="password" name="customer[password]" autocomplete="new-password" required></div>
+    <div class="form__end"><button class="btn btn--lamp" type="submit">{{ 'customer.register' | t }}</button></div>
+  {%- endform -%}
+</div></section>

@@ -1,0 +1,164 @@
+{%- comment -%}
+  Story stage. A sticky stage holding one miniature box. It opens on a short loop that plays by itself,
+  then the scroll plays a pre-rendered film of the same box ({prefix}-d-NNN.webp desktop,
+  {prefix}-m-NNN.webp phones). Captions, interface cards, the clock and the chapter bar are blocks
+  keyed to film frames, so they run backwards with the film. Without JavaScript the poster, the intro
+  and every caption still show as a plain sequence. Loop sources are a theme asset name (ck-loop.mp4)
+  or a full URL (e.g. a Shopify Files video).
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign prefix = s.prefix
+  assign first = prefix | append: '-d-000.webp'
+  assign base = first | asset_url | split: first | first
+  assign poster = prefix | append: '-poster.webp'
+  assign anchor = s.anchor | default: section.id
+  assign loop_mp4 = s.loop_mp4
+  unless loop_mp4 == blank or loop_mp4 contains '/'
+    assign loop_mp4 = loop_mp4 | asset_url
+  endunless
+  assign loop_webm = s.loop_webm
+  unless loop_webm == blank or loop_webm contains '/'
+    assign loop_webm = loop_webm | asset_url
+  endunless
+-%}
+<section class="story{% if s.theme_light %} story--light{% endif %}" id="{{ anchor }}" data-story style="--len: {{ s.length }}svh" aria-label="{{ s.label | escape }}">
+  <script type="application/json" data-story-config>
+    {%- capture cfg -%}{"n": {{ s.frames }}, "base": {{ base | json }}, "prefix": {{ prefix | json }}, "bg": "#0a0909", "eager": {{ s.eager }}, "hero": {{ s.framing }}, "heroEnd": {{ s.hero_end }}, "filmEnd": 0.985, "box": [0.03, 0.0, 0.92, 0.93], "mobileFill": 1.08, "anchor": {"d": [0.5, 0.5], "m": [0.5, 0.4]}, "cam": {{ s.camera }}, "clock": {{ s.clock }}}{%- endcapture -%}
+    {{- cfg -}}
+  </script>
+  <div class="story__stick" data-stick>
+    <div class="stage">
+      <img class="stage__poster" src="{{ poster | asset_url }}" alt="{{ s.poster_alt | escape }}" width="1280" height="716"{% if s.eager %} fetchpriority="high"{% else %} loading="lazy"{% endif %}>
+      <canvas class="stage__amb" data-amb aria-hidden="true"></canvas>
+      <canvas class="stage__film" data-film aria-hidden="true"></canvas>
+      {%- if loop_mp4 != blank -%}
+        <video class="stage__video" data-hero-video muted loop playsinline autoplay preload="{% if s.eager %}auto{% else %}metadata{% endif %}" poster="{{ poster | asset_url }}" aria-hidden="true">
+          {%- if loop_webm != blank -%}<source src="{{ loop_webm }}" type="video/webm">{%- endif -%}
+          <source src="{{ loop_mp4 }}" type="video/mp4">
+        </video>
+      {%- endif -%}
+    </div>
+
+    <div class="story__intro" data-hero>
+      {%- if s.eyebrow != blank -%}<p class="kicker">{{ s.eyebrow }}</p>{%- endif -%}
+      {%- if s.h1 -%}<h1 class="story__h">{{ s.heading }}</h1>{%- else -%}<h2 class="story__h">{{ s.heading }}</h2>{%- endif -%}
+      {%- if s.text != blank -%}<p class="story__lead">{{ s.text }}</p>{%- endif -%}
+      {%- if s.btn_label != blank or s.btn2_label != blank -%}
+        <div class="actions">
+          {%- if s.btn_label != blank -%}<a class="btn btn--solid" href="{{ s.btn_link }}">{{ s.btn_label }}</a>{%- endif -%}
+          {%- if s.btn2_label != blank -%}<a class="btn btn--glass" href="#{{ anchor }}-play" data-play>{{ s.btn2_label }} {% render 'icon', i: 'down' %}</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+    {%- if s.cue != blank -%}<div class="story__cue" data-cue aria-hidden="true"><span>{{ s.cue }}</span><i></i></div>{%- endif -%}
+
+    <div class="story__hud" data-hud aria-hidden="true">
+      <div class="story__time"><span data-day>{{ s.day }}</span><b data-time>{{ s.time }}</b></div>
+      <div class="story__note">{{ s.note }}</div>
+    </div>
+
+    <svg class="story__leaders" data-leaders aria-hidden="true"></svg>
+
+    <div class="story__caps" data-hud>
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'caption' -%}
+          <p class="cap" data-cap data-from="{{ block.settings.from }}" data-to="{{ block.settings.to }}"{% if block.settings.hold %} data-hold{% endif %} {{ block.shopify_attributes }}>
+            {%- if block.settings.kicker != blank -%}<small>{{ block.settings.kicker }}</small>{%- endif -%}
+            {{ block.settings.line }}
+          </p>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'card' -%}
+        {%- assign b = block.settings -%}
+        <div class="ov ov--{{ b.kind }}" data-ov data-from="{{ b.from }}" data-to="{{ b.to }}" data-place="{{ b.place }}" data-mplace="{{ b.mplace }}"{% if b.at != blank %} data-at="{{ b.at }}"{% endif %}{% if b.k_to > 0 %} data-k-from="{{ b.k_from }}" data-k-to="{{ b.k_to }}"{% endif %}{% if b.hold %} data-hold{% endif %} aria-hidden="true" {{ block.shopify_attributes }}>
+          {%- render 'story-card', b: b, block: block -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    <div class="story__bar" data-hud aria-hidden="true">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'chapter' -%}<span data-chapter data-from="{{ block.settings.from }}" data-to="{{ block.settings.to }}" {{ block.shopify_attributes }}>{{ block.settings.label }}</span>{%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+  <span id="{{ anchor }}-play" class="story__play" aria-hidden="true"></span>
+</section>
+<script src="{{ 'cx-story.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Story stage",
+  "class": "sx-story",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id" },
+    { "type": "text", "id": "label", "label": "Accessible label" },
+    { "type": "text", "id": "prefix", "label": "Frame asset prefix", "default": "ck" },
+    { "type": "number", "id": "frames", "label": "Frame count", "default": 301 },
+    { "type": "number", "id": "length", "label": "Scroll length (screen heights)", "default": 1100 },
+    { "type": "checkbox", "id": "eager", "label": "First on page (load now)", "default": false },
+    { "type": "checkbox", "id": "h1", "label": "Heading is the page H1", "default": false },
+    { "type": "checkbox", "id": "theme_light", "label": "Light variant", "default": false },
+    { "type": "text", "id": "poster_alt", "label": "Poster description" },
+    { "type": "text", "id": "loop_mp4", "label": "Opening loop MP4 (theme asset name or URL)" },
+    { "type": "text", "id": "loop_webm", "label": "Opening loop WebM (theme asset name or URL)" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading" },
+    { "type": "text", "id": "text", "label": "Intro text" },
+    { "type": "text", "id": "btn_label", "label": "Button" },
+    { "type": "url", "id": "btn_link", "label": "Button link" },
+    { "type": "text", "id": "btn2_label", "label": "Second button (plays the story)" },
+    { "type": "text", "id": "cue", "label": "Scroll cue" },
+    { "type": "text", "id": "day", "label": "Day label at start" },
+    { "type": "text", "id": "time", "label": "Time at start" },
+    { "type": "text", "id": "note", "label": "Honesty note", "default": "Rendered film, played by your scroll" },
+    { "type": "textarea", "id": "framing", "label": "Opening framing (JSON)", "default": "{\"d\":{\"w\":0.64,\"cx\":0.655,\"cy\":0.5},\"m\":{\"w\":1.04,\"cx\":0.5,\"cy\":0.33}}" },
+    { "type": "text", "id": "hero_end", "label": "Opening ends at (0-1 of scroll)", "default": "0.03" },
+    { "type": "textarea", "id": "camera", "label": "Camera keys (JSON)", "default": "{\"d\":[[0,0.475,0.47,1]],\"m\":[[0,0.475,0.47,1.45]]}" },
+    { "type": "textarea", "id": "clock", "label": "Clock keys (JSON)", "default": "[[0,1122,\"Day 01\"]]" }
+  ],
+  "blocks": [
+    { "type": "caption", "name": "Caption", "settings": [
+      { "type": "number", "id": "from", "label": "From frame", "default": 0 },
+      { "type": "number", "id": "to", "label": "To frame", "default": 40 },
+      { "type": "checkbox", "id": "hold", "label": "Stay to the end", "default": false },
+      { "type": "text", "id": "kicker", "label": "Small label" },
+      { "type": "inline_richtext", "id": "line", "label": "Line" }
+    ]},
+    { "type": "chapter", "name": "Chapter", "settings": [
+      { "type": "number", "id": "from", "label": "From frame", "default": 0 },
+      { "type": "number", "id": "to", "label": "To frame", "default": 60 },
+      { "type": "text", "id": "label", "label": "Label" }
+    ]},
+    { "type": "card", "name": "Interface card", "settings": [
+      { "type": "select", "id": "kind", "label": "Kind", "default": "phone", "options": [
+        { "value": "phone", "label": "Phone: CHARGIX packages" },
+        { "value": "brief", "label": "Laptop: project brief" },
+        { "value": "store", "label": "Demo storefront" },
+        { "value": "orders", "label": "Demo orders" },
+        { "value": "picks", "label": "Design picker" }
+      ]},
+      { "type": "number", "id": "from", "label": "From frame", "default": 0 },
+      { "type": "number", "id": "to", "label": "To frame", "default": 60 },
+      { "type": "checkbox", "id": "hold", "label": "Stay to the end", "default": false },
+      { "type": "select", "id": "place", "label": "Desktop place", "default": "right", "options": [ { "value": "right", "label": "Right" }, { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" } ] },
+      { "type": "select", "id": "mplace", "label": "Phone place", "default": "bottom", "options": [ { "value": "bottom", "label": "Bottom" }, { "value": "bottom-right", "label": "Bottom right" } ] },
+      { "type": "text", "id": "at", "label": "Points at (x,y in the film, 0-1)" },
+      { "type": "number", "id": "k_from", "label": "Inner motion from frame", "default": 0 },
+      { "type": "number", "id": "k_to", "label": "Inner motion to frame", "default": 0 },
+      { "type": "text", "id": "brand", "label": "Brand" },
+      { "type": "text", "id": "url", "label": "Address shown" },
+      { "type": "text", "id": "title", "label": "Title" },
+      { "type": "text", "id": "sub", "label": "Subtitle" },
+      { "type": "image_picker", "id": "image", "label": "Image" },
+      { "type": "text", "id": "image_asset", "label": "Image (theme asset name)" },
+      { "type": "textarea", "id": "rows", "label": "Rows (one per line, parts split by |)" },
+      { "type": "text", "id": "label", "label": "Demo label" }
+    ]}
+  ]
+}
+{% endschema %}
