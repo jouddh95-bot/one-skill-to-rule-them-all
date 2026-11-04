@@ -74,6 +74,8 @@
             <span class="pk__badges">
               {%- if block.settings.three_d == 'none' -%}
                 <span class="badge badge--flat">{% render 'icon', i: 'flat' %}{{ 'packages.no_3d_badge' | t }}</span>
+              {%- elsif block.settings.three_d == 'plus' -%}
+                <span class="badge badge--3d">{% render 'icon', i: 'box' %}{{ 'packages.launch_3d' | t }}</span>
               {%- else -%}
                 <span class="badge badge--3d">{% render 'icon', i: 'box' %}{{ 'packages.interactive_3d' | t }}</span>
               {%- endif -%}

@@ -37,6 +37,7 @@
     "compare": "Compare the three packages",
     "no_3d_badge": "No 3D",
     "interactive_3d": "Interactive 3D",
+    "launch_3d": "3D scene + launch",
     "drag": "Drag to turn",
     "includes": "What's included",
     "timeline": "Timeline",
