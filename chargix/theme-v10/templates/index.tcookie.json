@@ -1,0 +1,266 @@
+{
+ "sections": {
+  "story_cookie": {
+   "type": "story",
+   "settings": {
+    "anchor": "work",
+    "label": "Story one: a cookie business grows inside one miniature room",
+    "prefix": "ck",
+    "frames": 263,
+    "length": 1250,
+    "eager": true,
+    "h1": true,
+    "poster_alt": "A miniature apartment on a dark plinth at sunset: a man sits on the sofa, head in his hands, beside a kitchen and a desk.",
+    "loop_mp4": "ck-loop.mp4",
+    "loop_webm": "ck-loop.webm",
+    "eyebrow": "CHARGIX \u00b7 Shopify website studio",
+    "heading": "Every brand starts in a <em>small room.</em>",
+    "text": "We design and build Shopify websites for new brands, from the first idea to the first order.",
+    "btn_label": "See packages",
+    "btn_link": "/#packages",
+    "btn2_label": "Follow his story",
+    "cue": "Scroll to play",
+    "day": "Day 01",
+    "time": "6:40 PM",
+    "note": "Rendered film, played by your scroll. Brands and orders are made up.",
+    "framing": "{\"d\":{\"w\":0.64,\"cx\":0.655,\"cy\":0.5},\"m\":{\"w\":1.04,\"cx\":0.5,\"cy\":0.33}}",
+    "hero_end": "0.03",
+    "camera": "{\"d\":[[0,0.475,0.47,1],[34,0.475,0.47,1],[52,0.42,0.45,1.16],[76,0.42,0.45,1.16],[92,0.52,0.46,1.04],[106,0.6,0.43,1.18],[118,0.6,0.43,1.18],[130,0.475,0.47,1],[152,0.49,0.47,1.02],[172,0.5,0.5,1.12],[198,0.5,0.5,1.12],[214,0.475,0.47,1],[240,0.475,0.47,1],[262,0.43,0.47,1.12]],\"m\":[[0,0.475,0.47,1.0],[34,0.44,0.46,1.2],[52,0.38,0.44,1.7],[76,0.38,0.44,1.7],[92,0.52,0.45,1.3],[106,0.64,0.42,1.7],[118,0.64,0.42,1.7],[130,0.475,0.47,1.0],[152,0.5,0.45,1.15],[172,0.5,0.5,1.45],[198,0.5,0.5,1.45],[214,0.475,0.47,1.0],[240,0.45,0.47,1.1],[262,0.37,0.46,1.6]]}",
+    "clock": "[[0,1120,\"Day 01\"],[60,1175,\"Day 01\"],[120,1430,\"Day 01\"],[124,1435,\"Day 01\"],[125,1440,\"Day 02\"],[134,1825,\"Day 02\"],[143,1865,\"Day 02\"],[170,2020,\"Day 02\"],[202,2190,\"Day 02\"],[203,2190,\"Day 14\"],[262,2565,\"Day 14\"]]"
+   },
+   "blocks": {
+    "b1": {
+     "type": "caption",
+     "settings": {
+      "from": 4,
+      "to": 34,
+      "line": "He has the recipe. <em>Not the store.</em>",
+      "kicker": "Sweet & Co. \u00b7 before it existed",
+      "hold": false
+     }
+    },
+    "b2": {
+     "type": "caption",
+     "settings": {
+      "from": 38,
+      "to": 74,
+      "line": "One evening, one search, <em>one studio.</em>",
+      "kicker": "",
+      "hold": false
+     }
+    },
+    "b3": {
+     "type": "caption",
+     "settings": {
+      "from": 80,
+      "to": 118,
+      "line": "He picks Essential and sends the brief.",
+      "kicker": "",
+      "hold": false
+     }
+    },
+    "b4": {
+     "type": "caption",
+     "settings": {
+      "from": 136,
+      "to": 168,
+      "line": "Morning. The kitchen becomes a bakery.",
+      "kicker": "Overnight",
+      "hold": false
+     }
+    },
+    "b5": {
+     "type": "caption",
+     "settings": {
+      "from": 172,
+      "to": 200,
+      "line": "He bakes. <em>We build the store.</em>",
+      "kicker": "",
+      "hold": false
+     }
+    },
+    "b6": {
+     "type": "caption",
+     "settings": {
+      "from": 205,
+      "to": 234,
+      "line": "Sweet & Co. is open.",
+      "kicker": "Launch day",
+      "hold": false
+     }
+    },
+    "b7": {
+     "type": "caption",
+     "settings": {
+      "from": 238,
+      "to": 262,
+      "line": "And the first orders come in.",
+      "kicker": "",
+      "hold": true
+     }
+    },
+    "b8": {
+     "type": "chapter",
+     "settings": {
+      "from": 0,
+      "to": 40,
+      "label": "The idea"
+     }
+    },
+    "b9": {
+     "type": "chapter",
+     "settings": {
+      "from": 40,
+      "to": 80,
+      "label": "Finding CHARGIX"
+     }
+    },
+    "b10": {
+     "type": "chapter",
+     "settings": {
+      "from": 80,
+      "to": 122,
+      "label": "The brief"
+     }
+    },
+    "b11": {
+     "type": "chapter",
+     "settings": {
+      "from": 122,
+      "to": 136,
+      "label": "Overnight"
+     }
+    },
+    "b12": {
+     "type": "chapter",
+     "settings": {
+      "from": 136,
+      "to": 170,
+      "label": "Baking"
+     }
+    },
+    "b13": {
+     "type": "chapter",
+     "settings": {
+      "from": 170,
+      "to": 202,
+      "label": "The build"
+     }
+    },
+    "b14": {
+     "type": "chapter",
+     "settings": {
+      "from": 202,
+      "to": 236,
+      "label": "Launch"
+     }
+    },
+    "b15": {
+     "type": "chapter",
+     "settings": {
+      "from": 236,
+      "to": 262,
+      "label": "First orders"
+     }
+    },
+    "b16": {
+     "type": "card",
+     "settings": {
+      "kind": "phone",
+      "from": 40,
+      "to": 80,
+      "place": "right",
+      "mplace": "bottom",
+      "at": "0.37,0.435",
+      "k_from": 50,
+      "k_to": 74,
+      "sub": "7:22",
+      "url": "chargix.store",
+      "title": "Your brand, <em>open for business.</em>",
+      "rows": "essential-website|Essential|Clean site \u00b7 about 10 days|hot\n3d-experience-website|3D Experience|Real 3D scene \u00b7 3 to 4 weeks|\nbusiness-launch|Business Launch|3D + brand + socials \u00b7 4 to 5 weeks|"
+     }
+    },
+    "b17": {
+     "type": "card",
+     "settings": {
+      "kind": "brief",
+      "from": 86,
+      "to": 124,
+      "place": "right",
+      "mplace": "bottom",
+      "at": "0.66,0.40",
+      "k_from": 92,
+      "k_to": 118,
+      "url": "chargix.store/pages/onboarding",
+      "title": "Project brief \u00b7 Sweet & Co.",
+      "rows": "Package|Essential Website\nBusiness|Home bakery, cookie boxes\nPages|Home \u00b7 Shop \u00b7 About \u00b7 Contact\nLook|Warm kraft, cream, handwritten\nProducts|3 boxes to start",
+      "sub": "Order paid \u00b7 Project form sent \u00b7 Start date confirmed",
+      "label": "Demo brief \u00b7 made-up brand"
+     }
+    },
+    "b18": {
+     "type": "card",
+     "settings": {
+      "kind": "store",
+      "from": 205,
+      "to": 238,
+      "place": "right",
+      "mplace": "bottom",
+      "at": "0.5,0.56",
+      "k_from": 207,
+      "k_to": 228,
+      "brand": "Sweet & Co.",
+      "url": "sweetandco.demo",
+      "title": "Baked this morning.",
+      "sub": "Small-batch cookies, boxed by hand.",
+      "image_asset": "sw-hero.webp",
+      "rows": "The Classic Six|$18|sw-p1.webp\nBrown Butter Sea-Salt|$22|sw-p2.webp\nThe Gift Box|$34|sw-p3.webp",
+      "label": "Demo store \u00b7 made-up brand"
+     }
+    },
+    "b19": {
+     "type": "card",
+     "settings": {
+      "kind": "orders",
+      "from": 238,
+      "to": 262,
+      "place": "right",
+      "mplace": "bottom",
+      "hold": true,
+      "at": "0.34,0.46",
+      "k_from": 240,
+      "k_to": 258,
+      "brand": "Sweet & Co.",
+      "title": "New orders",
+      "rows": "Order #1001|Classic Six \u00d7 2|$36.00\nOrder #1002|The Gift Box|$34.00\nOrder #1003|Brown Butter, Classic Six|$40.00",
+      "label": "Illustrative orders, not real sales"
+     }
+    }
+   },
+   "block_order": [
+    "b1",
+    "b2",
+    "b3",
+    "b4",
+    "b5",
+    "b6",
+    "b7",
+    "b8",
+    "b9",
+    "b10",
+    "b11",
+    "b12",
+    "b13",
+    "b14",
+    "b15",
+    "b16",
+    "b17",
+    "b18",
+    "b19"
+   ]
+  }
+ },
+ "order": [
+  "story_cookie"
+ ]
+}

@@ -1,0 +1,217 @@
+{
+ "sections": {
+  "studio": {
+   "type": "what-we-do",
+   "settings": {
+    "anchor": "studio",
+    "index": "03",
+    "eyebrow": "What CHARGIX does",
+    "heading": "We build the website your business runs on.",
+    "text": "CHARGIX is a small studio that designs, builds and launches Shopify websites. Three fixed prices, paid online, built in English or Spanish."
+   },
+   "blocks": {
+    "w1": {
+     "type": "pillar",
+     "settings": {
+      "icon": "flat",
+      "title": "Websites that sell",
+      "text": "Shopify stores and service sites, designed for your brand, set up properly and tested on phones before launch."
+     }
+    },
+    "w2": {
+     "type": "pillar",
+     "settings": {
+      "icon": "box",
+      "title": "3D people remember",
+      "text": "A real interactive 3D scene on your site: your product, space or idea, built for the browser with a light fallback for phones."
+     }
+    },
+    "w3": {
+     "type": "pillar",
+     "settings": {
+      "icon": "store",
+      "title": "Launches done for you",
+      "text": "Products, logo refresh, social profiles, pixels and Spanish pages, set up end to end so you can start selling."
+     }
+    },
+    "w4": {
+     "type": "serve",
+     "settings": {
+      "title": "Who it is for",
+      "items": "First-time founders, Bakers and food makers, Product brands, Service businesses, Shops moving to Shopify, Brands in the US and Mexico"
+     }
+    }
+   },
+   "block_order": [
+    "w1",
+    "w2",
+    "w3",
+    "w4"
+   ]
+  },
+  "process": {
+   "type": "steps",
+   "settings": {
+    "anchor": "process",
+    "index": "04",
+    "eyebrow": "After you buy",
+    "heading": "From checkout to launch in five steps.",
+    "button": "Already bought? Send your project form",
+    "link": "/pages/onboarding"
+   },
+   "blocks": {
+    "s1": {
+     "type": "step",
+     "settings": {
+      "when": "Day 0",
+      "title": "You pay at checkout",
+      "text": "Secure Shopify checkout. Your order email arrives right away with a link to the project form."
+     }
+    },
+    "s2": {
+     "type": "step",
+     "settings": {
+      "when": "Day 0\u20131",
+      "title": "You send the project form",
+      "text": "About 10 minutes: your business, the look you want and a link to your logo and photos."
+     }
+    },
+    "s3": {
+     "type": "step",
+     "settings": {
+      "when": "Within 1 business day",
+      "title": "We confirm your start date",
+      "text": "Your timeline starts once the form and files are complete."
+     }
+    },
+    "s4": {
+     "type": "step",
+     "settings": {
+      "when": "Build",
+      "title": "We design and build, you review",
+      "text": "You see the work in progress and get the revision rounds your package includes."
+     }
+    },
+    "s5": {
+     "type": "step",
+     "settings": {
+      "when": "Launch",
+      "title": "We launch and hand over",
+      "text": "A recorded walkthrough (live calls on the bigger packages), then free fixes for 14 or 30 days."
+     }
+    }
+   },
+   "block_order": [
+    "s1",
+    "s2",
+    "s3",
+    "s4",
+    "s5"
+   ]
+  },
+  "care": {
+   "type": "care",
+   "settings": {
+    "anchor": "care",
+    "index": "05",
+    "eyebrow": "After launch",
+    "heading": "Keep it running.",
+    "text": "Optional monthly care for Shopify sites. Shopify handles hosting and security; we do the human checks and the edits.",
+    "product": "care-plan",
+    "desc_1": "Monthly health check, 30 minutes of edits, reply within 3 business days",
+    "desc_2": "Twice-monthly checks, 2 hours of edits, reply within 1 business day",
+    "desc_3": "Weekly checks, 3D checks on every device, 4 hours of edits, same-day reply",
+    "fine": "Extra work is always quoted first, at $65/hour."
+   }
+  },
+  "faq": {
+   "type": "faq",
+   "settings": {
+    "anchor": "faq",
+    "index": "06",
+    "eyebrow": "Questions",
+    "heading": "Before you buy"
+   },
+   "blocks": {
+    "q1": {
+     "type": "q",
+     "settings": {
+      "q": "Is the 3D in the $1,650 package real 3D?",
+      "a": "<p>Yes. 3D Experience and Business Launch include one real, interactive 3D scene built with WebGL, with a lighter fallback for phones. The story at the top of this page is different: it is a pre-rendered animation that your scrolling plays forwards and backwards.</p>"
+     }
+    },
+    "q2": {
+     "type": "q",
+     "settings": {
+      "q": "Does the $750 package include 3D?",
+      "a": "<p>No. Essential is a clean, fast, professional website with no 3D. If you want 3D, choose 3D Experience or Business Launch.</p>"
+     }
+    },
+    "q3": {
+     "type": "q",
+     "settings": {
+      "q": "What do you need from me?",
+      "a": "<p>After checkout you fill in a short project form and share your logo, photos and product information. Your timeline starts once those are in.</p>"
+     }
+    },
+    "q4": {
+     "type": "q",
+     "settings": {
+      "q": "What is not included?",
+      "a": "<p>Your Shopify plan, domain, paid apps, photography and ad spend. We never guarantee sales, rankings or ad results.</p>"
+     }
+    },
+    "q5": {
+     "type": "q",
+     "settings": {
+      "q": "Do you need my Shopify password?",
+      "a": "<p>No. We use Shopify collaborator access, which you approve and can remove at any time.</p>"
+     }
+    },
+    "q6": {
+     "type": "q",
+     "settings": {
+      "q": "Do you work in Spanish?",
+      "a": "<p>Yes, we work in English or Spanish. Business Launch also includes Spanish versions of your key pages.</p>"
+     }
+    },
+    "q7": {
+     "type": "q",
+     "settings": {
+      "q": "Can I get a refund?",
+      "a": "<p>See our <a href=\"/policies/refund-policy\">refund policy</a> for exactly when and how refunds work.</p>"
+     }
+    }
+   },
+   "block_order": [
+    "q1",
+    "q2",
+    "q3",
+    "q4",
+    "q5",
+    "q6",
+    "q7"
+   ]
+  },
+  "closing": {
+   "type": "closing",
+   "settings": {
+    "asset": "ck-d-262.webp",
+    "eyebrow": "Ready when you are",
+    "heading": "Your business, <em>open for orders.</em>",
+    "text": "Pick a package and pay online. We start as soon as your project form is in.",
+    "label": "Start your project",
+    "link": "/#packages",
+    "label2": "Talk to us",
+    "link2": "/pages/contact"
+   }
+  }
+ },
+ "order": [
+  "studio",
+  "process",
+  "care",
+  "faq",
+  "closing"
+ ]
+}

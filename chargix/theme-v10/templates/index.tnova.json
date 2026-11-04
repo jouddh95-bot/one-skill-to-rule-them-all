@@ -1,0 +1,255 @@
+{
+ "sections": {
+  "story_nova": {
+   "type": "story",
+   "settings": {
+    "anchor": "nova",
+    "label": "Story two: a clothing label in a different miniature room",
+    "prefix": "nv",
+    "frames": 237,
+    "length": 1150,
+    "eager": false,
+    "h1": false,
+    "poster_alt": "A miniature print studio at night: a woman sketches at a work table beside a heat press and rails of plain tees.",
+    "loop_mp4": "nv-loop.mp4",
+    "loop_webm": "nv-loop.webm",
+    "eyebrow": "Story two \u00b7 a clothing label",
+    "heading": "Same box. <em>A different business.</em>",
+    "text": "NOVA is a made-up label. Watch it go from late-night sketches to launch day.",
+    "btn_label": "",
+    "btn2_label": "Follow her story",
+    "cue": "Keep scrolling",
+    "day": "Day 01",
+    "time": "10:40 PM",
+    "note": "Rendered film, played by your scroll. Brands and orders are made up.",
+    "framing": "{\"d\":{\"w\":0.64,\"cx\":0.655,\"cy\":0.5},\"m\":{\"w\":1.04,\"cx\":0.5,\"cy\":0.33}}",
+    "hero_end": "0.04",
+    "camera": "{\"d\":[[0,0.475,0.47,1],[6,0.46,0.45,1.14],[28,0.46,0.45,1.14],[44,0.475,0.47,1],[60,0.47,0.46,1.04],[76,0.55,0.4,1.14],[112,0.52,0.44,1.12],[124,0.475,0.47,1],[150,0.47,0.48,1.14],[176,0.47,0.48,1.14],[190,0.475,0.47,1],[214,0.475,0.47,1],[236,0.34,0.44,1.14]],\"m\":[[0,0.475,0.47,1.0],[6,0.45,0.44,1.65],[28,0.45,0.44,1.65],[44,0.475,0.47,1.1],[60,0.46,0.45,1.4],[76,0.56,0.4,1.6],[112,0.5,0.44,1.55],[124,0.475,0.47,1.05],[150,0.47,0.48,1.5],[176,0.47,0.48,1.5],[190,0.475,0.47,1.0],[214,0.45,0.47,1.1],[236,0.3,0.44,1.55]]}",
+    "clock": "[[0,1360,\"Day 01\"],[26,1410,\"Day 01\"],[29,1440,\"Day 02\"],[52,1870,\"Day 02\"],[60,1900,\"Day 02\"],[120,2120,\"Day 02\"],[121,2120,\"Day 02\"],[180,2410,\"Day 02\"],[181,2410,\"Day 30\"],[236,2600,\"Day 30\"]]"
+   },
+   "blocks": {
+    "b1": {
+     "type": "caption",
+     "settings": {
+      "from": 4,
+      "to": 28,
+      "line": "She has the designs. <em>Not the brand.</em>",
+      "kicker": "NOVA \u00b7 before it existed",
+      "hold": false
+     }
+    },
+    "b2": {
+     "type": "caption",
+     "settings": {
+      "from": 31,
+      "to": 58,
+      "line": "She picks Business Launch: store, brand, socials.",
+      "kicker": "",
+      "hold": false
+     }
+    },
+    "b3": {
+     "type": "caption",
+     "settings": {
+      "from": 64,
+      "to": 90,
+      "line": "The blanks arrive.",
+      "kicker": "Morning",
+      "hold": false
+     }
+    },
+    "b4": {
+     "type": "caption",
+     "settings": {
+      "from": 92,
+      "to": 120,
+      "line": "Transfer, heat, press. <em>Peel.</em>",
+      "kicker": "",
+      "hold": false
+     }
+    },
+    "b5": {
+     "type": "caption",
+     "settings": {
+      "from": 126,
+      "to": 178,
+      "line": "She folds. <em>We build the launch.</em>",
+      "kicker": "",
+      "hold": false
+     }
+    },
+    "b6": {
+     "type": "caption",
+     "settings": {
+      "from": 184,
+      "to": 214,
+      "line": "NOVA goes live, in English and Spanish.",
+      "kicker": "Launch day",
+      "hold": false
+     }
+    },
+    "b7": {
+     "type": "caption",
+     "settings": {
+      "from": 218,
+      "to": 236,
+      "line": "And the first orders come in.",
+      "kicker": "",
+      "hold": true
+     }
+    },
+    "b8": {
+     "type": "chapter",
+     "settings": {
+      "from": 0,
+      "to": 30,
+      "label": "The design"
+     }
+    },
+    "b9": {
+     "type": "chapter",
+     "settings": {
+      "from": 30,
+      "to": 60,
+      "label": "The pick"
+     }
+    },
+    "b10": {
+     "type": "chapter",
+     "settings": {
+      "from": 60,
+      "to": 90,
+      "label": "Blanks"
+     }
+    },
+    "b11": {
+     "type": "chapter",
+     "settings": {
+      "from": 90,
+      "to": 121,
+      "label": "The press"
+     }
+    },
+    "b12": {
+     "type": "chapter",
+     "settings": {
+      "from": 121,
+      "to": 181,
+      "label": "Packing"
+     }
+    },
+    "b13": {
+     "type": "chapter",
+     "settings": {
+      "from": 181,
+      "to": 216,
+      "label": "Launch"
+     }
+    },
+    "b14": {
+     "type": "chapter",
+     "settings": {
+      "from": 216,
+      "to": 236,
+      "label": "First orders"
+     }
+    },
+    "b15": {
+     "type": "card",
+     "settings": {
+      "kind": "picks",
+      "from": 4,
+      "to": 30,
+      "place": "right",
+      "mplace": "bottom",
+      "at": "0.47,0.42",
+      "k_from": 8,
+      "k_to": 26,
+      "title": "Pick the first print",
+      "sub": "3 prints \u00b7 2 colours \u00b7 1 drop",
+      "rows": "Orbit|nv-d1.webp|\nPebble|nv-d2.webp|hot\nLine|nv-d3.webp|"
+     }
+    },
+    "b16": {
+     "type": "card",
+     "settings": {
+      "kind": "brief",
+      "from": 32,
+      "to": 60,
+      "place": "right",
+      "mplace": "bottom",
+      "at": "0.47,0.42",
+      "k_from": 38,
+      "k_to": 56,
+      "url": "chargix.store/pages/onboarding",
+      "title": "Project brief \u00b7 NOVA",
+      "rows": "Package|Business Launch\nStore|Heavyweight tees, 1 drop\nBrand|Logo refresh + mini guide\nSocials|Instagram, Facebook, TikTok\nLanguages|English + Spanish pages",
+      "sub": "Order paid \u00b7 Project form sent \u00b7 Start date confirmed",
+      "label": "Demo brief \u00b7 made-up brand"
+     }
+    },
+    "b17": {
+     "type": "card",
+     "settings": {
+      "kind": "store",
+      "from": 185,
+      "to": 218,
+      "place": "right",
+      "mplace": "bottom",
+      "at": "0.5,0.52",
+      "k_from": 187,
+      "k_to": 208,
+      "brand": "NOVA",
+      "url": "nova.demo",
+      "title": "Drop 01.",
+      "sub": "Heavyweight tees, printed by hand. EN \u00b7 ES",
+      "image_asset": "nv-hero.webp",
+      "rows": "Pebble Tee, Bone|$38|nv-p1.webp\nLine Tee, Black|$38|nv-p2.webp\nThe Mailer Set|$70|nv-p3.webp",
+      "label": "Demo store \u00b7 made-up brand"
+     }
+    },
+    "b18": {
+     "type": "card",
+     "settings": {
+      "kind": "orders",
+      "from": 218,
+      "to": 236,
+      "place": "right",
+      "mplace": "bottom",
+      "hold": true,
+      "at": "0.22,0.43",
+      "k_from": 220,
+      "k_to": 234,
+      "brand": "NOVA",
+      "title": "New orders",
+      "rows": "Order #1001|Pebble Tee \u00b7 M|$38.00\nPedido #1002|Line Tee \u00b7 L \u00d7 2|$76.00\nOrder #1003|The Mailer Set|$70.00",
+      "label": "Illustrative orders, not real sales"
+     }
+    }
+   },
+   "block_order": [
+    "b1",
+    "b2",
+    "b3",
+    "b4",
+    "b5",
+    "b6",
+    "b7",
+    "b8",
+    "b9",
+    "b10",
+    "b11",
+    "b12",
+    "b13",
+    "b14",
+    "b15",
+    "b16",
+    "b17",
+    "b18"
+   ]
+  }
+ },
+ "order": [
+  "story_nova"
+ ]
+}
