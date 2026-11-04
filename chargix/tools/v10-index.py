@@ -29,7 +29,7 @@ def story(settings, items):
     b, o = blocks('b', items)
     return {"type": "story", "settings": settings, "blocks": b, "block_order": o}
 
-J = lambda v: json.dumps(v, separators=(',', ':'))
+J = lambda v: json.dumps(v, separators=(',', ':')).replace('}}', '} }').replace('{{', '{ {')  # Shopify reads {{ }} in template values as dynamic sources
 DEMO = "Demo store · made-up brand"
 ORD = "Illustrative orders, not real sales"
 H = 60  # minutes per hour, for the clock keys
