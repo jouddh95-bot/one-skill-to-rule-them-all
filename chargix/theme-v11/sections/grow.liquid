@@ -34,7 +34,7 @@
         <canvas class="grow__gl grow__film" data-grow-film></canvas>
         {%- assign first = s.film_prefix | append: '-d-000.webp' -%}
         {%- assign base = first | asset_url | split: first | first -%}
-        <script type="application/json" data-film-config>{"n": {{ s.film_frames }}, "base": {{ base | json }}, "prefix": {{ s.film_prefix | json }}, "map": {{ s.film_map }}, "size": {"d": [{{ s.film_size_d | replace: 'x', ', ' }}], "m": [{{ s.film_size_m | replace: 'x', ', ' }}]}, "mobileH": 0.76, "zoom": 0.07, "shift": 0.035}</script>
+        <script type="application/json" data-film-config>{"n": {{ s.film_frames }}, "base": {{ base | json }}, "prefix": {{ s.film_prefix | json }}, "map": {{ s.film_map }}, "size": {"d": [{{ s.film_size_d | replace: 'x', ', ' }}], "m": [{{ s.film_size_m | replace: 'x', ', ' }}]}, "mobileH": 0.76, "zoom": 0.07, "shift": 0.035, "introMs": 3200}</script>
       {%- else -%}
         <canvas class="grow__gl" data-grow-gl></canvas>
       {%- endif -%}

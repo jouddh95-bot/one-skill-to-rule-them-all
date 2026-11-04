@@ -730,8 +730,8 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--lamp); width: 
 .js .grow.is-gl .grow__poster { visibility: hidden; transition: visibility 0s .8s; }
 .js .grow.is-still .grow__gl { display: none; }
 .js .grow.is-still .grow__still { display: block; opacity: 0; transition: opacity .7s var(--ease); }
-.js .grow__scrim { display: block; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(90deg, rgba(10, 9, 9, .7), rgba(10, 9, 9, .38) 30%, rgba(10, 9, 9, 0) 52%); }
-.js .grow__stage::after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; background: linear-gradient(rgba(10, 9, 9, .45), rgba(10, 9, 9, 0) 18%, rgba(10, 9, 9, 0) 78%, rgba(10, 9, 9, .55)); }
+.js .grow__scrim { display: block; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(90deg, rgba(16, 11, 8, .7), rgba(16, 11, 8, .38) 30%, rgba(16, 11, 8, 0) 52%); -webkit-mask-image: linear-gradient(rgba(0, 0, 0, .25), #000 32%); mask-image: linear-gradient(rgba(0, 0, 0, .25), #000 32%); }
+.js .grow__stage::after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none; background: linear-gradient(rgba(24, 14, 6, .3), rgba(24, 14, 6, 0) 16%, rgba(10, 9, 9, 0) 78%, rgba(10, 9, 9, .55)); }
 .js .grow__hero { position: absolute; left: var(--gutter); bottom: clamp(56px, 12vh, 128px); max-width: min(560px, 44vw); padding: 0; margin: 0; will-change: opacity, transform; }
 .js .grow__h { font-size: clamp(48px, 5.6vw, 96px); text-shadow: 0 2px 40px rgba(10, 9, 9, .35); }
 .js .grow__lead { color: var(--text); opacity: .86; }
@@ -757,6 +757,25 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--lamp); width: 
 /* Film mode (cx-film.js): a canvas at the film's own size, scaled and placed by a transform. */
 .js .grow--film .grow__film { inset: auto; left: 0; top: 0; width: 1280px; height: 720px; max-width: none; max-height: none; transform-origin: 0 0; will-change: transform; }
 .js .grow--film .grow__stage { background: #0a0909; }
+/* chapters come in line by line; the opening title rises in once on arrival */
+.js .grow--film .gch:not(.gch--card) > *, .js .grow--film .gch--card .gcard > * { opacity: 0; transform: translate3d(0, 24px, 0); transition: opacity .55s var(--ease), transform .9s var(--ease); }
+.js .grow--film .gch.is-in:not(.gch--card) > *, .js .grow--film .gch--card.is-in .gcard > * { opacity: 1; transform: none; }
+.js .grow--film .gch.is-in :is(.gcard > *, :scope > *):nth-child(2) { transition-delay: .06s; }
+.js .grow--film .gch.is-in :is(.gcard > *, :scope > *):nth-child(3) { transition-delay: .12s; }
+.js .grow--film .gch.is-in :is(.gcard > *, :scope > *):nth-child(4) { transition-delay: .18s; }
+.js .grow--film .gch.is-in :is(.gcard > *, :scope > *):nth-child(5) { transition-delay: .24s; }
+.js .grow--film .gch.is-in :is(.gcard > *, :scope > *):nth-child(n+6) { transition-delay: .3s; }
+.js .grow--film .gch--card .gcard { transform: translate3d(0, 0, 0) scale(.965); transition: transform 1.1s var(--ease); }
+.js .grow--film .gch--card.is-in .gcard { transform: none; }
+@keyframes cxRise { from { opacity: 0; transform: translate3d(0, 34px, 0); } }
+.js .grow--film .grow__hero > * { animation: cxRise 1.3s var(--ease) both; }
+.js .grow--film .grow__hero > :nth-child(1) { animation-delay: .35s; }
+.js .grow--film .grow__hero > :nth-child(2) { animation-delay: .5s; }
+.js .grow--film .grow__hero > :nth-child(3) { animation-delay: .7s; }
+.js .grow--film .grow__hero > :nth-child(4) { animation-delay: .85s; }
+@media (prefers-reduced-motion: reduce) {
+  .js .grow--film .gch > *, .js .grow--film .gch .gcard, .js .grow--film .gch .gcard > *, .js .grow--film .grow__hero > * { transition: none; animation: none; }
+}
 @media (max-aspect-ratio: 4/5) {
   /* phones: the film fills the upper part of the screen and melts into the page below it */
   .js .grow--film .grow__poster { bottom: auto; height: 76%; }
@@ -768,6 +787,7 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--lamp); width: 
 .js .grow.is-off .grow__stick { position: relative; height: auto; overflow: visible; }
 .js .grow.is-off .grow__stage { position: relative; aspect-ratio: 16 / 10; }
 .js .grow.is-off :is(.grow__gl, .grow__scrim, .grow__cue, .grow__bar) { display: none; }
+.js .grow.is-off .gch > *, .js .grow.is-off .gch .gcard, .js .grow.is-off .gch .gcard > * { opacity: 1; transform: none; }
 .js .grow.is-off .grow__stage::after { content: none; }
 .js .grow.is-off :is(.grow__hero, .grow__note) { position: relative; left: auto; right: auto; top: auto; bottom: auto; max-width: var(--max); padding: var(--s-6) var(--gutter) 0; margin: 0 auto; }
 .js .grow.is-off .grow__chs { position: relative; display: grid; padding: var(--s-7) var(--gutter) var(--s-8); max-width: var(--max); margin: 0 auto; }

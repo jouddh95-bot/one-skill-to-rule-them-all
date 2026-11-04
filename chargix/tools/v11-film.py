@@ -7,13 +7,25 @@
 # and chargix/v11-film/film.json with the frame count and where each clip starts (read by tools/v11-index.py).
 # Run:  python3 chargix/tools/v11-film.py clip1.mp4 clip2.mp4 clip3.mp4 clip4.mp4
 import json, os, shutil, subprocess, sys, tempfile
-from PIL import Image
+import numpy as np
+from PIL import Image, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ASSETS = os.path.join(HERE, '..', 'theme-v11', 'assets')
-PER_CLIP = int(os.environ.get('PER_CLIP', 50))   # frames kept per 5 s clip
+PER_CLIP = int(os.environ.get('PER_CLIP', 80))   # frames kept per 5 s clip (16 per second)
 DW, DH, MW = 1280, 720, 640
 clips = sys.argv[1:]
+
+def unblue(im):
+    # Clip 2 morphs the sprout's leaf into the tree and the leaf's underside comes out teal-blue for
+    # about a second. Tint those pixels (upper middle of the frame only) to the canopy's olive.
+    a = np.asarray(im).astype(np.float32); r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    core = (b > r + 8) & (g > r); core[450:] = False; core[:, :300] = False; core[:, 1000:] = False
+    if not core.any(): return im
+    m = (np.asarray(Image.fromarray((core * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(7))) > 0) & (b > r - 6)
+    lum = 0.3 * r + 0.59 * g + 0.11 * b
+    a[..., 0][m] = lum[m] * 1.05; a[..., 1][m] = lum[m] * 1.12; a[..., 2][m] = lum[m] * 0.55
+    return Image.fromarray(a.clip(0, 255).astype(np.uint8))
 assert len(clips) == 4, 'need four clips'
 
 for f in os.listdir(ASSETS):
@@ -35,9 +47,10 @@ for ci, clip in enumerate(clips):
 n = len(frames)
 for i, fp in enumerate(frames):
     im = Image.open(fp).convert('RGB')
-    im.save(os.path.join(ASSETS, f'gf-d-{i:03d}.webp'), quality=80, method=5)
+    if starts[1] + 36 <= i <= starts[1] + 62: im = unblue(im); im.save(fp)
+    im.save(os.path.join(ASSETS, f'gf-d-{i:03d}.webp'), quality=72, method=5)
     x0 = (DW - MW) // 2
-    im.crop((x0, 0, x0 + MW, DH)).save(os.path.join(ASSETS, f'gf-m-{i:03d}.webp'), quality=80, method=5)
+    im.crop((x0, 0, x0 + MW, DH)).save(os.path.join(ASSETS, f'gf-m-{i:03d}.webp'), quality=74, method=5)
 
 ends = starts[1:] + [n - 1]
 # posters/stills: opening, mid clip 1, end clip 2, mid clip 3, mid clip 4, last frame
@@ -49,7 +62,7 @@ for k, i in enumerate(picks):
     im.crop((x0, 0, x0 + MW, DH)).save(os.path.join(ASSETS, f'grow-m-{k}.webp'), quality=82, method=5)
 
 os.makedirs(os.path.join(HERE, '..', 'v11-film'), exist_ok=True)
-json.dump({'n': n, 'starts': starts, 'per_clip': PER_CLIP, 'size_d': [DW, DH], 'size_m': [MW, DH], 'stills': picks},
+json.dump({'n': n, 'starts': starts, 'per_clip': PER_CLIP, 'hero': round(PER_CLIP * 0.3), 'size_d': [DW, DH], 'size_m': [MW, DH], 'stills': picks},
           open(os.path.join(HERE, '..', 'v11-film', 'film.json'), 'w'), indent=1)
 shutil.rmtree(tmp)
 tot = sum(os.path.getsize(os.path.join(ASSETS, f)) for f in os.listdir(ASSETS) if f.startswith('gf-'))

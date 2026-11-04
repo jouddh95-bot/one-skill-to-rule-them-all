@@ -10,7 +10,8 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'theme-v11
 FILM = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'v11-film', 'film.json')))
 # scroll position -> film frame: hero holds the first frame, then seed (clip 1), tree (2), store (3), night (4)
 _st, _n = FILM['starts'], FILM['n']
-FILM_MAP = [[0, 0], [0.035, 0], [0.26, _st[1]], [0.46, _st[2]], [0.62, _st[3]], [0.9, _n - 1], [1, _n - 1]]
+# The opening shot glides from frame 0 to the hero frame by itself (cx-film.js), so the map starts there.
+FILM_MAP = [[0, FILM['hero']], [0.035, FILM['hero']], [0.26, _st[1]], [0.46, _st[2]], [0.62, _st[3]], [0.9, _n - 1], [1, _n - 1]]
 
 def blocks(prefix, items):
     b = {f"{prefix}{i+1}": it for i, it in enumerate(items)}
@@ -82,7 +83,7 @@ gb, go = blocks('g', [
     still(0, 0.12, "0"), still(0.12, 0.3, "1"), still(0.3, 0.46, "2"), still(0.46, 0.66, "3"), still(0.66, 0.84, "4"), still(0.84, 1.01, "5"),
 ])
 S["grow"] = {"type": "grow", "settings": {
-    "anchor": "work", "label": "From the ground up: a seed in the desert grows into a tree and a store", "length": 1400,
+    "anchor": "work", "label": "From the ground up: a seed in the desert grows into a tree and a store", "length": 1100,
     "poster_d": "grow-d-0.webp", "poster_m": "grow-m-0.webp",
     "eyebrow": "CHARGIX · Shopify website studio", "heading": "Every great store <em>starts as a seed.</em>",
     "text": "We design and build Shopify stores that are made to sell, from the ground up.",
