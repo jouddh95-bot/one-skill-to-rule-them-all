@@ -1,5 +1,6 @@
 {%- comment -%}
-  "From the ground up": a real-time WebGL desert (assets/cx-grow.js, Three.js). Scrolling plays one shot:
+  "From the ground up": a desert film (assets/cx-film.js, frames made with Higgsfield) or, with no film frames
+  set, a real-time WebGL desert (assets/cx-grow.js, Three.js). Scrolling plays one shot:
   a seed opens in the sand, sprouts, grows into a palo verde, a pavilion store rises around it, the tree
   blooms gold and a garden spreads while the day turns to night. Chapters, package cards and the care
   card are blocks keyed to the scroll (from/to are 0-1 of the section), so they run backwards with it.
@@ -9,12 +10,16 @@
 {%- liquid
   assign s = section.settings
   assign anchor = s.anchor | default: section.id
+  assign film = false
+  if s.film_frames > 0
+    assign film = true
+  endif
 -%}
-<section class="grow" id="{{ anchor }}" data-grow style="--len: {{ s.length }}svh" aria-label="{{ s.label | escape }}">
+<section class="grow{% if film %} grow--film{% endif %}" id="{{ anchor }}" data-grow style="--len: {{ s.length }}svh" aria-label="{{ s.label | escape }}">
   <div class="grow__stick" data-grow-stick>
     <div class="grow__stage" aria-hidden="true">
       <picture class="grow__poster" data-grow-poster>
-        <source media="(max-width: 699px)" srcset="{{ s.poster_m | asset_url }}" width="780" height="1688">
+        <source media="(max-aspect-ratio: 4/5)" srcset="{{ s.poster_m | asset_url }}">
         <img src="{{ s.poster_d | asset_url }}" alt="" width="1600" height="1000" fetchpriority="high" decoding="async">
       </picture>
       {%- for block in section.blocks -%}
@@ -25,7 +30,14 @@
           </picture>
         {%- endif -%}
       {%- endfor -%}
-      <canvas class="grow__gl" data-grow-gl></canvas>
+      {%- if film -%}
+        <canvas class="grow__gl grow__film" data-grow-film></canvas>
+        {%- assign first = s.film_prefix | append: '-d-000.webp' -%}
+        {%- assign base = first | asset_url | split: first | first -%}
+        <script type="application/json" data-film-config>{"n": {{ s.film_frames }}, "base": {{ base | json }}, "prefix": {{ s.film_prefix | json }}, "map": {{ s.film_map }}, "size": {"d": [{{ s.film_size_d | replace: 'x', ', ' }}], "m": [{{ s.film_size_m | replace: 'x', ', ' }}]}, "mobileH": 0.76, "zoom": 0.07, "shift": 0.035}</script>
+      {%- else -%}
+        <canvas class="grow__gl" data-grow-gl></canvas>
+      {%- endif -%}
       <div class="grow__scrim" data-grow-scrim></div>
     </div>
 
@@ -141,7 +153,11 @@
   </div>
   <span id="{{ anchor }}-play" class="grow__play" aria-hidden="true"></span>
 </section>
+{%- if film -%}
+<script src="{{ 'cx-film.js' | asset_url }}" defer></script>
+{%- else -%}
 <script type="module" src="{{ 'cx-grow.js' | asset_url }}"></script>
+{%- endif -%}
 <script>setTimeout(function () { var g = document.getElementById({{ anchor | json }}); if (g && !g.classList.contains('is-on')) g.classList.add('is-off'); }, 8000);</script>
 
 {% schema %}
@@ -152,6 +168,12 @@
     { "type": "text", "id": "anchor", "label": "Anchor id", "default": "grow" },
     { "type": "text", "id": "label", "label": "Accessible label" },
     { "type": "number", "id": "length", "label": "Scroll length (screen heights × 100)", "default": 1400 },
+    { "type": "header", "content": "Film (leave frames at 0 for the live 3D desert)" },
+    { "type": "number", "id": "film_frames", "label": "Film frames", "default": 0 },
+    { "type": "text", "id": "film_prefix", "label": "Film frame prefix (theme assets PREFIX-d-000.webp)", "default": "gf" },
+    { "type": "text", "id": "film_map", "label": "Scroll to frame map, [[position, frame], ...]", "default": "[[0, 0], [1, 0]]" },
+    { "type": "text", "id": "film_size_d", "label": "Desktop frame size", "default": "1280x720" },
+    { "type": "text", "id": "film_size_m", "label": "Phone frame size", "default": "640x720" },
     { "type": "text", "id": "poster_d", "label": "Poster, desktop (theme asset)", "default": "grow-d-0.webp" },
     { "type": "text", "id": "poster_m", "label": "Poster, phones (theme asset)", "default": "grow-m-0.webp" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow" },

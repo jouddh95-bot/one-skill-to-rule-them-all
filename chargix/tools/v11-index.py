@@ -1,12 +1,16 @@
 # Writes chargix/theme-v11/templates/index.json (CHARGIX v11, "From the ground up").
-# The home page opens on sections/grow.liquid: a live WebGL desert (assets/cx-grow.js) where a seed grows into a
-# tree and a store is built around it. Chapters, package cards and the care card are keyed to the scroll (0-1).
+# The home page opens on sections/grow.liquid playing the desert film (assets/cx-film.js, four Higgsfield clips
+# turned into frames by tools/v11-film.py): a seed grows into a tree and a store is built around it. Chapters, package cards and the care card are keyed to the scroll (0-1).
 # Package, process, care and FAQ sections below it keep the v10 copy, updated to sam's 2026-11-04 brief.
 # Prices are never typed here: every card reads them from the Shopify products.
 # Run:  python3 chargix/tools/v11-index.py
 import json, os
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'theme-v11')
+FILM = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'v11-film', 'film.json')))
+# scroll position -> film frame: hero holds the first frame, then seed (clip 1), tree (2), store (3), night (4)
+_st, _n = FILM['starts'], FILM['n']
+FILM_MAP = [[0, 0], [0.035, 0], [0.26, _st[1]], [0.46, _st[2]], [0.62, _st[3]], [0.9, _n - 1], [1, _n - 1]]
 
 def blocks(prefix, items):
     b = {f"{prefix}{i+1}": it for i, it in enumerate(items)}
@@ -44,10 +48,10 @@ gb, go = blocks('g', [
        "Every CHARGIX store is built on Shopify and set up properly from day one, so it is ready to sell the moment it opens.",
        ["Shopify set up end to end", "Secure checkout, payments and shipping", "Fast pages, designed for phones first", "Tested on real devices before launch"]),
     pk(0.34, 0.455, "3d-experience-website", "04 · Stand out",
-       ["1 real interactive 3D scene (WebGL), like this one", "Custom visual direction and motion design", "Up to 8 pages + 1 custom landing page",
+       ["1 real interactive 3D scene (WebGL)", "Custom visual direction and motion design", "Up to 8 pages + 1 custom landing page",
         "Up to 20 products or services set up", "Full Shopify setup and branded emails", "3 revision rounds, 30 days of fixes"],
        "3 to 4 weeks", pick=True, pick_label="Signature", tagline="A site people remember.",
-       **{"for": "For brands that need to stand out. The desert you are scrolling is live 3D, rendered in your browser."}),
+       **{"for": "For brands that need to stand out and be remembered."}),
     ch(0.465, 0.585, "We build the store <em>around your idea.</em>", "05 · The build",
        "A clear process with fixed prices. You always know what happens next.",
        ["Day 0 | You pay at a secure Shopify checkout", "Day 0–1 | You send the project form, about 10 minutes",
@@ -83,7 +87,9 @@ S["grow"] = {"type": "grow", "settings": {
     "eyebrow": "CHARGIX · Shopify website studio", "heading": "Every great store <em>starts as a seed.</em>",
     "text": "We design and build Shopify stores that are made to sell, from the ground up.",
     "btn_label": "See packages", "btn_link": "/#packages", "btn2_label": "Watch it grow", "cue": "Scroll to grow",
-    "note": "Live 3D, rendered in your browser as you scroll"}, "blocks": gb, "block_order": go}
+    "note": "A film that plays as you scroll",
+    "film_frames": FILM["n"], "film_prefix": "gf", "film_map": json.dumps(FILM_MAP),
+    "film_size_d": "%dx%d" % tuple(FILM["size_d"]), "film_size_m": "%dx%d" % tuple(FILM["size_m"])}, "blocks": gb, "block_order": go}
 
 # Package copy is v8's, verbatim (templates/index.json / tools/v8-index.py).
 pb, po = blocks('p', [
@@ -152,7 +158,7 @@ S["care"] = {"type": "care", "settings": {"anchor": "care", "index": "05", "eyeb
   "fine": "Extra work is always quoted first, at $65/hour."}}
 
 qs = [
-  ("Is the 3D in the $1,650 package real 3D?", "<p>Yes. 3D Experience and Business Launch include one real, interactive 3D scene built with WebGL, with a lighter fallback for phones. The desert at the top of this page is the same kind of work: real-time 3D, rendered live in your browser as you scroll.</p>"),
+  ("Is the 3D in the $1,650 package real 3D?", "<p>Yes. 3D Experience and Business Launch include one real, interactive 3D scene built with WebGL, with a lighter fallback for phones. The desert at the top of this page is different: it is a pre-rendered film that plays as you scroll, while your 3D scene is real-time and you can interact with it.</p>"),
   ("Does the $750 package include 3D?", "<p>No. Essential is a clean, fast, professional website with no 3D. If you want 3D, choose 3D Experience or Business Launch.</p>"),
   ("What do you need from me?", "<p>After checkout you fill in a short project form and share your logo, photos and product information. Your timeline starts once those are in.</p>"),
   ("What is not included?", "<p>Your Shopify plan, domain, paid apps, photography and ad spend. We never guarantee sales, rankings or ad results.</p>"),
