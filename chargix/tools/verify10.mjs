@@ -29,6 +29,29 @@ for (const v of views) {
   await page.waitForLoadState('load', { timeout: 90000 }).catch(() => {});
   r.loadMs = Date.now() - t0;
   await page.waitForTimeout(2500);
+  // Storefront password on: visitors (and this runner) only get the password page. Record it, then check
+  // that every theme asset the home page needs is served by Shopify's CDN for this theme.
+  if (/\/password/.test(page.url()) || (await page.$('form[action*="password"]'))) {
+    r.passwordPage = true;
+    await shot(page, `${v.name}-00-password`);
+    if (!report.assets) {
+      const css = await page.evaluate(() => [...document.querySelectorAll('link[href*="/assets/"],script[src*="/assets/"]')].map((e) => e.href || e.src)[0]);
+      const cdn = css && css.slice(0, css.indexOf('/assets/') + 8);
+      const dir = new URL('../theme-v10/assets/', import.meta.url).pathname;
+      const names = fs.readdirSync(dir);
+      const bad = [];
+      let total = 0;
+      for (let i = 0; i < names.length; i += 24) {
+        await Promise.all(names.slice(i, i + 24).map(async (n) => {
+          const res = await fetch(cdn + n, { method: 'HEAD' }).catch((e) => ({ status: 'ERR ' + e.message }));
+          if (res.status !== 200) bad.push(`${n}: ${res.status}`); else total += +(res.headers.get('content-length') || 0);
+        }));
+      }
+      report.assets = { cdn, checked: names.length, missing: bad, bytes: total };
+    }
+    await ctx.close();
+    continue;
+  }
   // 1. Landing moves without scrolling: compare two screenshots 1.2 s apart.
   const a = await page.screenshot({ type: 'png' });
   await shot(page, `${v.name}-00-landing`);
