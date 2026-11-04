@@ -89,6 +89,7 @@ function boot(root) {
   renderer.shadowMap.type = PCFSoftShadowMap;
   renderer.shadowMap.autoUpdate = false;
   const fixedDpr = +new URLSearchParams(location.search).get('cxdpr') || 0; // for rendering posters and stills
+  const noShift = new URLSearchParams(location.search).has('cxnoshift'); // centred framing, for film keyframes
   let dpr = fixedDpr || Math.min(devicePixelRatio || 1, Q.dpr);
   renderer.setPixelRatio(dpr);
 
@@ -1042,8 +1043,8 @@ function boot(root) {
     camera.fov = c[6] * (aspect < 0.8 ? 1.12 : 1); camera.near = Math.max(0.004, dist * 0.015); camera.far = 6000;
     camera.updateProjectionMatrix();
     // composition: subject right of the text on desktop, above the text on phones
-    const sx = aspect >= 0.8 ? -0.22 * smooth(0.05, 0.14, pp) * (1 - smooth(0.82, 0.95, pp)) : 0;
-    const sy = aspect < 0.8 ? -0.16 * (1 - smooth(0.9, 1, pp)) : -0.04;
+    const sx = noShift ? 0 : aspect >= 0.8 ? -0.22 * smooth(0.05, 0.14, pp) * (1 - smooth(0.82, 0.95, pp)) : 0;
+    const sy = noShift ? 0 : aspect < 0.8 ? -0.16 * (1 - smooth(0.9, 1, pp)) : -0.04;
     camera.projectionMatrix.elements[8] = sx; camera.projectionMatrix.elements[9] = sy;
     camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();
     sky.position.copy(camera.position);
