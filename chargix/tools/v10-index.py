@@ -43,7 +43,7 @@ S["story_cookie"] = story({
     "loop_mp4": LOOP.get("ck_mp4", ""), "loop_webm": LOOP.get("ck_webm", ""),
     "eyebrow": "CHARGIX · Shopify website studio", "heading": "Every brand starts in a <em>small room.</em>",
     "text": "We design and build Shopify websites for new brands, from the first idea to the first order.",
-    "btn_label": "See packages", "btn_link": "#packages", "btn2_label": "Follow his story", "cue": "Scroll to play",
+    "btn_label": "See packages", "btn_link": "/#packages", "btn2_label": "Follow his story", "cue": "Scroll to play",
     "day": "Day 01", "time": "6:40 PM", "note": "Rendered film, played by your scroll. Brands and orders are made up.",
     "framing": J({"d": {"w": 0.64, "cx": 0.655, "cy": 0.5}, "m": {"w": 1.04, "cx": 0.5, "cy": 0.33}}), "hero_end": "0.03",
     "camera": J({
@@ -91,7 +91,7 @@ S["story_nova"] = story({
     "loop_mp4": LOOP.get("nv_mp4", ""), "loop_webm": LOOP.get("nv_webm", ""),
     "eyebrow": "Story two · a clothing label", "heading": "Same box. <em>A different business.</em>",
     "text": "NOVA is a made-up label. Watch it go from late-night sketches to launch day.",
-    "btn_label": "", "btn_link": "", "btn2_label": "Follow her story", "cue": "Keep scrolling",
+    "btn_label": "", "btn2_label": "Follow her story", "cue": "Keep scrolling",
     "day": "Day 01", "time": "10:40 PM", "note": "Rendered film, played by your scroll. Brands and orders are made up.",
     "framing": J({"d": {"w": 0.64, "cx": 0.655, "cy": 0.5}, "m": {"w": 1.04, "cx": 0.5, "cy": 0.33}}), "hero_end": "0.04",
     "camera": J({
