@@ -15,7 +15,12 @@
         "btn_link": "/#packages",
         "btn2_label": "Watch it grow",
         "cue": "Scroll to grow",
-        "note": "Live 3D, rendered in your browser as you scroll"
+        "note": "A film that plays as you scroll",
+        "film_frames": 201,
+        "film_prefix": "gf",
+        "film_map": "[[0, 0], [0.035, 0], [0.26, 50], [0.46, 100], [0.62, 150], [0.9, 200], [1, 200]]",
+        "film_size_d": "1280x720",
+        "film_size_m": "640x720"
       },
       "blocks": {
         "g1": {
@@ -68,7 +73,7 @@
             "to": "0.455",
             "product": "3d-experience-website",
             "kicker": "04 · Stand out",
-            "list": "1 real interactive 3D scene (WebGL), like this one\nCustom visual direction and motion design\nUp to 8 pages + 1 custom landing page\nUp to 20 products or services set up\nFull Shopify setup and branded emails\n3 revision rounds, 30 days of fixes",
+            "list": "1 real interactive 3D scene (WebGL)\nCustom visual direction and motion design\nUp to 8 pages + 1 custom landing page\nUp to 20 products or services set up\nFull Shopify setup and branded emails\n3 revision rounds, 30 days of fixes",
             "time": "3 to 4 weeks",
             "price_note": "one-time",
             "buy_label": "Buy now",
@@ -77,7 +82,7 @@
             "pick": true,
             "pick_label": "Signature",
             "tagline": "A site people remember.",
-            "for": "For brands that need to stand out. The desert you are scrolling is live 3D, rendered in your browser."
+            "for": "For brands that need to stand out and be remembered."
           }
         },
         "g5": {
@@ -536,7 +541,7 @@
           "type": "q",
           "settings": {
             "q": "Is the 3D in the $1,650 package real 3D?",
-            "a": "<p>Yes. 3D Experience and Business Launch include one real, interactive 3D scene built with WebGL, with a lighter fallback for phones. The desert at the top of this page is the same kind of work: real-time 3D, rendered live in your browser as you scroll.</p>"
+            "a": "<p>Yes. 3D Experience and Business Launch include one real, interactive 3D scene built with WebGL, with a lighter fallback for phones. The desert at the top of this page is different: it is a pre-rendered film that plays as you scroll, while your 3D scene is real-time and you can interact with it.</p>"
           }
         },
         "q2": {
