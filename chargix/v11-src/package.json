@@ -1,0 +1,12 @@
+{
+  "name": "chargix-v11-grow",
+  "private": true,
+  "description": "Builds theme-v11/assets/cx-grow.js (the live WebGL desert) from grow.js",
+  "scripts": {
+    "build": "esbuild grow.js --bundle --format=esm --minify --target=es2020 --legal-comments=none --outfile=../theme-v11/assets/cx-grow.js"
+  },
+  "devDependencies": {
+    "esbuild": "0.24.0",
+    "three": "0.170.0"
+  }
+}

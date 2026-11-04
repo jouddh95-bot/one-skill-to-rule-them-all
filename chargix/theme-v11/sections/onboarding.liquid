@@ -1,0 +1,97 @@
+<section class="sec sec--page" aria-labelledby="{{ section.id }}-h">
+  <div class="wrap narrow">
+    <header class="head">
+      <p class="label-mono">{{ section.settings.eyebrow }}</p>
+      <h1 class="t-h2" id="{{ section.id }}-h">{{ section.settings.heading }}</h1>
+      <p class="lead">{{ section.settings.text }}</p>
+      <ol class="onb-steps" aria-label="{{ 'onboarding.parts' | t }}"><li><span>01</span>{{ 'onboarding.p1' | t }}</li><li><span>02</span>{{ 'onboarding.p2' | t }}</li><li><span>03</span>{{ 'onboarding.p3' | t }}</li><li><span>04</span>{{ 'onboarding.p4' | t }}</li></ol>
+    </header>
+    {%- form 'contact', class: 'form glass', id: 'ProjectForm' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="alert alert--ok" role="status" tabindex="-1">{{ section.settings.success }}</div>
+      {%- else -%}
+        {%- if form.errors -%}<div class="alert alert--err" role="alert">{{ form.errors | default_errors }}</div>{%- endif -%}
+        <input type="hidden" name="contact[form]" value="Project onboarding">
+        <fieldset class="fieldset">
+          <legend><span class="idx" aria-hidden="true">01</span>{{ 'onboarding.p1' | t }}</legend>
+          <div class="row row--2">
+            <div class="field"><label for="ob-name">Full name <span aria-hidden="true">*</span></label><input class="input" id="ob-name" name="contact[name]" autocomplete="name" required></div>
+            <div class="field"><label for="ob-email">Email <span aria-hidden="true">*</span></label><input class="input" id="ob-email" type="email" name="contact[email]" autocomplete="email" required></div>
+          </div>
+          <div class="row row--2">
+            <div class="field"><label for="ob-phone">Phone / WhatsApp</label><input class="input" id="ob-phone" type="tel" name="contact[phone]" autocomplete="tel"></div>
+            <div class="field"><label for="ob-order">Order number <span aria-hidden="true">*</span></label><input class="input" id="ob-order" name="contact[Order number]" placeholder="#1002" required data-order-field><span class="hint">From your order confirmation email.</span></div>
+          </div>
+          <div class="row row--2">
+            <div class="field"><label for="ob-country">Country <span aria-hidden="true">*</span></label><select class="select" id="ob-country" name="contact[Country]" required><option value="">Choose…</option><option>United States</option><option>Mexico</option><option>Other</option></select></div>
+            <div class="field"><label for="ob-lang">Preferred language <span aria-hidden="true">*</span></label><select class="select" id="ob-lang" name="contact[Language]" required><option>English</option><option>Español</option></select></div>
+          </div>
+        </fieldset>
+        <fieldset class="fieldset">
+          <legend><span class="idx" aria-hidden="true">02</span>{{ 'onboarding.p2' | t }}</legend>
+          <div class="row row--2">
+            <div class="field"><label for="ob-biz">Business name <span aria-hidden="true">*</span></label><input class="input" id="ob-biz" name="contact[Business name]" required></div>
+            <div class="field"><label for="ob-ind">Industry <span aria-hidden="true">*</span></label><input class="input" id="ob-ind" name="contact[Industry]" placeholder="e.g. bakery, skincare, coaching" required></div>
+          </div>
+          <div class="field"><label for="ob-purpose">What should the website do for you? <span aria-hidden="true">*</span></label><textarea class="textarea" id="ob-purpose" name="contact[Website purpose]" required placeholder="Sell products online, book clients, look credible to wholesale buyers…"></textarea></div>
+          <div class="field">
+            <span class="label" id="ob-sell-l">What do you sell? <span aria-hidden="true">*</span></span>
+            <div class="checks" data-group="sell" role="group" aria-labelledby="ob-sell-l">
+              <label><input type="checkbox" value="Physical products"> Physical products</label>
+              <label><input type="checkbox" value="Digital products"> Digital products</label>
+              <label><input type="checkbox" value="Services"> Services</label>
+            </div>
+            <input type="hidden" name="contact[Sells]" data-for="sell">
+          </div>
+          <div class="row row--2">
+            <div class="field"><label for="ob-count">How many products or services?</label><input class="input" id="ob-count" type="number" min="0" name="contact[Product count]"></div>
+            <div class="field"><label for="ob-time">Desired go-live date</label><input class="input" id="ob-time" type="date" name="contact[Desired launch]"></div>
+          </div>
+        </fieldset>
+        <fieldset class="fieldset">
+          <legend><span class="idx" aria-hidden="true">03</span>{{ 'onboarding.p3' | t }}</legend>
+          <div class="field"><label for="ob-style">Describe the style you want <span aria-hidden="true">*</span></label><textarea class="textarea" id="ob-style" name="contact[Visual style]" required placeholder="Minimal and calm, bold and colourful, luxury, playful…"></textarea></div>
+          <div class="field"><label for="ob-ref">2–3 websites you like (links)</label><textarea class="textarea" id="ob-ref" name="contact[Reference websites]" placeholder="https://…"></textarea></div>
+          <div class="field"><label for="ob-assets">Link to your logo, photos and product info <span aria-hidden="true">*</span></label><input class="input" id="ob-assets" name="contact[Assets link]" placeholder="Google Drive, Dropbox or WeTransfer link" required><span class="hint">Share a folder link with "anyone with the link can view". No link yet? Write "will email" and reply to our email with attachments.</span></div>
+        </fieldset>
+        <fieldset class="fieldset">
+          <legend><span class="idx" aria-hidden="true">04</span>{{ 'onboarding.p4' | t }}</legend>
+          <div class="field"><label for="ob-pages">Pages you need</label><textarea class="textarea" id="ob-pages" name="contact[Pages]" placeholder="Home, About, Shop, Contact, FAQ…"></textarea></div>
+          <div class="field"><label for="ob-int">Integrations or apps you need</label><input class="input" id="ob-int" name="contact[Integrations]" placeholder="Booking, reviews, email marketing, Instagram shop…"></div>
+          <div class="row row--2">
+            <div class="field"><label for="ob-dom">Do you own a domain?</label><select class="select" id="ob-dom" name="contact[Domain]"><option>Yes</option><option>No, I need one</option><option>Not sure</option></select></div>
+            <div class="field"><label for="ob-shop">Do you already have a Shopify store?</label><select class="select" id="ob-shop" name="contact[Shopify status]"><option>No, start one for me</option><option>Yes, I'll send a collaborator request code</option><option>Not sure</option></select><span class="hint">We never ask for your password. We use Shopify collaborator access.</span></div>
+          </div>
+          <div class="field">
+            <span class="label" id="ob-social-l">Social accounts to set up (Business Launch only)</span>
+            <div class="checks" data-group="social" role="group" aria-labelledby="ob-social-l">
+              <label><input type="checkbox" value="Instagram"> Instagram</label><label><input type="checkbox" value="Facebook"> Facebook</label><label><input type="checkbox" value="TikTok"> TikTok</label><label><input type="checkbox" value="Meta Business / Ads"> Meta Business / Ads</label>
+            </div>
+            <input type="hidden" name="contact[Social setup]" data-for="social">
+          </div>
+          <div class="field"><label for="ob-body">Anything else we should know?</label><textarea class="textarea" id="ob-body" name="contact[body]" placeholder="Special requirements, deadlines, questions…"></textarea></div>
+        </fieldset>
+        <div class="form__end">
+          <p class="hint">{% render 'icon', i: 'lock' %}{{ section.settings.privacy }}</p>
+          <button class="btn btn--lamp" type="submit">{{ section.settings.submit }} {% render 'icon', i: 'arrow' %}</button>
+        </div>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</section>
+<script>
+  (function () { var m = location.search.match(/[?&]order=([^&]+)/), f = document.querySelector('[data-order-field]'); if (m && f && !f.value) f.value = decodeURIComponent(m[1]); })();
+</script>
+{% schema %}
+{
+  "name": "Project onboarding form",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Project form" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Tell us about <em>your business.</em>" },
+    { "type": "textarea", "id": "text", "label": "Intro", "default": "This takes about 10 minutes. Your timeline starts once we have this form and your files, and we confirm your start date by email within 1 business day." },
+    { "type": "text", "id": "submit", "label": "Submit button", "default": "Send project details" },
+    { "type": "textarea", "id": "success", "label": "Success message", "default": "Thank you. We have your project details and will confirm your start date by email within 1 business day." },
+    { "type": "textarea", "id": "privacy", "label": "Privacy note", "default": "We only use this information to build your website. Never send passwords through this form." }
+  ]
+}
+{% endschema %}

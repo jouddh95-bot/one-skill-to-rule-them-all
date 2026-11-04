@@ -1,0 +1,618 @@
+{
+  "sections": {
+    "grow": {
+      "type": "grow",
+      "settings": {
+        "anchor": "work",
+        "label": "From the ground up: a seed in the desert grows into a tree and a store",
+        "length": 1400,
+        "poster_d": "grow-d-0.webp",
+        "poster_m": "grow-m-0.webp",
+        "eyebrow": "CHARGIX · Shopify website studio",
+        "heading": "Every great store <em>starts as a seed.</em>",
+        "text": "We design and build Shopify stores that are made to sell, from the ground up.",
+        "btn_label": "See packages",
+        "btn_link": "/#packages",
+        "btn2_label": "Watch it grow",
+        "cue": "Scroll to grow",
+        "note": "Live 3D, rendered in your browser as you scroll"
+      },
+      "blocks": {
+        "g1": {
+          "type": "chapter",
+          "settings": {
+            "from": "0.05",
+            "to": "0.115",
+            "hold": false,
+            "kicker": "01 · The idea",
+            "heading": "Every big brand was once <em>a small idea.</em>",
+            "text": "A product, a plan and a lot of empty space. That is where most brands start, and it is where we start with you.",
+            "list": "",
+            "list_style": "ticks"
+          }
+        },
+        "g2": {
+          "type": "package",
+          "settings": {
+            "from": "0.122",
+            "to": "0.225",
+            "product": "essential-website",
+            "kicker": "02 · Plant the seed",
+            "list": "Up to 5 pages\nPremium theme customised to your brand\nUp to 10 products or services set up\nContact form, payments and shipping basics\nMobile optimisation and launch testing\n2 revision rounds, 14 days of fixes",
+            "time": "About 10 business days",
+            "price_note": "one-time",
+            "buy_label": "Buy now",
+            "more_label": "Everything included",
+            "more_link": "/#packages",
+            "tagline": "A clean, professional start.",
+            "for": "For freelancers, service providers and first-time founders."
+          }
+        },
+        "g3": {
+          "type": "chapter",
+          "settings": {
+            "from": "0.235",
+            "to": "0.33",
+            "hold": false,
+            "kicker": "03 · Roots",
+            "heading": "Strong roots <em>before anything grows.</em>",
+            "text": "Every CHARGIX store is built on Shopify and set up properly from day one, so it is ready to sell the moment it opens.",
+            "list": "Shopify set up end to end\nSecure checkout, payments and shipping\nFast pages, designed for phones first\nTested on real devices before launch",
+            "list_style": "ticks"
+          }
+        },
+        "g4": {
+          "type": "package",
+          "settings": {
+            "from": "0.34",
+            "to": "0.455",
+            "product": "3d-experience-website",
+            "kicker": "04 · Stand out",
+            "list": "1 real interactive 3D scene (WebGL), like this one\nCustom visual direction and motion design\nUp to 8 pages + 1 custom landing page\nUp to 20 products or services set up\nFull Shopify setup and branded emails\n3 revision rounds, 30 days of fixes",
+            "time": "3 to 4 weeks",
+            "price_note": "one-time",
+            "buy_label": "Buy now",
+            "more_label": "Everything included",
+            "more_link": "/#packages",
+            "pick": true,
+            "pick_label": "Signature",
+            "tagline": "A site people remember.",
+            "for": "For brands that need to stand out. The desert you are scrolling is live 3D, rendered in your browser."
+          }
+        },
+        "g5": {
+          "type": "chapter",
+          "settings": {
+            "from": "0.465",
+            "to": "0.585",
+            "hold": false,
+            "kicker": "05 · The build",
+            "heading": "We build the store <em>around your idea.</em>",
+            "text": "A clear process with fixed prices. You always know what happens next.",
+            "list": "Day 0 | You pay at a secure Shopify checkout\nDay 0–1 | You send the project form, about 10 minutes\nWithin 1 business day | We confirm your start date\nBuild | We design and build, you review each round\nLaunch | We launch, hand over and fix anything for free",
+            "list_style": "steps"
+          }
+        },
+        "g6": {
+          "type": "package",
+          "settings": {
+            "from": "0.595",
+            "to": "0.705",
+            "product": "business-launch",
+            "kicker": "06 · Bloom",
+            "list": "Everything in 3D Experience\nUp to 40 products uploaded, descriptions written\nLogo refresh and mini brand guide\nInstagram, Facebook and TikTok profiles set up\nMeta and TikTok pixels + 1 ad campaign drafted (not launched)\nSpanish versions of key pages\nUp to 10 pages, 2 custom landing pages",
+            "time": "About 4 to 5 weeks",
+            "price_note": "one-time",
+            "buy_label": "Buy now",
+            "more_label": "Everything included",
+            "more_link": "/#packages",
+            "tagline": "Complete brand domination.",
+            "for": "Your store, brand and socials, launched together."
+          }
+        },
+        "g7": {
+          "type": "chapter",
+          "settings": {
+            "from": "0.715",
+            "to": "0.795",
+            "hold": false,
+            "kicker": "07 · What we do",
+            "heading": "Websites, 3D and launches, <em>under one roof.</em>",
+            "text": "CHARGIX is a small studio that designs, builds and launches Shopify websites, in English or Spanish.",
+            "list": "Websites that sell | Shopify stores and service sites, built for your brand\n3D people remember | A real interactive scene, with a light fallback for phones\nLaunches done for you | Products, brand, socials, pixels and Spanish pages",
+            "list_style": "ticks"
+          }
+        },
+        "g8": {
+          "type": "care",
+          "settings": {
+            "from": "0.805",
+            "to": "0.885",
+            "product": "care-plan",
+            "kicker": "08 · Open all night",
+            "heading": "Keep it growing <em>after launch.</em>",
+            "text": "Optional monthly care. Shopify handles hosting and security; we do the human checks and the edits.",
+            "name_1": "Care Plan",
+            "name_2": "Care Plus",
+            "name_3": "Premium Care",
+            "desc_1": "Monthly health check, 30 minutes of edits",
+            "desc_2": "Twice-monthly checks, 2 hours of edits",
+            "desc_3": "Weekly checks, 3D checks, 4 hours of edits",
+            "btn_label": "Compare care plans",
+            "btn_link": "/#care"
+          }
+        },
+        "g9": {
+          "type": "chapter",
+          "settings": {
+            "from": "0.9",
+            "to": "1",
+            "hold": true,
+            "kicker": "09 · Your turn",
+            "heading": "Imagine what we could <em>grow for you.</em>",
+            "text": "Pick a package and pay online. We start as soon as your project form is in.",
+            "list": "",
+            "list_style": "ticks",
+            "btn_label": "Start your project",
+            "btn_link": "/#packages",
+            "btn2_label": "Talk to us",
+            "btn2_link": "/pages/contact"
+          }
+        },
+        "g10": {
+          "type": "bar",
+          "settings": {
+            "from": "0",
+            "to": "0.12",
+            "label": "Idea"
+          }
+        },
+        "g11": {
+          "type": "bar",
+          "settings": {
+            "from": "0.12",
+            "to": "0.23",
+            "label": "Seed"
+          }
+        },
+        "g12": {
+          "type": "bar",
+          "settings": {
+            "from": "0.23",
+            "to": "0.335",
+            "label": "Roots"
+          }
+        },
+        "g13": {
+          "type": "bar",
+          "settings": {
+            "from": "0.335",
+            "to": "0.46",
+            "label": "Grow"
+          }
+        },
+        "g14": {
+          "type": "bar",
+          "settings": {
+            "from": "0.46",
+            "to": "0.59",
+            "label": "Build"
+          }
+        },
+        "g15": {
+          "type": "bar",
+          "settings": {
+            "from": "0.59",
+            "to": "0.71",
+            "label": "Bloom"
+          }
+        },
+        "g16": {
+          "type": "bar",
+          "settings": {
+            "from": "0.71",
+            "to": "0.8",
+            "label": "Dusk"
+          }
+        },
+        "g17": {
+          "type": "bar",
+          "settings": {
+            "from": "0.8",
+            "to": "0.89",
+            "label": "Care"
+          }
+        },
+        "g18": {
+          "type": "bar",
+          "settings": {
+            "from": "0.89",
+            "to": "1",
+            "label": "Open"
+          }
+        },
+        "g19": {
+          "type": "still",
+          "settings": {
+            "from": "0",
+            "to": "0.12",
+            "desktop": "grow-d-0.webp",
+            "mobile": "grow-m-0.webp"
+          }
+        },
+        "g20": {
+          "type": "still",
+          "settings": {
+            "from": "0.12",
+            "to": "0.3",
+            "desktop": "grow-d-1.webp",
+            "mobile": "grow-m-1.webp"
+          }
+        },
+        "g21": {
+          "type": "still",
+          "settings": {
+            "from": "0.3",
+            "to": "0.46",
+            "desktop": "grow-d-2.webp",
+            "mobile": "grow-m-2.webp"
+          }
+        },
+        "g22": {
+          "type": "still",
+          "settings": {
+            "from": "0.46",
+            "to": "0.66",
+            "desktop": "grow-d-3.webp",
+            "mobile": "grow-m-3.webp"
+          }
+        },
+        "g23": {
+          "type": "still",
+          "settings": {
+            "from": "0.66",
+            "to": "0.84",
+            "desktop": "grow-d-4.webp",
+            "mobile": "grow-m-4.webp"
+          }
+        },
+        "g24": {
+          "type": "still",
+          "settings": {
+            "from": "0.84",
+            "to": "1.01",
+            "desktop": "grow-d-5.webp",
+            "mobile": "grow-m-5.webp"
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "g2",
+        "g3",
+        "g4",
+        "g5",
+        "g6",
+        "g7",
+        "g8",
+        "g9",
+        "g10",
+        "g11",
+        "g12",
+        "g13",
+        "g14",
+        "g15",
+        "g16",
+        "g17",
+        "g18",
+        "g19",
+        "g20",
+        "g21",
+        "g22",
+        "g23",
+        "g24"
+      ]
+    },
+    "packages": {
+      "type": "packages",
+      "settings": {
+        "anchor": "packages",
+        "index": "01",
+        "eyebrow": "Packages",
+        "heading": "Three fixed prices. Pick how far you want to go.",
+        "text": "Every package is a complete website. The difference is how much we build for you: a clean site, a site with a real 3D scene, or the whole launch.",
+        "note": "Prices in USD, paid once at checkout. Not included in any package: Shopify plan, domain, paid apps, photography or ad spend. No package guarantees sales or rankings. Demo storefronts use made-up brands.",
+        "compare_anchor": "compare",
+        "compare_index": "02",
+        "compare_eyebrow": "Side by side",
+        "compare_heading": "What changes between the three",
+        "matrix": "Pages | Up to 5 | Up to 8 | Up to 10\nInteractive 3D scene | - | 1 scene (WebGL) | 1 scene (WebGL)\nDesign | Premium theme, customised | Custom direction + motion | Custom direction + motion\nProducts set up | Up to 10 | Up to 20 | Up to 40, descriptions written\nImages prepared | Up to 20 | Up to 40 | Up to 80\nLogo refresh and brand guide | - | - | yes\nSocial profiles and pixels | - | - | yes\nSpanish pages | - | - | Key pages\nRevision rounds | 2 | 3 | 3\nHandover | 30-min video | 45-min call + video | 2 × 45-min calls + video\nPost-launch fixes | 14 days | 30 days | 30 days\nTimeline | About 10 business days | 3 to 4 weeks | 4 to 5 weeks"
+      },
+      "blocks": {
+        "p1": {
+          "type": "package",
+          "settings": {
+            "product": "essential-website",
+            "tier": "Tier 01",
+            "price_note": "one-time",
+            "for": "For freelancers, service providers and first-time founders.",
+            "three_d": "none",
+            "chips": "",
+            "preview": "site",
+            "asset": "pk-essential.webp",
+            "mini_url": "sweetandco.demo",
+            "mini_brand": "Sweet & Co.",
+            "mini_heading": "Baked this morning.",
+            "list": "*Up to 5 pages\nPremium theme customised to your brand\nUp to 10 products or services set up\nContact form, payments and shipping basics\nMobile optimisation and launch testing\n2 revision rounds, 14 days of fixes",
+            "time": "About 10 business days",
+            "demo_link": "/?view=essential-demo",
+            "demo_label": "See a demo"
+          }
+        },
+        "p2": {
+          "type": "package",
+          "settings": {
+            "product": "3d-experience-website",
+            "tier": "Tier 02",
+            "pick": true,
+            "pick_label": "Signature",
+            "price_note": "one-time",
+            "for": "Our signature package, for brands that need to stand out.",
+            "three_d": "premium",
+            "chips": "",
+            "preview": "model",
+            "asset": "pk-3d.webp",
+            "glb": "pk-3d.glb",
+            "model_alt": "A 3D gift box you can turn around",
+            "list": "*1 real interactive 3D scene (WebGL)\n*Custom visual direction and motion design\nUp to 8 pages, 1 custom landing page\nUp to 20 products or services set up\nFull Shopify setup and branded emails\n3 revision rounds, 30 days of fixes",
+            "time": "3 to 4 weeks",
+            "demo_link": "/?view=3d-demo",
+            "demo_label": "See a demo"
+          }
+        },
+        "p3": {
+          "type": "package",
+          "settings": {
+            "product": "business-launch",
+            "tier": "Tier 03",
+            "price_note": "one-time",
+            "for": "Complete brand domination: everything in 3D Experience, plus your store, brand and socials set up for you.",
+            "three_d": "plus",
+            "chips": "",
+            "preview": "image",
+            "asset": "pk-launch.webp",
+            "mini_url": "nova.demo",
+            "scope": "store|Store set up\nbrand|Logo & brand guide\nsocial|Social profiles\npixel|Meta & TikTok pixels\nlang|Spanish pages",
+            "list": "*Everything in 3D Experience\n*Up to 40 products uploaded, descriptions written\n*Logo refresh and mini brand guide\nInstagram, Facebook and TikTok profiles set up\nMeta and TikTok pixels; 1 ad campaign drafted, not launched\nSpanish versions of key pages\nUp to 10 pages, 2 custom landing pages",
+            "time": "4 to 5 weeks",
+            "demo_link": "/?view=launch-demo",
+            "demo_label": "See a demo"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ]
+    },
+    "studio": {
+      "type": "what-we-do",
+      "settings": {
+        "anchor": "studio",
+        "index": "03",
+        "eyebrow": "What CHARGIX does",
+        "heading": "We build the website your business runs on.",
+        "text": "CHARGIX is a small studio that designs, builds and launches Shopify websites. Three fixed prices, paid online, built in English or Spanish."
+      },
+      "blocks": {
+        "w1": {
+          "type": "pillar",
+          "settings": {
+            "icon": "flat",
+            "title": "Websites that sell",
+            "text": "Shopify stores and service sites, designed for your brand, set up properly and tested on phones before launch."
+          }
+        },
+        "w2": {
+          "type": "pillar",
+          "settings": {
+            "icon": "box",
+            "title": "3D people remember",
+            "text": "A real interactive 3D scene on your site: your product, space or idea, built for the browser with a light fallback for phones."
+          }
+        },
+        "w3": {
+          "type": "pillar",
+          "settings": {
+            "icon": "store",
+            "title": "Launches done for you",
+            "text": "Products, logo refresh, social profiles, pixels and Spanish pages, set up end to end so you can start selling."
+          }
+        },
+        "w4": {
+          "type": "serve",
+          "settings": {
+            "title": "Who it is for",
+            "items": "First-time founders, Bakers and food makers, Product brands, Service businesses, Shops moving to Shopify, Brands in the US and Mexico"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4"
+      ]
+    },
+    "process": {
+      "type": "steps",
+      "settings": {
+        "anchor": "process",
+        "index": "04",
+        "eyebrow": "After you buy",
+        "heading": "From checkout to launch in five steps.",
+        "button": "Already bought? Send your project form",
+        "link": "/pages/onboarding"
+      },
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "when": "Day 0",
+            "title": "You pay at checkout",
+            "text": "Secure Shopify checkout. Your order email arrives right away with a link to the project form."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "when": "Day 0–1",
+            "title": "You send the project form",
+            "text": "About 10 minutes: your business, the look you want and a link to your logo and photos."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "when": "Within 1 business day",
+            "title": "We confirm your start date",
+            "text": "Your timeline starts once the form and files are complete."
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "when": "Build",
+            "title": "We design and build, you review",
+            "text": "You see the work in progress and get the revision rounds your package includes."
+          }
+        },
+        "s5": {
+          "type": "step",
+          "settings": {
+            "when": "Launch",
+            "title": "We launch and hand over",
+            "text": "A recorded walkthrough (live calls on the bigger packages), then free fixes for 14 or 30 days."
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5"
+      ]
+    },
+    "care": {
+      "type": "care",
+      "settings": {
+        "anchor": "care",
+        "index": "05",
+        "eyebrow": "After launch",
+        "heading": "Keep it running.",
+        "text": "Optional monthly care for Shopify sites. Shopify handles hosting and security; we do the human checks and the edits.",
+        "product": "care-plan",
+        "name_1": "Care Plan",
+        "name_2": "Care Plus",
+        "name_3": "Premium Care",
+        "desc_1": "Monthly health check, 30 minutes of edits, reply within 3 business days",
+        "desc_2": "Twice-monthly checks, 2 hours of edits, reply within 1 business day",
+        "desc_3": "Weekly checks, 3D checks on every device, 4 hours of edits, same-day reply",
+        "fine": "Extra work is always quoted first, at $65/hour."
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "anchor": "faq",
+        "index": "06",
+        "eyebrow": "Questions",
+        "heading": "Before you buy"
+      },
+      "blocks": {
+        "q1": {
+          "type": "q",
+          "settings": {
+            "q": "Is the 3D in the $1,650 package real 3D?",
+            "a": "<p>Yes. 3D Experience and Business Launch include one real, interactive 3D scene built with WebGL, with a lighter fallback for phones. The desert at the top of this page is the same kind of work: real-time 3D, rendered live in your browser as you scroll.</p>"
+          }
+        },
+        "q2": {
+          "type": "q",
+          "settings": {
+            "q": "Does the $750 package include 3D?",
+            "a": "<p>No. Essential is a clean, fast, professional website with no 3D. If you want 3D, choose 3D Experience or Business Launch.</p>"
+          }
+        },
+        "q3": {
+          "type": "q",
+          "settings": {
+            "q": "What do you need from me?",
+            "a": "<p>After checkout you fill in a short project form and share your logo, photos and product information. Your timeline starts once those are in.</p>"
+          }
+        },
+        "q4": {
+          "type": "q",
+          "settings": {
+            "q": "What is not included?",
+            "a": "<p>Your Shopify plan, domain, paid apps, photography and ad spend. We never guarantee sales, rankings or ad results.</p>"
+          }
+        },
+        "q5": {
+          "type": "q",
+          "settings": {
+            "q": "Do you need my Shopify password?",
+            "a": "<p>No. We use Shopify collaborator access, which you approve and can remove at any time.</p>"
+          }
+        },
+        "q6": {
+          "type": "q",
+          "settings": {
+            "q": "Do you work in Spanish?",
+            "a": "<p>Yes, we work in English or Spanish. Business Launch also includes Spanish versions of your key pages.</p>"
+          }
+        },
+        "q7": {
+          "type": "q",
+          "settings": {
+            "q": "Can I get a refund?",
+            "a": "<p>See our <a href=\"/policies/refund-policy\">refund policy</a> for exactly when and how refunds work.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7"
+      ]
+    },
+    "closing": {
+      "type": "closing",
+      "settings": {
+        "asset": "grow-d-5.webp",
+        "eyebrow": "Ready when you are",
+        "heading": "Your business, <em>open for orders.</em>",
+        "text": "Pick a package and pay online. We start as soon as your project form is in.",
+        "label": "Start your project",
+        "link": "/#packages",
+        "label2": "Talk to us",
+        "link2": "/pages/contact"
+      }
+    }
+  },
+  "order": [
+    "grow",
+    "packages",
+    "studio",
+    "process",
+    "care",
+    "faq",
+    "closing"
+  ]
+}
